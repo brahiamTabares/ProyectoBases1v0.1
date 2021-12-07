@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Afiliado extends Usuario{
 
     private List<Plan> Planes;
-    private String telefono;
+
 
 
     public Afiliado() {
@@ -26,12 +26,4 @@ public class Afiliado extends Usuario{
         return Objects.hashCode(getId());
     }
 
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
 }

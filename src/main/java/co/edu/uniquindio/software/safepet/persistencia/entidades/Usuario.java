@@ -16,7 +16,6 @@ public class Usuario implements Serializable {
         this.id = id;
         this.nombre = nombre;
         this.contrasenia = contrasenia;
-        this.telefono = telefono;
     }
 
     public String getTelefono() {

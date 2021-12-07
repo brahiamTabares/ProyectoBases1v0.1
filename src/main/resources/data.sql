@@ -38,7 +38,7 @@ ALTER TABLE empleadosafepet ADD CONSTRAINT empleado_pk PRIMARY KEY ( id );
 
 CREATE TABLE evaluacion (
                             id_evaluacion              VARCHAR2(20) NOT NULL,
-                            "puntuacion "              VARCHAR2(20),
+                            "puntuacion "              INTEGER
                             planservicio_id            INTEGER NOT NULL,
                             planservicio_servicio_idcs VARCHAR2(30) NOT NULL,
                             planservicio_servicioc_id  INTEGER NOT NULL,
@@ -67,7 +67,6 @@ CREATE TABLE examenes_centro (
 CREATE TABLE historiaclinica (
                                  nombre        VARCHAR2(20) NOT NULL,
                                  sexo          VARCHAR2(20),
-                                 peso          VARCHAR2(20),
                                  fecha_ingreso DATE,
                                  fechasalida   DATE,
                                  mascota_id    INTEGER NOT NULL
