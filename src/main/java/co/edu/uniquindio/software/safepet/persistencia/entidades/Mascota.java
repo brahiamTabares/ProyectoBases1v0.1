@@ -8,6 +8,11 @@ public class Mascota {
       private   Integer id;
       private String nombre;
       private Date fecha_nacimiento;
+    private String  genero;
+    private String   plan_id;
+    private Integer tipomascota_id;
+    private String raza_codigo ;
+
 
     public Mascota(Integer id, String nombre, Date fecha_nacimiento, String genero, String plan_id, Integer tipomascota_id, String raza_codigo) {
         this.id = id;
@@ -88,9 +93,5 @@ public class Mascota {
         this.raza_codigo = raza_codigo;
     }
 
-    private String  genero;
-      private String   plan_id
-      private Integer tipomascota_id;
-      private String raza_codigo ;
 
 }
