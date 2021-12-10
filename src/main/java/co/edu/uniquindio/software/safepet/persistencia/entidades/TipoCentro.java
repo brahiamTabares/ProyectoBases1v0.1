@@ -1,11 +1,10 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
-public class raza {
-
-    private String codigo;
+public class TipoCentro {
+    private  String codigo;
     private String nombre;
 
-    public raza(String codigo, String nombre) {
+    public TipoCentro(String codigo, String nombre) {
         this.codigo = codigo;
         this.nombre = nombre;
     }

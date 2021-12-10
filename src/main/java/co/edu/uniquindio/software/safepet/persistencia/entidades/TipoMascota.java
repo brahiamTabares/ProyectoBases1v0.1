@@ -1,13 +1,13 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
-public class raza {
+public class TipoMascota {
 
     private String codigo;
-    private String nombre;
+    private  String tipo;
 
-    public raza(String codigo, String nombre) {
+    public TipoMascota(String codigo, String nombre) {
         this.codigo = codigo;
-        this.nombre = nombre;
+        this.tipo = nombre;
     }
 
     public String getCodigo() {
@@ -18,11 +18,11 @@ public class raza {
         this.codigo = codigo;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
