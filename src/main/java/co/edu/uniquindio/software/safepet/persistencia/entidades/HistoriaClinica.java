@@ -4,7 +4,17 @@ import java.util.Date;
 import java.util.Objects;
 
 public class HistoriaClinica {
-    public HistoriaClinica(String nombre, String sexo, String peso, Date fechaIngreso, Date fechaSalida, Integer mascota_id) {
+
+
+    private String nombre;
+    private String sexo;
+    private String peso;
+    private Date fechaIngreso;
+    private Date fechaSalida;
+    private String mascota_id;
+
+
+    public HistoriaClinica(String nombre, String sexo, String peso, Date fechaIngreso, Date fechaSalida, String mascota_id) {
         this.nombre = nombre;
         this.sexo = sexo;
         this.peso = peso;
@@ -13,12 +23,7 @@ public class HistoriaClinica {
         this.mascota_id = mascota_id;
     }
 
-    private String nombre;
-    private String sexo;
-    private String peso;
-    private Date fechaIngreso;
-    private Date fechaSalida;
-    private Integer mascota_id;
+
 
     public String getNombre() {
         return nombre;
@@ -73,11 +78,11 @@ public class HistoriaClinica {
         this.fechaSalida = fechaSalida;
     }
 
-    public Integer getMascota_id() {
+    public String getMascota_id() {
         return mascota_id;
     }
 
-    public void setMascota_id(Integer mascota_id) {
+    public void setMascota_id(String mascota_id) {
         this.mascota_id = mascota_id;
     }
 }

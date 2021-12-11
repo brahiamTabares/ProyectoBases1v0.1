@@ -13,17 +13,11 @@ public class Afiliado extends Usuario{
     public Afiliado() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Usuario)) return false;
-        Usuario usuario = (Usuario) o;
-        return Objects.equals(getId(), usuario.getId());
+    public List<Plan> getPlanes() {
+        return Planes;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
+    public void setPlanes(List<Plan> planes) {
+        Planes = planes;
     }
-
 }

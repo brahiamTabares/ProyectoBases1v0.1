@@ -5,6 +5,11 @@ public class Examenes_Centro {
     private String centroServicio_id;
     private String examenes_codigo;
 
+    public Examenes_Centro(String centroServicio_id, String examenes_codigo) {
+        this.centroServicio_id = centroServicio_id;
+        this.examenes_codigo = examenes_codigo;
+    }
+
     public String getCentroServicio_id() {
         return centroServicio_id;
     }
@@ -21,3 +26,4 @@ public class Examenes_Centro {
         this.examenes_codigo = examenes_codigo;
     }
 }
+

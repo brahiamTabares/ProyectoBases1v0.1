@@ -2,13 +2,13 @@ package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
 public class Plan {
 
-    private Integer  id ;
+    private String  id ;
     private  double mensualidad;
     private  double copago;
     private String afiliado_id;
     private String empleadoSafepet_id;
 
-    public Plan(Integer id, double mensualidad, double copago, String afiliado_id, String empleadoSafepet_id) {
+    public Plan(String id, double mensualidad, double copago, String afiliado_id, String empleadoSafepet_id) {
         this.id = id;
         this.mensualidad = mensualidad;
         this.copago = copago;
@@ -16,11 +16,11 @@ public class Plan {
         this.empleadoSafepet_id = empleadoSafepet_id;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

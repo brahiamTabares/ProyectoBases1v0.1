@@ -9,7 +9,7 @@ CREATE TABLE afiliado (
 ALTER TABLE afiliado ADD CONSTRAINT afiliado_pk PRIMARY KEY ( id );
 
 CREATE TABLE centroservicio (
-                                id                VARCHAR2(5) NOT NULL,
+                                id                VARCHAR2(20) NOT NULL,
                                 nombre            VARCHAR2(30),
                                 contrasenia       VARCHAR2(20),
                                 telefono          VARCHAR2(30),
@@ -23,7 +23,7 @@ CREATE TABLE consulta (
                           fecha_cita        DATE,
                           descripcion       VARCHAR2(300),
                           centroservicio_id VARCHAR2(5) NOT NULL,
-                          mascota_id        INTEGER NOT NULL
+                          mascota_id        VARCHAR2(20) NOT NULL
 );
 
 ALTER TABLE consulta ADD CONSTRAINT consulta_pk PRIMARY KEY ( codigo );
@@ -37,12 +37,9 @@ CREATE TABLE empleadosafepet (
 ALTER TABLE empleadosafepet ADD CONSTRAINT empleado_pk PRIMARY KEY ( id );
 
 CREATE TABLE evaluacion (
-                            id_evaluacion              VARCHAR2(20) NOT NULL,
-                            "puntuacion "              INTEGER
-                            planservicio_id            INTEGER NOT NULL,
-                            planservicio_servicio_idcs VARCHAR2(30) NOT NULL,
-                            planservicio_servicioc_id  INTEGER NOT NULL,
-                            afiliado_id                VARCHAR2(20) NOT NULL
+                            id_evaluacion VARCHAR2(20) NOT NULL,
+                            "puntuacion " INTEGER,
+                            afiliado_id   VARCHAR2(20) NOT NULL
 );
 
 CREATE UNIQUE INDEX evaluacion__idx ON
@@ -69,7 +66,7 @@ CREATE TABLE historiaclinica (
                                  sexo          VARCHAR2(20),
                                  fecha_ingreso DATE,
                                  fechasalida   DATE,
-                                 mascota_id    INTEGER NOT NULL
+                                 mascota_id    VARCHAR2(20) NOT NULL
 );
 
 CREATE UNIQUE INDEX historiaclinica__idx ON
@@ -80,19 +77,19 @@ CREATE UNIQUE INDEX historiaclinica__idx ON
 ALTER TABLE historiaclinica ADD CONSTRAINT historiaclinica_pk PRIMARY KEY ( mascota_id );
 
 CREATE TABLE mascota (
-                         id               INTEGER NOT NULL,
+                         id               VARCHAR2(20) NOT NULL,
                          nombre           VARCHAR2(20),
                          fecha_nacimiento DATE,
                          genero           VARCHAR2(20),
-                         plan_id          INTEGER NOT NULL,
-                         tipomascota_id   INTEGER NOT NULL,
-                         raza_codigo      VARCHAR2(20) NOT NULL
+                         plan_id          VARCHAR2(5) NOT NULL,
+                         raza_codigo      VARCHAR2(20) NOT NULL,
+                         tipomascota_id   VARCHAR2(20) NOT NULL
 );
 
 ALTER TABLE mascota ADD CONSTRAINT mascota_pk PRIMARY KEY ( id );
 
 CREATE TABLE plan (
-                      id                 INTEGER NOT NULL,
+                      id                 VARCHAR2(20) NOT NULL,
                       mensualidad        NUMBER,
                       copago             NUMBER,
                       afiliado_id        VARCHAR2(20) NOT NULL,
@@ -102,18 +99,19 @@ CREATE TABLE plan (
 ALTER TABLE plan ADD CONSTRAINT plan_pk PRIMARY KEY ( id );
 
 CREATE TABLE planservicio (
-                              id              INTEGER NOT NULL,
-                              fecha_servicio  DATE,
-                              servicio_idcs   VARCHAR2(30) NOT NULL,
-                              servicioc_id    INTEGER NOT NULL,
-                              servicioc_idser INTEGER NOT NULL,
-                              servicioc_idcen VARCHAR2(5) NOT NULL
+                              id                   VARCHAR2(20) NOT NULL,
+                              fecha_servicio       DATE,
+                              servicio_idcs        VARCHAR2(30) NOT NULL,
+                              servicioc_id         INTEGER NOT NULL,
+                              plan_id              VARCHAR2(20) NOT NULL,
+                              serviciocentro_idcen VARCHAR2(5) NOT NULL,
+                              serviciocentro_idser VARCHAR2(20) NOT NULL
 );
 
 ALTER TABLE planservicio
-    ADD CONSTRAINT planservicio_pk PRIMARY KEY ( id,
-                                                 servicio_idcs,
-                                                 servicioc_id );
+    ADD CONSTRAINT planservicio_pk PRIMARY KEY ( servicio_idcs,
+                                                 servicioc_id,
+                                                 id );
 
 CREATE TABLE raza (
                       codigo VARCHAR2(20) NOT NULL,
@@ -124,18 +122,18 @@ ALTER TABLE raza ADD CONSTRAINT raza_pk PRIMARY KEY ( codigo );
 
 CREATE TABLE registro (
                           codigo                     VARCHAR2(20) NOT NULL,
-                           "observaciones"           VARCHAR2(20),
+                          "observaciones "           VARCHAR2(20),
                           concepto                   VARCHAR2(20),
                           decisiones                 VARCHAR2(20),
                           fecharegistro              DATE,
                           examenes_codigo            VARCHAR2(20) NOT NULL,
-                          historiaclinica_mascota_id INTEGER NOT NULL
+                          historiaclinica_mascota_id VARCHAR2(20) NOT NULL
 );
 
 ALTER TABLE registro ADD CONSTRAINT registro_pk PRIMARY KEY ( codigo );
 
 CREATE TABLE servicio (
-                          id     INTEGER NOT NULL,
+                          id     VARCHAR2(20) NOT NULL,
                           nombre VARCHAR2(50),
                           valor  INTEGER
 );
@@ -143,12 +141,13 @@ CREATE TABLE servicio (
 ALTER TABLE servicio ADD CONSTRAINT servicio_pk PRIMARY KEY ( id );
 
 CREATE TABLE serviciocentro (
-                                idser INTEGER NOT NULL,
-                                idcen VARCHAR2(5) NOT NULL
+                                idser       VARCHAR2(20) NOT NULL,
+                                idcen       VARCHAR2(5) NOT NULL,
+                                servicio_id VARCHAR2(20) NOT NULL
 );
 
-ALTER TABLE serviciocentro ADD CONSTRAINT servicio_centro_pk PRIMARY KEY ( idser,
-                                                                           idcen );
+ALTER TABLE serviciocentro ADD CONSTRAINT servicio_centro_pk PRIMARY KEY ( idcen,
+                                                                           idser );
 
 CREATE TABLE tipocentro (
                             codigo VARCHAR2(20) NOT NULL,
@@ -158,7 +157,7 @@ CREATE TABLE tipocentro (
 ALTER TABLE tipocentro ADD CONSTRAINT tipocentro_pk PRIMARY KEY ( codigo );
 
 CREATE TABLE tipomascota (
-                             id   INTEGER NOT NULL,
+                             id   VARCHAR2(20) NOT NULL,
                              tipo VARCHAR2(20)
 );
 
@@ -179,14 +178,6 @@ ALTER TABLE consulta
 ALTER TABLE evaluacion
     ADD CONSTRAINT evaluacion_afiliado_fk FOREIGN KEY ( afiliado_id )
         REFERENCES afiliado ( id );
-
-ALTER TABLE evaluacion
-    ADD CONSTRAINT evaluacion_planservicio_fk FOREIGN KEY ( planservicio_id,
-                                                            planservicio_servicio_idcs,
-                                                            planservicio_servicioc_id )
-        REFERENCES planservicio ( id,
-                                  servicio_idcs,
-                                  servicioc_id );
 
 ALTER TABLE examenes_centro
     ADD CONSTRAINT examenes_centro__fk FOREIGN KEY ( examenes_codigo )
@@ -221,14 +212,14 @@ ALTER TABLE plan
         REFERENCES empleadosafepet ( id );
 
 ALTER TABLE planservicio
-    ADD CONSTRAINT planservicio_plan_fk FOREIGN KEY ( id )
+    ADD CONSTRAINT planservicio_plan_fk FOREIGN KEY ( plan_id )
         REFERENCES plan ( id );
 
 ALTER TABLE planservicio
-    ADD CONSTRAINT planservicio_serviciocentro_fk FOREIGN KEY ( servicioc_idser,
-                                                                servicioc_idcen )
-        REFERENCES serviciocentro ( idser,
-                                    idcen );
+    ADD CONSTRAINT planservicio_serviciocentro_fk FOREIGN KEY ( serviciocentro_idcen,
+                                                                serviciocentro_idser )
+        REFERENCES serviciocentro ( idcen,
+                                    idser );
 
 ALTER TABLE registro
     ADD CONSTRAINT registro_examenes_fk FOREIGN KEY ( examenes_codigo )
@@ -239,13 +230,12 @@ ALTER TABLE registro
         REFERENCES historiaclinica ( mascota_id );
 
 ALTER TABLE serviciocentro
-    ADD CONSTRAINT servicio_centro_servicio_fk FOREIGN KEY ( idser )
-        REFERENCES servicio ( id );
-
-ALTER TABLE serviciocentro
     ADD CONSTRAINT servicio_centroservicio_fk FOREIGN KEY ( idcen )
         REFERENCES centroservicio ( id );
 
+ALTER TABLE serviciocentro
+    ADD CONSTRAINT serviciocentro_servicio_fk FOREIGN KEY ( servicio_id )
+        REFERENCES servicio ( id );
 
 
 ---- INSERT RAZA ---

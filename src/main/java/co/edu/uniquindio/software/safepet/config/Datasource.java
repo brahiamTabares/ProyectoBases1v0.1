@@ -5,7 +5,7 @@ import javax.annotation.sql.DataSourceDefinition;
 
 
 @DataSourceDefinition(
-		name = "java:app/safepetb1/mysql", //
+		name = Datasource.DATASOURCE, //
 		className = "com.mysql.cj.jdbc.MysqlDataSource", //
 		initialPoolSize = 2,
 		minPoolSize = 2,
@@ -20,5 +20,5 @@ import javax.annotation.sql.DataSourceDefinition;
 		}
 )
 public class Datasource {
-
+	public static final String DATASOURCE = "java:app/safepetb1/mysql";
 }
