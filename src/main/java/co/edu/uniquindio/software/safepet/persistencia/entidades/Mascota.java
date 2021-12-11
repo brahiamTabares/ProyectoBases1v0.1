@@ -5,16 +5,16 @@ import java.util.Objects;
 
 public class Mascota {
 
-      private   Integer id;
+      private   String id;
       private String nombre;
       private Date fecha_nacimiento;
     private String  genero;
     private String   plan_id;
-    private Integer tipomascota_id;
+    private String tipomascota_id;
     private String raza_codigo ;
 
 
-    public Mascota(Integer id, String nombre, Date fecha_nacimiento, String genero, String plan_id, Integer tipomascota_id, String raza_codigo) {
+    public Mascota(String id, String nombre, Date fecha_nacimiento, String genero, String plan_id, String tipomascota_id, String raza_codigo) {
         this.id = id;
         this.nombre = nombre;
         this.fecha_nacimiento = fecha_nacimiento;
@@ -22,6 +22,9 @@ public class Mascota {
         this.plan_id = plan_id;
         this.tipomascota_id = tipomascota_id;
         this.raza_codigo = raza_codigo;
+    }
+    public  Mascota(){
+
     }
 
     @Override
@@ -37,11 +40,11 @@ public class Mascota {
         return Objects.hash(id);
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -77,11 +80,11 @@ public class Mascota {
         this.plan_id = plan_id;
     }
 
-    public Integer getTipomascota_id() {
+    public String getTipomascota_id() {
         return tipomascota_id;
     }
 
-    public void setTipomascota_id(Integer tipomascota_id) {
+    public void setTipomascota_id(String tipomascota_id) {
         this.tipomascota_id = tipomascota_id;
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
 
 @Named
 @ViewScoped
-public class PlanBean extends PrimeFacesCrudBean<Plan,Integer, PlanBO> {
+public class PlanBean extends PrimeFacesCrudBean<Plan,String, PlanBO> {
     @Inject
     private MascotaBO mascotaBO;
 

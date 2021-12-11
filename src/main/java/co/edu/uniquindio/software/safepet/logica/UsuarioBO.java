@@ -1,5 +1,6 @@
 package co.edu.uniquindio.software.safepet.logica;
 
+import co.edu.uniquindio.software.safepet.config.Datasource;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Usuario;
 
 import javax.annotation.Resource;
@@ -16,7 +17,7 @@ import java.util.List;
 @ApplicationScoped
 public class UsuarioBO implements GenericBO<Usuario,String>{
 
-    @Resource(lookup="java:app/ejemplo_sql/mysql")
+    @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
 
 

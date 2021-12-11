@@ -1,6 +1,8 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
-public class Servicio {
+import java.io.Serializable;
+
+public class Servicio implements Serializable {
 
     private String id ;
  private String nombre;
