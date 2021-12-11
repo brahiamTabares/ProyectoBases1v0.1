@@ -248,9 +248,19 @@ ALTER TABLE serviciocentro
 
 
 
+---- INSERT RAZA ---
 
+INSERT INTO RAZA (codigo, nombre) VALUES ('1','CRIOLLO');
+INSERT INTO RAZA (codigo, nombre) VALUES ('2','BULDOG');
+INSERT INTO RAZA (codigo, nombre) VALUES ('3','CHIHUAHUA');
+INSERT INTO RAZA (codigo, nombre) VALUES ('4','LABRADOR');
+INSERT INTO RAZA (codigo, nombre) VALUES ('5','DOBERMAN');
+INSERT INTO RAZA (codigo, nombre) VALUES ('6','ROTTWEILER');
+INSERT INTO RAZA (codigo, nombre) VALUES ('7','PERSA');
+INSERT INTO RAZA (codigo, nombre) VALUES ('8','SIAMES');
+INSERT INTO RAZA (codigo, nombre) VALUES ('9','RAGDOLL');
 
-
+----
 
 
 
