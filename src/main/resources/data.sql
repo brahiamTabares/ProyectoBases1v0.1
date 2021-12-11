@@ -37,9 +37,12 @@ CREATE TABLE empleadosafepet (
 ALTER TABLE empleadosafepet ADD CONSTRAINT empleado_pk PRIMARY KEY ( id );
 
 CREATE TABLE evaluacion (
-                            id_evaluacion VARCHAR2(20) NOT NULL,
-                            "puntuacion " INTEGER,
-                            afiliado_id   VARCHAR2(20) NOT NULL
+                            id_evaluacion              VARCHAR2(20) NOT NULL,
+                            puntuacion               INTEGER,
+                            afiliado_id                VARCHAR2(20) NOT NULL,
+                            planservicio_servicio_idcs VARCHAR2(30) NOT NULL,
+                            planservicio_servicioc_id  INTEGER NOT NULL,
+                            planservicio_id            VARCHAR2(20) NOT NULL
 );
 
 CREATE UNIQUE INDEX evaluacion__idx ON
@@ -60,6 +63,8 @@ CREATE TABLE examenes_centro (
                                  centroservicio_id VARCHAR2(20) NOT NULL,
                                  examenes_codigo   VARCHAR2(20) NOT NULL
 );
+ALTER TABLE examenes_centro ADD CONSTRAINT examenes_centro_pk PRIMARY KEY ( centroservicio_id);
+ALTER TABLE examenes_centro ADD CONSTRAINT examenes_centro_pk PRIMARY KEY ( examenes_codigo;
 
 CREATE TABLE historiaclinica (
                                  nombre        VARCHAR2(20) NOT NULL,
@@ -179,6 +184,14 @@ ALTER TABLE evaluacion
     ADD CONSTRAINT evaluacion_afiliado_fk FOREIGN KEY ( afiliado_id )
         REFERENCES afiliado ( id );
 
+ALTER TABLE evaluacion
+    ADD CONSTRAINT evaluacion_planservicio_fk FOREIGN KEY ( planservicio_servicio_idcs,
+                                                            planservicio_servicioc_id,
+                                                            planservicio_id )
+        REFERENCES planservicio ( servicio_idcs,
+                                  servicioc_id,
+                                  id );
+
 ALTER TABLE examenes_centro
     ADD CONSTRAINT examenes_centro__fk FOREIGN KEY ( examenes_codigo )
         REFERENCES examenes ( codigo );
@@ -238,19 +251,9 @@ ALTER TABLE serviciocentro
         REFERENCES servicio ( id );
 
 
----- INSERT RAZA ---
 
-INSERT INTO RAZA (codigo, nombre) VALUES ('1','CRIOLLO');
-INSERT INTO RAZA (codigo, nombre) VALUES ('2','BULDOG');
-INSERT INTO RAZA (codigo, nombre) VALUES ('3','CHIHUAHUA');
-INSERT INTO RAZA (codigo, nombre) VALUES ('4','LABRADOR');
-INSERT INTO RAZA (codigo, nombre) VALUES ('5','DOBERMAN');
-INSERT INTO RAZA (codigo, nombre) VALUES ('6','ROTTWEILER');
-INSERT INTO RAZA (codigo, nombre) VALUES ('7','PERSA');
-INSERT INTO RAZA (codigo, nombre) VALUES ('8','SIAMES');
-INSERT INTO RAZA (codigo, nombre) VALUES ('9','RAGDOLL');
 
-----
+
 
 
 

@@ -1,11 +1,11 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
-public class Examenes_Centro {
+public class ExamenesCentro {
 
     private String centroServicio_id;
     private String examenes_codigo;
 
-    public Examenes_Centro(String centroServicio_id, String examenes_codigo) {
+    public ExamenesCentro() {
         this.centroServicio_id = centroServicio_id;
         this.examenes_codigo = examenes_codigo;
     }

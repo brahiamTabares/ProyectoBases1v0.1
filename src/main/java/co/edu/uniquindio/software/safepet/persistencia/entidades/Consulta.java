@@ -10,7 +10,7 @@ public class Consulta {
     private String centroServicio_id;
     private String mascota_id;
 
-    public Consulta(String codigo, Date fecha_Cita, String descripcion, String centroServicio_id, String mascota_id) {
+    public Consulta() {
         this.codigo = codigo;
         this.fecha_Cita = fecha_Cita;
         this.descripcion = descripcion;

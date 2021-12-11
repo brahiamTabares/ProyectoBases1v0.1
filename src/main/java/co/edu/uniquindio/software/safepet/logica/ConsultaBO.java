@@ -1,30 +1,32 @@
 package co.edu.uniquindio.software.safepet.logica;
 
 import co.edu.uniquindio.software.safepet.config.Datasource;
-import co.edu.uniquindio.software.safepet.persistencia.entidades.Afiliado;
+import co.edu.uniquindio.software.safepet.persistencia.entidades.Consulta;
+import co.edu.uniquindio.software.safepet.persistencia.entidades.Evaluacion;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class AfiliadoBO implements GenericBO<Afiliado,String>{
+public class ConsultaBO implements GenericBO<Consulta,String>{
+
     @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
+
     @Override
-    public Afiliado create(Afiliado entity) {
-        String sql = "insert into AFILIADO(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
+    public Consulta create(Consulta entity) {
+
+        String sql = "insert into CONSULTA(CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID) values (?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setString(1, entity.getId());
-            statement.setString(2, entity.getNombre());
-            statement.setString(3, entity.getContrasenia());
-            statement.setString(4, entity.getTelefono());
+            statement.setString(1, entity.getCodigo());
+            statement.setDate(2, (Date) entity.getFecha_Cita());
+            statement.setString(3, entity.getDescripcion());
+            statement.setString(4, entity.getCentroServicio_id());
+            statement.setString(5,entity.getMascota_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -35,23 +37,21 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
     }
 
     @Override
-    public void delete(Afiliado entity) {
-
-        String sql = "delete from AFILIADO where ID = ? ";
+    public void delete(Consulta entity) {
+        String sql = "delete  where CODIGO= ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setString(1, entity.getId());
+            statement.setString(1, entity.getCodigo());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
         }
+
     }
 
-
-
     @Override
-    public Afiliado find(String id) {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from afiliado where ID = ? " ;
+    public Consulta find(String id) {
+        String sql = "select CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID from CONSULTA where CODIGO = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -64,15 +64,15 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
     }
 
     @Override
-    public Afiliado update(Afiliado entity) {
-        String sql = "UPDATE AFILIADO SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
+    public Consulta update(Consulta entity) {
+        String sql = "UPDATE CONSULTA SET FECHA_CITA=?,DESCRIPCION=?,CENTROSERVICIO_ID=?,MASCOTA_ID=? where CODIGO=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
-            statement.setString(1, entity.getNombre());
-            statement.setString(2, entity.getContrasenia());
-            statement.setString(3, entity.getTelefono());
-
-            statement.setString(4, entity.getId());
+            statement.setString(1, entity.getCodigo());
+            statement.setDate(2, (Date) entity.getFecha_Cita());
+            statement.setString(3, entity.getDescripcion());
+            statement.setString(4, entity.getCentroServicio_id());
+            statement.setString(5,entity.getMascota_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -82,13 +82,13 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
     }
 
     @Override
-    public List<Afiliado> findAll() {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from AFILIADO " ;
+    public List<Consulta> findAll() {
+        String sql = "select CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID from CONSULTA" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
-            List<Afiliado> result = new ArrayList<>();
+            List<Consulta> result = new ArrayList<>();
             while (resultSet.next()) {
-                result.add(createFromResultSet(resultSet) );
+                result.add( createFromResultSet(resultSet) );
             }
             return result;
         } catch (SQLException e) {
@@ -97,12 +97,15 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
         }
     }
 
-    private Afiliado createFromResultSet(ResultSet resultSet) throws SQLException {
-        Afiliado afiliado = new Afiliado();
-        afiliado.setId(resultSet.getString("ID"));
-        afiliado.setNombre(resultSet.getString("NOMBRE"));
-        afiliado.setContrasenia(resultSet.getString("CONTRASENIA"));
-        afiliado.setTelefono(resultSet.getString("TELEFONO"));
-        return afiliado;
+
+    private Consulta createFromResultSet(ResultSet resultSet) throws SQLException {
+        Consulta consulta = new Consulta();
+        consulta.setCodigo(resultSet.getString("CODIGO"));
+        consulta.setFecha_Cita(resultSet.getDate("FECHA_CITA"));
+        consulta.setDescripcion(resultSet.getString("DESCRIPCION"));
+        consulta.setCentroServicio_id(resultSet.getString("CENTROSERVICIO_ID"));
+        consulta.setMascota_id(resultSet.getString("MASCOTA_ID"));
+
+        return consulta;
     }
 }

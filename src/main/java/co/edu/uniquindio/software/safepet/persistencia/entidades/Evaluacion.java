@@ -10,14 +10,17 @@ public class Evaluacion {
     private Integer puntacion;
     private String planservicio_servicio_idcs;
     private String planservicio_servicioc_id;
-    private  String  afiliado_id;
+    private String  afiliado_id;
+    private String  planservicio_id;
 
-    public Evaluacion(String id_evaluacion, Integer puntacion, String planservicio_servicio_idcs, String planservicio_servicioc_id, String afiliado_id) {
+
+    public Evaluacion() {
         this.id_evaluacion = id_evaluacion;
         this.puntacion = puntacion;
         this.planservicio_servicio_idcs = planservicio_servicio_idcs;
         this.planservicio_servicioc_id = planservicio_servicioc_id;
         this.afiliado_id = afiliado_id;
+        this.planservicio_id=planservicio_id;
     }
 
 
@@ -63,6 +66,13 @@ public class Evaluacion {
         this.afiliado_id = afiliado_id;
     }
 
+    public String getPlanservicio_id() {
+        return planservicio_id;
+    }
+
+    public void setPlanservicio_id(String planservicio_id) {
+        this.planservicio_id = planservicio_id;
+    }
 
     @Override
     public boolean equals(Object o) {

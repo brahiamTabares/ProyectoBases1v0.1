@@ -1,5 +1,7 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
+
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,21 +10,22 @@ public class HistoriaClinica {
 
     private String nombre;
     private String sexo;
-    private String peso;
     private Date fechaIngreso;
     private Date fechaSalida;
     private String mascota_id;
 
 
-    public HistoriaClinica(String nombre, String sexo, String peso, Date fechaIngreso, Date fechaSalida, String mascota_id) {
+    public HistoriaClinica(String nombre, String sexo, Date fechaIngreso, Date fechaSalida, String mascota_id) {
         this.nombre = nombre;
         this.sexo = sexo;
-        this.peso = peso;
         this.fechaIngreso = fechaIngreso;
         this.fechaSalida = fechaSalida;
         this.mascota_id = mascota_id;
     }
 
+    public HistoriaClinica() {
+
+    }
 
 
     public String getNombre() {
@@ -52,14 +55,6 @@ public class HistoriaClinica {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
-    }
-
-    public String getPeso() {
-        return peso;
-    }
-
-    public void setPeso(String peso) {
-        this.peso = peso;
     }
 
     public Date getFechaIngreso() {
