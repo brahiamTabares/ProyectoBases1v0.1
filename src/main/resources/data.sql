@@ -126,7 +126,7 @@ ALTER TABLE raza ADD CONSTRAINT raza_pk PRIMARY KEY ( codigo );
 
 CREATE TABLE registro (
                           codigo                     VARCHAR2(20) NOT NULL,
-                          "observaciones "           VARCHAR2(20),
+                          observaciones              VARCHAR2(20),
                           concepto                   VARCHAR2(20),
                           decisiones                 VARCHAR2(20),
                           fecharegistro              DATE,

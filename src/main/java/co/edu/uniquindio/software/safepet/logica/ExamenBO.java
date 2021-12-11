@@ -81,7 +81,7 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     @Override
     public List<Examen> findAll() {
-        String sql = "select CENTROSERVICIO_ID,EXAMENENES_CODIGO from EXAMENES_CENTRO " ;
+        String sql = "select CODIGO,NOMBRE from EXAMENES" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Examen> result = new ArrayList<>();

@@ -22,6 +22,10 @@ public class Registro {
         this.historiaclinica_mascota_id = historiaclinica_mascota_id;
     }
 
+    public Registro() {
+
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -39,7 +43,7 @@ public class Registro {
     }
 
     public String getConcepto() {
-        return concepto;
+        return this.concepto;
     }
 
     public void setConcepto(String concepto) {

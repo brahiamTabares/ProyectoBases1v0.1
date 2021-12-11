@@ -4,11 +4,13 @@ public class ServicioCentro {
 
     private String idser;
    private String  idcen;
+   private String servicio_id;
 
-    public ServicioCentro(String idser, String idcen) {
-        this.idser = idser;
-        this.idcen = idcen;
+
+    public ServicioCentro() {
+
     }
+
 
     public String getIdser() {
         return idser;
@@ -24,5 +26,13 @@ public class ServicioCentro {
 
     public void setIdcen(String idcen) {
         this.idcen = idcen;
+    }
+
+    public String getServicio_id() {
+        return servicio_id;
+    }
+
+    public void setServicio_id(String servicio_id) {
+        this.servicio_id = servicio_id;
     }
 }

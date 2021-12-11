@@ -63,14 +63,15 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String>{
     }
 
     @Override
-    public Plan update(Plan entity) {
-        String sql = "UPDATE PLANSERVICIO SET ID,FECHA_SERVICIO,SERVICIO_IDCS,SERVICIOC_ID,SERVICIOCENTRO_IDSER,SERVICIOCENTRO_IDCEN  where ID=? ";
+    public PlanServicio update(PlanServicio entity) {
+        String sql = "UPDATE PLANSERVICIO SET FECHA_SERVICIO=?,SERVICIO_IDCS=?,SERVICIOC_ID=?,SERVICIOCENTRO_IDSER=?,SERVICIOCENTRO_IDCEN=?  where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setDouble(1, entity.);
-            statement.setDouble(2, entity.getCopago());
-            statement.setString(3, entity.getAfiliado_id());
-            statement.setString(4,entity.getEmpleadoSafepet_id());
-            statement.setString(5, entity.getId());
+            statement.setDate(1, (Date) entity.getFechaServicio());
+            statement.setString(2,entity.getServicio_idcs());
+            statement.setString(3,entity.getServicioc_id());
+            statement.setString(4,entity.getServicioc_idser());
+            statement.setString(5, entity.getServicioc_idcen());
+            statement.setString(6, entity.getId());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -80,11 +81,11 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String>{
     }
 
     @Override
-    public List<Plan> findAll() {
-        String sql = "select ID,MENSUALIDAD,COPAGO,AFILIADO_ID,EMPLEADOSAFEPET_ID from PLAN " ;
+    public List<PlanServicio> findAll() {
+        String sql = "select  from PLANSERVICIO ";
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
-            List<Plan> result = new ArrayList<>();
+            List<PlanServicio> result = new ArrayList<>();
             while (resultSet.next()) {
                 result.add( createFromResultSet(resultSet) );
             }
@@ -95,13 +96,15 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String>{
         }
     }
 
-    private Plan createFromResultSet(ResultSet resultSet) throws SQLException {
-        Plan plan = new Plan();
-        plan.setId(resultSet.getString("ID"));
-        plan.setMensualidad(resultSet.getDouble("MENSUALIDAD"));
-        plan.setCopago(resultSet.getDouble("COPAGO"));
-        plan.setAfiliado_id(resultSet.getString("AFILIADO_ID"));
-        plan.setEmpleadoSafepet_id(resultSet.getString("EMPLEADO_SAFEPET"));
-        return plan;
+    private PlanServicio createFromResultSet(ResultSet resultSet) throws SQLException {
+        PlanServicio planServicio = new PlanServicio();
+        planServicio.setId(resultSet.getString("ID"));
+        planServicio.setFechaServicio(resultSet.getDate("FECHA_SERVICIO"));
+        planServicio.setServicio_idcs(resultSet.getString("SERVICIO_IDCS"));
+        planServicio.setServicioc_id(resultSet.getString("SERVICIO_ID"));
+        planServicio.setServicioc_idser(resultSet.getString("SERVICIOC_IDSER"));
+        planServicio.setServicioc_idcen(resultSet.getString("SERVICIO_IDCEN"));
+
+        return planServicio;
     }
 }

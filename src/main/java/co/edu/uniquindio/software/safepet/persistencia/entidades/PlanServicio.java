@@ -19,6 +19,10 @@ public class PlanServicio {
         this.servicioc_idcen = servicioc_idcen;
     }
 
+    public PlanServicio() {
+
+    }
+
     public String getId() {
         return id;
     }

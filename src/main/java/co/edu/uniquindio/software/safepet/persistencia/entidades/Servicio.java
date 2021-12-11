@@ -14,6 +14,10 @@ public class Servicio implements Serializable {
         this.valor = valor;
     }
 
+    public Servicio() {
+
+    }
+
     public String getId() {
         return id;
     }
