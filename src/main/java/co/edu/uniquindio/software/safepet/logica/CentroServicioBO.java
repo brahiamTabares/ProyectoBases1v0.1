@@ -2,6 +2,8 @@ package co.edu.uniquindio.software.safepet.logica;
 
 import co.edu.uniquindio.software.safepet.config.Datasource;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Afiliado;
+import co.edu.uniquindio.software.safepet.persistencia.entidades.CentroServicio;
+
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -14,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class AfiliadoBO implements GenericBO<Afiliado,String>{
+public class CentroServicioBO implements GenericBO<CentroServicio, String> {
     @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
     @Override
-    public Afiliado create(Afiliado entity) {
-        String sql = "insert into AFILIADO(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
+    public CentroServicio create(CentroServicio entity) {
+        String sql = "insert into centroservicio(ID,NOMBRE,CONTRASENIA,TELEFONO,TIPOCENTRO_CODIGO) values (?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setString(2, entity.getNombre());
@@ -31,13 +33,12 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
         }
         return entity;
-
     }
 
     @Override
-    public void delete(Afiliado entity) {
+    public void delete(CentroServicio entity) {
 
-        String sql = "delete from AFILIADO where ID = ? ";
+        String sql = "delete from centroservicio where ID = ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.executeUpdate();
@@ -45,13 +46,12 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
         }
+
     }
 
-
-
     @Override
-    public Afiliado find(String id) {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from afiliado where ID = ? " ;
+    public CentroServicio find(String id) {
+        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO,TIPOCENTRO_CODIGO from centroservicio where ID = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -61,11 +61,12 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
         }
+
     }
 
     @Override
-    public Afiliado update(Afiliado entity) {
-        String sql = "UPDATE AFILIADO SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
+    public CentroServicio update(CentroServicio entity) {
+        String sql = "UPDATE CENTROSERVICIO SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? ,TIPOCENTRO_CODIGO=? where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getNombre());
@@ -82,11 +83,11 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
     }
 
     @Override
-    public List<Afiliado> findAll() {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from AFILIADO " ;
+    public List<CentroServicio> findAll() {
+        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO,TIPOCENTRO_CODIGO from centroservicio " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
-            List<Afiliado> result = new ArrayList<>();
+            List<CentroServicio> result = new ArrayList<>();
             while (resultSet.next()) {
                 result.add(createFromResultSet(resultSet) );
             }
@@ -97,12 +98,13 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
         }
     }
 
-    private Afiliado createFromResultSet(ResultSet resultSet) throws SQLException {
-        Afiliado afiliado = new Afiliado();
-        afiliado.setId(resultSet.getString("ID"));
-        afiliado.setNombre(resultSet.getString("NOMBRE"));
-        afiliado.setContrasenia(resultSet.getString("CONTRASENIA"));
-        afiliado.setTelefono(resultSet.getString("TELEFONO"));
-        return afiliado;
+    private CentroServicio createFromResultSet(ResultSet resultSet) throws SQLException {
+        CentroServicio centroServicio = new CentroServicio();
+        centroServicio.setId(resultSet.getString("ID"));
+        centroServicio.setNombre(resultSet.getString("NOMBRE"));
+        centroServicio.setContrasenia(resultSet.getString("CONTRASENIA"));
+        centroServicio.setTelefono(resultSet.getString("TELEFONO"));
+        centroServicio.setTipoCentro_codigo(resultSet.getString("TIPOCENTRO_CODIGO"));
+        return  centroServicio;
     }
 }

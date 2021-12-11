@@ -2,13 +2,13 @@ package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
 import java.util.Objects;
 
-public class Examens {
+public class Examen {
 
     private  String codigo;
     private String  nombre;
 
 
-    public Examens(String codigo, String nombre) {
+    public Examen() {
         this.codigo = codigo;
         this.nombre = nombre;
     }
@@ -32,8 +32,8 @@ public class Examens {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Examens)) return false;
-        Examens examens = (Examens) o;
+        if (!(o instanceof Examen)) return false;
+        Examen examens = (Examen) o;
         return Objects.equals(codigo, examens.codigo);
     }
 

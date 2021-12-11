@@ -1,34 +1,31 @@
 package co.edu.uniquindio.software.safepet.logica;
 
 import co.edu.uniquindio.software.safepet.config.Datasource;
-import co.edu.uniquindio.software.safepet.persistencia.entidades.EmpleadoSafePet;
-import co.edu.uniquindio.software.safepet.persistencia.entidades.Usuario;
+import co.edu.uniquindio.software.safepet.persistencia.entidades.HistoriaClinica;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
+public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
 
     @Override
-    public EmpleadoSafePet create(EmpleadoSafePet entity) {
+    public HistoriaClinica create(HistoriaClinica entity) {
 
-        String sql = "insert into EMPLEADOSAFEPET(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
+        String sql = "insert into HISTORIACLINICA(NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID) values (?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setString(1, entity.getId());
-            statement.setString(2, entity.getNombre());
-            statement.setString(3, entity.getContrasenia());
-            statement.setString(4, entity.getTelefono());
+            statement.setString(1, entity.getNombre());
+            statement.setString(2, entity.getSexo());
+            statement.setDate(3, (Date) entity.getFechaIngreso());
+            statement.setDate(4, (Date) entity.getFechaSalida());
+             statement.setString(5,entity.getMascota_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -39,10 +36,14 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
     }
 
     @Override
-    public void delete(EmpleadoSafePet entity) {
-        String sql = "delete from EMPLEADOSAFEPET where ID = ? ";
+    public void delete(HistoriaClinica entity) {
+        String sql = "delete from HISTORIACLINICA where MASCOTA_ID=?";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setString(1, entity.getId());
+            statement.setString(1, entity.getNombre());
+            statement.setString(2, entity.getSexo());
+            statement.setDate(3, (Date) entity.getFechaIngreso());
+            statement.setDate(4, (Date) entity.getFechaSalida());
+            statement.setString(5,entity.getMascota_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -52,8 +53,8 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
     }
 
     @Override
-    public EmpleadoSafePet find(String id) {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from EMPLEADOSAFEPET where ID = ? " ;
+    public HistoriaClinica find(String id) {
+        String sql = "select NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID from HISTORIACLINICA where MASCOTA_ID=?" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -66,15 +67,14 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
     }
 
     @Override
-    public EmpleadoSafePet update(EmpleadoSafePet entity) {
-        String sql = "UPDATE EMPLEADOSAFEPET SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
+    public HistoriaClinica update(HistoriaClinica entity) {
+        String sql = "UPDATE HISTORIACLINICA SET NOMBRE=?,SEXO=?,FECHA_INGRESO=?,FECHASALIDA=? where MASCOTA_ID ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
-
             statement.setString(1, entity.getNombre());
-            statement.setString(2, entity.getContrasenia());
-            statement.setString(3, entity.getTelefono());
-
-            statement.setString(4, entity.getId());
+            statement.setString(2, entity.getSexo());
+            statement.setDate(3, (Date) entity.getFechaIngreso());
+            statement.setDate(4, (Date) entity.getFechaSalida());
+            statement.setString(5,entity.getMascota_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -84,11 +84,11 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
     }
 
     @Override
-    public List<EmpleadoSafePet> findAll() {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from EMPLEADOSAFEPET " ;
+    public List<HistoriaClinica> findAll() {
+        String sql = "select NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID from HISTORIACLINICA " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
-            List<EmpleadoSafePet> result = new ArrayList<>();
+            List<HistoriaClinica> result = new ArrayList<>();
             while (resultSet.next()) {
                 result.add( createFromResultSet(resultSet) );
             }
@@ -100,12 +100,14 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
     }
 
 
-    private EmpleadoSafePet createFromResultSet(ResultSet resultSet) throws SQLException {
-        EmpleadoSafePet empleadoSafePet = new EmpleadoSafePet();
-        empleadoSafePet.setId(resultSet.getString("ID"));
-        empleadoSafePet.setNombre(resultSet.getString("NOMBRE"));
-        empleadoSafePet.setContrasenia(resultSet.getString("CONTRASENIA"));
-        empleadoSafePet.setTelefono(resultSet.getString("TELEFONO"));
-        return empleadoSafePet;
+    private HistoriaClinica createFromResultSet(ResultSet resultSet) throws SQLException {
+        HistoriaClinica historiaClinica = new HistoriaClinica();
+        historiaClinica.setNombre(resultSet.getString("NOMBRE"));
+        historiaClinica.setSexo(resultSet.getString("SEXO"));
+        historiaClinica.setFechaIngreso(resultSet.getDate("FECHA_INGRESO"));
+        historiaClinica.setFechaSalida(resultSet.getDate("FECHASALIDA"));
+        historiaClinica.setMascota_id(resultSet.getString("MASCOTA_ID"));
+
+        return historiaClinica;
     }
 }

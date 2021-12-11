@@ -1,7 +1,7 @@
 package co.edu.uniquindio.software.safepet.logica;
 
 import co.edu.uniquindio.software.safepet.config.Datasource;
-import co.edu.uniquindio.software.safepet.persistencia.entidades.Afiliado;
+import co.edu.uniquindio.software.safepet.persistencia.entidades.ExamenesCentro;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -14,17 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-public class AfiliadoBO implements GenericBO<Afiliado,String>{
+public class ExamenesCentroBO implements GenericBO<ExamenesCentro, String> {
+
     @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
+
     @Override
-    public Afiliado create(Afiliado entity) {
-        String sql = "insert into AFILIADO(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
+    public ExamenesCentro create(ExamenesCentro entity) {
+
+        String sql = "insert into EXAMENES_CENTRO(CENTROSERVICIO_ID,EXAMENES_CODIGO) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setString(1, entity.getId());
-            statement.setString(2, entity.getNombre());
-            statement.setString(3, entity.getContrasenia());
-            statement.setString(4, entity.getTelefono());
+            statement.setString(1, entity.getCentroServicio_id());
+            statement.setString(2, entity.getExamenes_codigo());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -35,23 +36,21 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
     }
 
     @Override
-    public void delete(Afiliado entity) {
-
-        String sql = "delete from AFILIADO where ID = ? ";
+    public void delete(ExamenesCentro entity) {
+        String sql = "delete from examenes_centtro where CENTROSERVICIO_ID = ?,EXAMENES_CODIGO=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setString(1, entity.getId());
+            statement.setString(1, entity.getCentroServicio_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
         }
+
     }
 
-
-
     @Override
-    public Afiliado find(String id) {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from afiliado where ID = ? " ;
+    public ExamenesCentro find(String id) {
+        String sql = "select  CENTROSERVICIO_ID,EXAMENES_CODIGO from EXAMENES_CENTRO where CENTROSERVICIO_ID= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -64,15 +63,12 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
     }
 
     @Override
-    public Afiliado update(Afiliado entity) {
-        String sql = "UPDATE AFILIADO SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
+    public ExamenesCentro update(ExamenesCentro entity) {
+        String sql = "UPDATE EXAMENES_CENTRO SET EXAMENES_CODIGO where CENTROSERVICIO_ID ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
-            statement.setString(1, entity.getNombre());
-            statement.setString(2, entity.getContrasenia());
-            statement.setString(3, entity.getTelefono());
-
-            statement.setString(4, entity.getId());
+            statement.setString(1, entity.getExamenes_codigo());
+            statement.setString(2, entity.getCentroServicio_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -82,13 +78,13 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
     }
 
     @Override
-    public List<Afiliado> findAll() {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from AFILIADO " ;
+    public List<ExamenesCentro> findAll() {
+        String sql = "select CENTROSERVICIO_ID,EXAMENENES_CODIGO from EXAMENES_CENTRO " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
-            List<Afiliado> result = new ArrayList<>();
+            List<ExamenesCentro> result = new ArrayList<>();
             while (resultSet.next()) {
-                result.add(createFromResultSet(resultSet) );
+                result.add( createFromResultSet(resultSet) );
             }
             return result;
         } catch (SQLException e) {
@@ -97,12 +93,13 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
         }
     }
 
-    private Afiliado createFromResultSet(ResultSet resultSet) throws SQLException {
-        Afiliado afiliado = new Afiliado();
-        afiliado.setId(resultSet.getString("ID"));
-        afiliado.setNombre(resultSet.getString("NOMBRE"));
-        afiliado.setContrasenia(resultSet.getString("CONTRASENIA"));
-        afiliado.setTelefono(resultSet.getString("TELEFONO"));
-        return afiliado;
+
+    private ExamenesCentro createFromResultSet(ResultSet resultSet) throws SQLException {
+        ExamenesCentro examenesCentro = new ExamenesCentro();
+        examenesCentro.setCentroServicio_id(resultSet.getString("CENTROSERVICIO_ID"));
+        examenesCentro.setExamenes_codigo(resultSet.getString("EXAMENES_CODIGO"));
+
+
+        return examenesCentro;
     }
 }

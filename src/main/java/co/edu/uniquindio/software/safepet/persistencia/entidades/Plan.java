@@ -16,6 +16,10 @@ public class Plan {
         this.empleadoSafepet_id = empleadoSafepet_id;
     }
 
+    public Plan() {
+
+    }
+
     public String getId() {
         return id;
     }
