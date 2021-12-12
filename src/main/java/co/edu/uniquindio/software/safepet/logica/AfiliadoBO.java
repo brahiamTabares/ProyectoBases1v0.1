@@ -48,6 +48,7 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
         }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
+
         }
     }
 

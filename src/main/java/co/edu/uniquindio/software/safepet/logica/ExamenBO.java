@@ -24,10 +24,10 @@ public class ExamenBO implements GenericBO<Examen,String> {
     @Override
     public Examen create(Examen entity) {
 
-        String sql = "insert into examenes (CODIGO,NOMBRE) values (?,?) ";
+        String sql = "insert into examenes (codigo,nombre) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
-            statement.setString(2, entity.getCodigo());
+            statement.setString(2, entity.getNombre());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -39,10 +39,9 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     @Override
     public void delete(Examen entity) {
-        String sql = "delete from examenes where CODIGO=? ";
+        String sql = "delete from examenes where codigo=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
-            statement.setString(2, entity.getNombre());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -53,7 +52,7 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     @Override
     public Examen find(String id) {
-        String sql = "select  CODIGO,NOMBRE from examenes whereCODIGO= ? " ;
+        String sql = "select  codigo,nombre from examenes where codigo= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -82,7 +81,7 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     @Override
     public List<Examen> findAll() {
-        String sql = "select CODIGO,NOMBRE from examenes" ;
+        String sql = "select codigo,nombre from examenes" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Examen> result = new ArrayList<>();
@@ -99,8 +98,8 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     private Examen createFromResultSet(ResultSet resultSet) throws SQLException {
         Examen examen = new Examen();
-        examen.setCodigo(resultSet.getString("CODIGO"));
-        examen.setNombre(resultSet.getString("NOMBRE"));
+        examen.setCodigo(resultSet.getString("codigo"));
+        examen.setNombre(resultSet.getString("nombre"));
 
 
         return examen;
