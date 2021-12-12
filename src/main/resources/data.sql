@@ -1,60 +1,50 @@
-
-CREATE TABLE usuario (
-                          id          VARCHAR2(20) NOT NULL,
-                          nombre      VARCHAR2(20),
-                          contrasenia VARCHAR2(30),
-                          telefono    VARCHAR2(30)
-);
-
-ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id );
-
-
-
 CREATE TABLE afiliado (
-                          id          VARCHAR2(20) NOT NULL,
-
+    usuario_id VARCHAR2(20) NOT NULL
 );
 
-ALTER TABLE afiliado ADD CONSTRAINT afiliado_pk PRIMARY KEY ( id );
+CREATE INDEX afiliado__idx ON
+    afiliado (
+        usuario_id
+    ASC );
+
+ALTER TABLE afiliado ADD CONSTRAINT afiliado_pk PRIMARY KEY ( usuario_id );
 
 CREATE TABLE centroservicio (
-                                id                VARCHAR2(20) NOT NULL,
+                                usuario_id        VARCHAR2(20) NOT NULL,
                                 tipocentro_codigo VARCHAR2(20) NOT NULL
 );
 
-ALTER TABLE centroservicio ADD CONSTRAINT usuario_pk PRIMARY KEY ( id );
+ALTER TABLE centroservicio ADD CONSTRAINT veterinaria_pk PRIMARY KEY ( usuario_id );
 
 CREATE TABLE consulta (
-                          codigo            VARCHAR2(20) NOT NULL,
-                          fecha_cita        DATE,
-                          descripcion       VARCHAR2(300),
-                          centroservicio_id VARCHAR2(5) NOT NULL,
-                          mascota_id        VARCHAR2(20) NOT NULL
+                          codigo                    VARCHAR2(20) NOT NULL,
+                          fecha_cita                DATE,
+                          descripcion               VARCHAR2(300),
+                          mascota_id                VARCHAR2(20) NOT NULL,
+                          centroservicio_usuario_id VARCHAR2(20) NOT NULL
 );
 
 ALTER TABLE consulta ADD CONSTRAINT consulta_pk PRIMARY KEY ( codigo );
 
 CREATE TABLE empleadosafepet (
-                                 id          VARCHAR2(20) NOT NULL,
-                                 nombre      VARCHAR2(50),
-                                 contrasenia VARCHAR2(20)
+    usuario_id VARCHAR2(20) NOT NULL
 );
 
-ALTER TABLE empleadosafepet ADD CONSTRAINT empleado_pk PRIMARY KEY ( id );
+ALTER TABLE empleadosafepet ADD CONSTRAINT empleado_pk PRIMARY KEY ( usuario_id );
 
 CREATE TABLE evaluacion (
                             id_evaluacion              VARCHAR2(20) NOT NULL,
-                            puntuacion               INTEGER,
-                            afiliado_id                VARCHAR2(20) NOT NULL,
+                            "puntuacion "              INTEGER,
                             planservicio_servicio_idcs VARCHAR2(30) NOT NULL,
                             planservicio_servicioc_id  INTEGER NOT NULL,
-                            planservicio_id            VARCHAR2(20) NOT NULL
+                            planservicio_id            VARCHAR2(20) NOT NULL,
+                            afiliado_usuario_id        VARCHAR2(20) NOT NULL
 );
 
 CREATE UNIQUE INDEX evaluacion__idx ON
     evaluacion (
-                id_evaluacion
-                ASC );
+        id_evaluacion
+    ASC );
 
 ALTER TABLE evaluacion ADD CONSTRAINT evaluacion_pk PRIMARY KEY ( id_evaluacion );
 
@@ -66,11 +56,13 @@ CREATE TABLE examenes (
 ALTER TABLE examenes ADD CONSTRAINT examenes_pk PRIMARY KEY ( codigo );
 
 CREATE TABLE examenes_centro (
-                                 centroservicio_id VARCHAR2(20) NOT NULL,
-                                 examenes_codigo   VARCHAR2(20) NOT NULL
+                                 centroservicio_id         VARCHAR2(20) NOT NULL,
+                                 examenes_codigo           VARCHAR2(20) NOT NULL,
+                                 centroservicio_usuario_id VARCHAR2(20) NOT NULL
 );
-ALTER TABLE examenes_centro ADD CONSTRAINT examenes_centro_pk PRIMARY KEY ( centroservicio_id);
-ALTER TABLE examenes_centro ADD CONSTRAINT examenes_centro_pk PRIMARY KEY ( examenes_codigo;
+
+ALTER TABLE examenes_centro ADD CONSTRAINT examenes_centro_pk PRIMARY KEY ( centroservicio_id,
+                                                                            examenes_codigo );
 
 CREATE TABLE historiaclinica (
                                  nombre        VARCHAR2(20) NOT NULL,
@@ -82,10 +74,25 @@ CREATE TABLE historiaclinica (
 
 CREATE UNIQUE INDEX historiaclinica__idx ON
     historiaclinica (
-                     mascota_id
-                     ASC );
+        mascota_id
+    ASC );
 
 ALTER TABLE historiaclinica ADD CONSTRAINT historiaclinica_pk PRIMARY KEY ( mascota_id );
+
+CREATE TABLE historialservicio (
+                                   id                   VARCHAR2(20) NOT NULL,
+                                   fecha_servicio       DATE,
+                                   servicio_idcs        VARCHAR2(30) NOT NULL,
+                                   servicioc_id         INTEGER NOT NULL,
+                                   plan_id              VARCHAR2(20) NOT NULL,
+                                   serviciocentro_idcen VARCHAR2(5) NOT NULL,
+                                   serviciocentro_idser VARCHAR2(20) NOT NULL
+);
+
+ALTER TABLE historialservicio
+    ADD CONSTRAINT planservicio_pk PRIMARY KEY ( servicio_idcs,
+                                                 servicioc_id,
+                                                 id );
 
 CREATE TABLE mascota (
                          id               VARCHAR2(20) NOT NULL,
@@ -100,29 +107,22 @@ CREATE TABLE mascota (
 ALTER TABLE mascota ADD CONSTRAINT mascota_pk PRIMARY KEY ( id );
 
 CREATE TABLE plan (
-                      id                 VARCHAR2(20) NOT NULL,
-                      mensualidad        NUMBER,
-                      copago             NUMBER,
-                      afiliado_id        VARCHAR2(20) NOT NULL,
-                      empleadosafepet_id VARCHAR2(20) NOT NULL
+                      id                         VARCHAR2(20) NOT NULL,
+                      mensualidad                NUMBER,
+                      copago                     NUMBER,
+                      afiliado_usuario_id        VARCHAR2(20) NOT NULL,
+                      empleadosafepet_usuario_id VARCHAR2(20) NOT NULL
 );
 
 ALTER TABLE plan ADD CONSTRAINT plan_pk PRIMARY KEY ( id );
 
 CREATE TABLE planservicio (
-                              id                   VARCHAR2(20) NOT NULL,
-                              fecha_servicio       DATE,
-                              servicio_idcs        VARCHAR2(30) NOT NULL,
-                              servicioc_id         INTEGER NOT NULL,
-                              plan_id              VARCHAR2(20) NOT NULL,
-                              serviciocentro_idcen VARCHAR2(5) NOT NULL,
-                              serviciocentro_idser VARCHAR2(20) NOT NULL
+                              plan_id     VARCHAR2(20) NOT NULL,
+                              servicio_id VARCHAR2(20) NOT NULL
 );
 
-ALTER TABLE planservicio
-    ADD CONSTRAINT planservicio_pk PRIMARY KEY ( servicio_idcs,
-                                                 servicioc_id,
-                                                 id );
+ALTER TABLE planservicio ADD CONSTRAINT planservicio_pk PRIMARY KEY ( plan_id,
+                                                                      servicio_id );
 
 CREATE TABLE raza (
                       codigo VARCHAR2(20) NOT NULL,
@@ -152,9 +152,10 @@ CREATE TABLE servicio (
 ALTER TABLE servicio ADD CONSTRAINT servicio_pk PRIMARY KEY ( id );
 
 CREATE TABLE serviciocentro (
-                                idser       VARCHAR2(20) NOT NULL,
-                                idcen       VARCHAR2(5) NOT NULL,
-                                servicio_id VARCHAR2(20) NOT NULL
+                                idser                     VARCHAR2(20) NOT NULL,
+                                idcen                     VARCHAR2(5) NOT NULL,
+                                servicio_id               VARCHAR2(20) NOT NULL,
+                                centroservicio_usuario_id VARCHAR2(20) NOT NULL
 );
 
 ALTER TABLE serviciocentro ADD CONSTRAINT servicio_centro_pk PRIMARY KEY ( idcen,
@@ -174,37 +175,58 @@ CREATE TABLE tipomascota (
 
 ALTER TABLE tipomascota ADD CONSTRAINT tipomascota_pk PRIMARY KEY ( id );
 
+CREATE TABLE usuario (
+                         id          VARCHAR2(20) NOT NULL,
+                         nombre      VARCHAR2(40),
+                         contrasenia VARCHAR2(20),
+                         telefono    VARCHAR2(20)
+);
+
+ALTER TABLE usuario ADD CONSTRAINT usuario_pk PRIMARY KEY ( id );
+
+ALTER TABLE afiliado
+    ADD CONSTRAINT afiliado_usuario_fk FOREIGN KEY ( usuario_id )
+        REFERENCES usuario ( id );
+
 ALTER TABLE centroservicio
     ADD CONSTRAINT centroservicio_tipocentro_fk FOREIGN KEY ( tipocentro_codigo )
         REFERENCES tipocentro ( codigo );
 
+ALTER TABLE centroservicio
+    ADD CONSTRAINT centroservicio_usuario_fk FOREIGN KEY ( usuario_id )
+        REFERENCES usuario ( id );
+
 ALTER TABLE consulta
-    ADD CONSTRAINT consulta_centroservicio_fk FOREIGN KEY ( centroservicio_id )
-        REFERENCES centroservicio ( id );
+    ADD CONSTRAINT consulta_centroservicio_fk FOREIGN KEY ( centroservicio_usuario_id )
+        REFERENCES centroservicio ( usuario_id );
 
 ALTER TABLE consulta
     ADD CONSTRAINT consulta_mascota_fk FOREIGN KEY ( mascota_id )
         REFERENCES mascota ( id );
 
+ALTER TABLE empleadosafepet
+    ADD CONSTRAINT empleadosafepet_usuario_fk FOREIGN KEY ( usuario_id )
+        REFERENCES usuario ( id );
+
 ALTER TABLE evaluacion
-    ADD CONSTRAINT evaluacion_afiliado_fk FOREIGN KEY ( afiliado_id )
-        REFERENCES afiliado ( id );
+    ADD CONSTRAINT evaluacion_afiliado_fk FOREIGN KEY ( afiliado_usuario_id )
+        REFERENCES afiliado ( usuario_id );
 
 ALTER TABLE evaluacion
     ADD CONSTRAINT evaluacion_planservicio_fk FOREIGN KEY ( planservicio_servicio_idcs,
                                                             planservicio_servicioc_id,
                                                             planservicio_id )
-        REFERENCES planservicio ( servicio_idcs,
-                                  servicioc_id,
-                                  id );
+        REFERENCES historialservicio ( servicio_idcs,
+                                       servicioc_id,
+                                       id );
 
 ALTER TABLE examenes_centro
     ADD CONSTRAINT examenes_centro__fk FOREIGN KEY ( examenes_codigo )
         REFERENCES examenes ( codigo );
 
 ALTER TABLE examenes_centro
-    ADD CONSTRAINT examenes_centro_servicio_fk FOREIGN KEY ( centroservicio_id )
-        REFERENCES centroservicio ( id );
+    ADD CONSTRAINT examenes_centro_servicio_fk FOREIGN KEY ( centroservicio_usuario_id )
+        REFERENCES centroservicio ( usuario_id );
 
 ALTER TABLE historiaclinica
     ADD CONSTRAINT historiaclinica_mascota_fk FOREIGN KEY ( mascota_id )
@@ -223,18 +245,26 @@ ALTER TABLE mascota
         REFERENCES tipomascota ( id );
 
 ALTER TABLE plan
-    ADD CONSTRAINT plan_afiliado_fk FOREIGN KEY ( afiliado_id )
-        REFERENCES afiliado ( id );
+    ADD CONSTRAINT plan_afiliado_fk FOREIGN KEY ( afiliado_usuario_id )
+        REFERENCES afiliado ( usuario_id );
 
 ALTER TABLE plan
-    ADD CONSTRAINT plan_empleadosafepet_fk FOREIGN KEY ( empleadosafepet_id )
-        REFERENCES empleadosafepet ( id );
+    ADD CONSTRAINT plan_empleadosafepet_fk FOREIGN KEY ( empleadosafepet_usuario_id )
+        REFERENCES empleadosafepet ( usuario_id );
 
-ALTER TABLE planservicio
+ALTER TABLE historialservicio
     ADD CONSTRAINT planservicio_plan_fk FOREIGN KEY ( plan_id )
         REFERENCES plan ( id );
 
 ALTER TABLE planservicio
+    ADD CONSTRAINT planservicio_plan_fkv2 FOREIGN KEY ( plan_id )
+        REFERENCES plan ( id );
+
+ALTER TABLE planservicio
+    ADD CONSTRAINT planservicio_servicio_fk FOREIGN KEY ( servicio_id )
+        REFERENCES servicio ( id );
+
+ALTER TABLE historialservicio
     ADD CONSTRAINT planservicio_serviciocentro_fk FOREIGN KEY ( serviciocentro_idcen,
                                                                 serviciocentro_idser )
         REFERENCES serviciocentro ( idcen,
@@ -249,8 +279,8 @@ ALTER TABLE registro
         REFERENCES historiaclinica ( mascota_id );
 
 ALTER TABLE serviciocentro
-    ADD CONSTRAINT servicio_centroservicio_fk FOREIGN KEY ( idcen )
-        REFERENCES centroservicio ( id );
+    ADD CONSTRAINT servicio_centroservicio_fk FOREIGN KEY ( centroservicio_usuario_id )
+        REFERENCES centroservicio ( usuario_id );
 
 ALTER TABLE serviciocentro
     ADD CONSTRAINT serviciocentro_servicio_fk FOREIGN KEY ( servicio_id )
@@ -310,15 +340,15 @@ INSERT INTO examenes (codigo, nombre) VALUES ('10', 'FRUCTOSAMINA');
 
 ----  INSERT SERVICIO
 
-insert into SERVICIO values('1','Vacunas',2000);
-insert into SERVICIO values('2','Desparasitación',1500);
-insert into SERVICIO values('3','Consultas',3000);
+insert into SERVICIO values('1','Vacunas',5000);
+insert into SERVICIO values('2','Desparasitación',7500);
+insert into SERVICIO values('3','Consultas',10000);
 insert into SERVICIO values('4','Hospitalización',10000);
 insert into SERVICIO values('5','Medicamentos',3000);
 insert into SERVICIO values('6','Cirugias',40000);
 insert into SERVICIO values('7','Funeraria',9000);
-insert into SERVICIO values('8','Arreglo de Uñas',10000);
-insert into SERVICIO values('9','Corte de Pelo',9000);
+insert into SERVICIO values('8','Arreglo de Uñas',6000);
+insert into SERVICIO values('9','Corte de Pelo',6000);
 insert into SERVICIO values('10','Paseos matutinos',5000);
 
 --- INSERT USUARIO ---
@@ -397,6 +427,61 @@ insert into centroservicio values('8','1');
 insert into centroservicio values('9','1');
 insert into centroservicio values('10','9');
 insert into centroservicio values('11','7');
+
+--- PLAN
+
+insert into plan values ('1',22500,5000,'1094901333','1094952956');
+insert into plan values ('2',69000,5000,'1094901334','1094901343');
+insert into plan values ('3',84500,2000,'1094901334','1094952956');
+insert into plan values ('4',19000,10000,'1094901331','1094973555');
+insert into plan values ('5',22500,5000,'1094901332','1094901343');
+insert into plan values ('6',69000,5000,'1094901336','1094952956');
+insert into plan values ('7',845000,2000,'1094901335','1094952956');
+insert into plan values ('8',19000,10000,'1094901336','1094756098');
+insert into plan values ('9',28125,5000,'1094901333','1094952956');
+insert into plan values ('10',30375,5000,'1094901333','1094876543');
+
+-- PLAN SERVICIO
+
+insert into planservicio values ('1','1');
+insert into planservicio values ('1','2');
+insert into planservicio values ('1','3');
+insert into planservicio values ('2','3');
+insert into planservicio values ('2','4');
+insert into planservicio values ('2','6');
+insert into planservicio values ('2','7');
+insert into planservicio values ('3','1');
+insert into planservicio values ('3','2');
+insert into planservicio values ('3','3');
+insert into planservicio values ('3','4');
+insert into planservicio values ('3','5');
+insert into planservicio values ('3','6');
+insert into planservicio values ('3','7');
+insert into planservicio values ('4','9');
+insert into planservicio values ('4','3');
+insert into planservicio values ('5','1');
+insert into planservicio values ('5','2');
+insert into planservicio values ('5','3');
+insert into planservicio values ('6','3');
+insert into planservicio values ('6','4');
+insert into planservicio values ('6','6');
+insert into planservicio values ('6','7');
+insert into planservicio values ('7','1');
+insert into planservicio values ('7','2');
+insert into planservicio values ('7','3');
+insert into planservicio values ('7','4');
+insert into planservicio values ('7','5');
+insert into planservicio values ('7','6');
+insert into planservicio values ('7','7');
+insert into planservicio values ('8','3');
+insert into planservicio values ('8','9');
+insert into planservicio values ('9','1');
+insert into planservicio values ('9','2');
+insert into planservicio values ('9','3');
+insert into planservicio values ('10','1');
+insert into planservicio values ('10','2');
+insert into planservicio values ('10','3');
+
 
 -- INSERT EVALUACIÓN
 
