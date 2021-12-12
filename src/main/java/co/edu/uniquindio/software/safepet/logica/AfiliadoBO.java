@@ -40,11 +40,13 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
 
     @Override
     public void delete(Afiliado entity) {
-
         String sql = "delete from afiliado where usuario_id = ? ";
-        try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
+        String sql2 = "delete from usuario where id = ? ";
+        try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ); PreparedStatement statement2 = connection.prepareStatement( sql2 ) ) {
             statement.setString(1, entity.getId());
             statement.executeUpdate();
+            statement2.setString(1, entity.getId());
+            statement2.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
