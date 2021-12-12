@@ -15,7 +15,7 @@ public class ServicioConverter extends EntidadConverter<Servicio> {
 
 	@Override
 	protected Servicio findById(String id) {
-		return bo.find(Integer.parseInt(id));
+		return bo.find(id);
 	}
 
 	@Override

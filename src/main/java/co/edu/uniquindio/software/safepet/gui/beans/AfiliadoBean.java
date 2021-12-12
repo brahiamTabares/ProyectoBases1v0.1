@@ -16,4 +16,10 @@ public class AfiliadoBean extends PrimeFacesCrudBean<Afiliado,String, AfiliadoBO
     }
 
 
+
+
+
+
+
+
 }

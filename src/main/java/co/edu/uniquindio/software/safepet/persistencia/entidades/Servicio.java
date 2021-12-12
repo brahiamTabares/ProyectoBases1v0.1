@@ -1,12 +1,15 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Servicio implements Serializable {
 
     private String id ;
  private String nombre;
   private double  valor;
+    private List<Plan> plan;
+
 
     public Servicio(String id, String nombre, double valor) {
         this.id = id;
@@ -40,5 +43,13 @@ public class Servicio implements Serializable {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public List<Plan> getPlan() {
+        return plan;
+    }
+
+    public void setPlan(List<Plan> plan) {
+        this.plan = plan;
     }
 }

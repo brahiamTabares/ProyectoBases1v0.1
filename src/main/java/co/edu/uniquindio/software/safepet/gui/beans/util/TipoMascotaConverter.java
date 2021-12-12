@@ -14,8 +14,7 @@ public class TipoMascotaConverter extends EntidadConverter<TipoMascota> {
 	private TipoMascotaBO bo;
 
 	@Override
-	protected TipoMascota findById(String id) {
-		return bo.find(Integer.parseInt(id));
+	protected TipoMascota findById(String id) {return bo.find(id);
 	}
 
 	@Override

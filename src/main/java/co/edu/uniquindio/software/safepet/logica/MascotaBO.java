@@ -114,4 +114,19 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
         }
 
 
+    public List<Mascota> findByPlan(String id) {
+        String sql = "select ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID from MASCOTA where plan_id=?" ;
+        try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
+            statement.setObject(1,id);
+            ResultSet resultSet = statement.executeQuery();
+            List<Mascota> result = new ArrayList<>();
+            while (resultSet.next()) {
+                result.add(createFromResultSet(resultSet));
+            }
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Operacion no completada:" + e.getMessage(), e);
+        }
+    }
 }

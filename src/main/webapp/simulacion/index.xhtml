@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<ui:composition template="/WEB-INF/template/plantilla.xhtml">
+    <ui:define name="content">
+<f:view>
+    <h:form id="form">
+        <p:growl id="messages" />
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:commandButton value="Simular" icon="pi pi-plus" actionListener="#{planBean.newEntity}"
+                                 update=":form:manage-entity-content" oncomplete="PF('manageEntityDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                    <p:resetInput target=":form:manage-entity-content"/>
+                </p:commandButton>
+            </p:toolbarGroup>
+
+        </p:toolbar>
+<!-- comentario -->
+
+        <ui:include src="form.xhtml" />
+    </h:form>
+</f:view>
+        <br /><br /><br /><br /><br />
+        BIENVENIDO A SAFEPET
+        SI REQUIERE MAYOR INFORMACION LA PUEDE ENCONTRAR EN NUESTRAS OFICINAS O EN EL PBX 606745212>
+</ui:define>
+        </ui:composition>
+</html>

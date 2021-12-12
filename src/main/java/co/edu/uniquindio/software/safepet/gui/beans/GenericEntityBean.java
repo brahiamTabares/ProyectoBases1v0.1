@@ -4,6 +4,7 @@ import co.edu.uniquindio.software.safepet.logica.GenericBO;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.ParameterizedType;
+import java.sql.SQLException;
 import java.util.List;
 
 public abstract class GenericEntityBean<E,K,T extends GenericBO<E,K>> extends AbstracBean {
@@ -29,8 +30,12 @@ public abstract class GenericEntityBean<E,K,T extends GenericBO<E,K>> extends Ab
     }
 
     @PostConstruct
-    public void initialize(){
-        entities = bo.findAll();
+    public void initialize()  {
+        try {
+            entities = bo.findAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         newEntity();
     }
 

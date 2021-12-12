@@ -6,6 +6,8 @@
     <display-name>safepet</display-name>
     <welcome-file-list>
         <welcome-file>autenticacion/index.xhtml</welcome-file>
+
+
     </welcome-file-list>
 
     <servlet>
@@ -22,18 +24,56 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>protegido</web-resource-name>
-            <url-pattern>/usuarios/*</url-pattern>
+            <url-pattern>/afiliados/*</url-pattern>
             <url-pattern>/welcome/*</url-pattern>
+            <url-pattern>/planes/*</url-pattern>
+            <url-pattern>/centros/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>Usuario</role-name>
+            <role-name>EmpleadoSafePet</role-name>
         </auth-constraint>
         <user-data-constraint>
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <!-- SECURITY CONSTRAINT #2 -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>protegido</web-resource-name>
+            <url-pattern>/welcome/*</url-pattern>
+            <url-pattern>/planes/*</url-pattern>
+            <url-pattern>/simulacion/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Afiliado</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <!-- SECURITY CONSTRAINT #3 -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>protegido</web-resource-name>
+            <url-pattern>/welcome/*</url-pattern>
+            <url-pattern>/planes/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>CentroServicio</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+
 <!--    &lt;!&ndash; SECURITY CONSTRAINT #2 &ndash;&gt;-->
 <!--    <security-constraint>-->
 <!--        <web-resource-collection>-->
@@ -53,6 +93,12 @@
 <!--    </security-constraint>-->
 
     <security-role>
-        <role-name>Usuario</role-name>
+        <role-name>Afiliado</role-name>
+    </security-role>
+    <security-role>
+        <role-name>CentroServicio</role-name>
+    </security-role>
+    <security-role>
+        <role-name>EmpleadoSafePet</role-name>
     </security-role>
 </web-app>

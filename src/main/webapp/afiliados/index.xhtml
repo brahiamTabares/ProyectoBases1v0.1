@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<ui:composition template="/WEB-INF/template/plantilla.xhtml">
+<ui:define name="content">
+<f:view>
+    <h:form id="form">
+        <p:growl id="messages" />
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{afiliadoBean.newEntity}"
+                                 update=":form:manage-entity-content" oncomplete="PF('manageEntityDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                    <p:resetInput target=":form:manage-entity-content"/>
+                </p:commandButton>
+            </p:toolbarGroup>
+
+        </p:toolbar>
+
+        <p:dataTable id="dt-entities" widgetVar="dtEntities" var="entity" value="#{afiliadoBean.entities}"
+                     reflow="true" styleClass="entity-table"
+                     selection="#{afiliadoBean.selectedEntities}" rowKey="#{entity.dny}" paginator="true"
+                     rows="10" rowSelectMode="add" paginatorPosition="bottom">
+            <f:facet name="header">
+                <div class="entity-table-header">
+                    <span style="font-weight: bold">AFILIADOS</span>
+                    <span class="filter-container ui-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtEntities').filter()" placeholder="Buscar"/>
+                    </span>
+                </div>
+            </f:facet>
+            <!-- COLUMNAS DE LOS ATRIBUTOS QUE DESEO MOSTRAR EN LA TABLA -->
+            <p:column headerText="ID"  filterBy="#{entity.id}" filterStyle="display: none" >
+                <h:outputText value="#{entity.id}"/>
+            </p:column>
+            <p:column headerText="Nombre"  filterBy="#{entity.nombre}" filterStyle="display: none" >
+                <h:outputText value="#{entity.nombre}"/>
+            </p:column>
+        <p:column headerText="Telefono"  filterBy="#{entity.telefono}" filterStyle="display: none" >>
+            <h:outputText value="#{entity.telefono}"/>
+        </p:column>
+            <p:column exportable="false">
+                <p:commandButton icon="pi pi-pencil" update=":form:manage-entity-content"
+                                 oncomplete="PF('manageEntityDialog').show()"
+                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                    <f:setPropertyActionListener value="#{entity}" target="#{afiliadoBean.selectedEntity}"/>
+                    <p:resetInput target=":form:manage-entity-content"/>
+                </p:commandButton>
+                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                 oncomplete="PF('deleteEntityDialog').show()">
+                    <f:setPropertyActionListener value="#{entity}" target="#{afiliadoBean.selectedEntity}"/>
+                </p:commandButton>
+            </p:column>
+
+        </p:dataTable>
+
+        <ui:include src="__form.xhtml" />
+        <p:confirmDialog widgetVar="deleteEntityDialog" showEffect="fade" width="300"
+                         message="Borrar el registro?" header="Confirmación" severity="warn">
+            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{afiliadoBean.delete}"
+                             process="@this" oncomplete="PF('deleteEntityDialog').hide()"/>
+            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                             onclick="PF('deleteEntityDialog').hide()"/>
+        </p:confirmDialog>
+    </h:form>
+</f:view>
+</ui:define>
+</ui:composition>
+</html>

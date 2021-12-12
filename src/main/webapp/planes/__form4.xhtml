@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<f:view>
+
+    <p:dialog id="dialog" widgetVar="manageEntityDialog">
+        <p:outputPanel id="manage-entity-content" class="ui-fluid">
+            <p:outputPanel rendered="#{not empty planBean.selectedEntity}">
+
+
+                <div class="p-field">
+                    <p:outputLabel for="id">ID</p:outputLabel>
+                    <p:inputText id="id" value="#{planBean.selectedEntity.id}" required="true" readonly="#{planBean.updating}" />
+                </div>
+                <div class="p-field">
+                    <p:outputLabel for="afiliado">AFILIADO</p:outputLabel>
+                    <p:selectOneMenu id="afiliado" value="#{planBean.selectedEntity.afiliado}" converter="#{afiliadoConverter}"
+                                     panelStyle="width:180px" effect="fade" var="c"
+                                     filter="true" filterMatchMode="startsWith">
+
+                        <f:selectItems value="#{afiliadoBean.entities}" var="entidad"
+                                       itemLabel="#{entidad.nombre}" itemValue="#{entidad}"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{c.nombre}"/>
+                        </p:column>
+
+
+
+                        <f:facet name="footer">
+                            <h:outputText value="#{afiliadoBean.entities.size()} afiliados"
+                                          style="font-weight:bold;" styleClass="p-py-1 p-d-block"/>
+                        </f:facet>
+                    </p:selectOneMenu>
+                </div>
+
+                <div class="p-field">
+
+
+
+                    <p:dataTable id="dt-servicios" widgetVar="dtServicios" var="servicio" value="#{servicioBean.entities}"
+                                 >
+                        <f:facet name="header">
+                            <div >
+                                <span style="font-weight: bold">SERVICIOS</span>
+                            </div>
+                        </f:facet>
+
+
+                        <p:column>
+                            <p:checkbox ></p:checkbox>
+                        </p:column>
+
+                        <p:column headerText="NOMBRE">
+                            <h:outputText value="#{servicio.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Valor x Mascota" >
+                            <h:outputText value="#{servicio.valor}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </div>
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <f:facet name="footer">
+            <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{planBean.save}"
+                             update="manage-entity-content" process="manage-entity-content @this"/>
+            <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageEntityDialog').hide()"
+                             class="ui-button-secondary"/>
+        </f:facet>
+    </p:dialog>
+</f:view>
+</html>

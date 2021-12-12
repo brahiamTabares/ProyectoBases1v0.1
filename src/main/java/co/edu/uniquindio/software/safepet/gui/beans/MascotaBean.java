@@ -17,28 +17,4 @@ public class MascotaBean extends PrimeFacesCrudBean<Mascota,Integer, MascotaBO> 
         super(bo);
     }
 
-    private Plan plan;
-
-    public Plan getPlan() {
-        return plan;
-    }
-
-    public void setPlan(Plan plan) {
-        System.out.println("PLAN "+plan.getId());
-        this.plan = plan;
-    }
-
-    @Override
-    public void save(){
-        System.out.println("PLAN SET"+plan.getId());
-        selectedEntity.setPlan(plan);
-        super.save();
-        PrimeFaces.current().executeScript("PF('manageMascotasDialog').hide()");
-    }
-
-    @Override
-    public void delete() {
-        super.delete();
-        plan.getMascotas().remove(selectedEntity);
-    }
 }

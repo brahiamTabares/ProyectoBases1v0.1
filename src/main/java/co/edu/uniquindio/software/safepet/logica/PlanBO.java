@@ -1,10 +1,12 @@
 package co.edu.uniquindio.software.safepet.logica;
 import co.edu.uniquindio.software.safepet.config.Datasource;
+import co.edu.uniquindio.software.safepet.persistencia.entidades.Mascota;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Plan;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Usuario;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +22,10 @@ public class PlanBO implements GenericBO<Plan,String>{
     @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
 
+    @Inject
+    private ServicioBO servicioBO;
+    @Inject
+    private MascotaBO mascotaBO;
 
     @Override
     public Plan create(Plan entity) {
@@ -57,7 +63,7 @@ public class PlanBO implements GenericBO<Plan,String>{
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            return createFromResultSet(resultSet);
+            return completarPlan(createFromResultSet(resultSet));
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
@@ -88,13 +94,23 @@ public class PlanBO implements GenericBO<Plan,String>{
             ResultSet resultSet = statement.executeQuery();
             List<Plan> result = new ArrayList<>();
             while (resultSet.next()) {
-                result.add( createFromResultSet(resultSet) );
+                Plan plan = createFromResultSet(resultSet);
+
+                completarPlan(plan);
+
+                result.add( plan );
             }
             return result;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
         }
+    }
+
+    private Plan completarPlan(Plan plan){
+        plan.setServicios( servicioBO.findByPlan(plan.getId()) );
+        plan.setMascotas( mascotaBO.findByPlan(plan.getId()) );
+        return plan;
     }
 
     private Plan createFromResultSet(ResultSet resultSet) throws SQLException {

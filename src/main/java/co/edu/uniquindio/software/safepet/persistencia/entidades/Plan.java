@@ -1,5 +1,7 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
+import java.util.List;
+
 public class Plan {
 
     private String  id ;
@@ -7,6 +9,10 @@ public class Plan {
     private  double copago;
     private String afiliado_id;
     private String empleadoSafepet_id;
+    private List<Mascota> mascotas;
+    private List<Servicio>servicios;
+    private Afiliado afiliado;
+
 
     public Plan(String id, double mensualidad, double copago, String afiliado_id, String empleadoSafepet_id) {
         this.id = id;
@@ -59,4 +65,20 @@ public class Plan {
     public void setEmpleadoSafepet_id(String empleadoSafepet_id) {
         this.empleadoSafepet_id = empleadoSafepet_id;
     }
+    public List<Mascota> getMascotas() {
+        return mascotas;
+    }
+
+    public void setMascotas(List<Mascota> mascotas) {
+        this.mascotas = mascotas;
+    }
+
+    public List<Servicio> getServicios() {
+        return servicios;
+    }
+
+    public void setServicios(List<Servicio> servicios) {
+        this.servicios = servicios;
+    }
+
 }

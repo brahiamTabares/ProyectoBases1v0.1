@@ -1,6 +1,7 @@
 package co.edu.uniquindio.software.safepet.gui.beans;
 
 import co.edu.uniquindio.software.safepet.logica.MascotaBO;
+import co.edu.uniquindio.software.safepet.logica.PlanBO;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Mascota;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Plan;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Servicio;
@@ -36,6 +37,8 @@ public class PlanBean extends PrimeFacesCrudBean<Plan,String, PlanBO> {
     public void setServicios(List<Servicio> servicios) {
         this.servicios = servicios;
     }
+
+
 
 
     @Override
