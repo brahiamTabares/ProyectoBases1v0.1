@@ -19,15 +19,14 @@ CREATE TABLE examenes (codigo VARCHAR(20) NOT NULL,nombre VARCHAR(20) );
 ALTER TABLE examenes ADD CONSTRAINT examenes_pk PRIMARY KEY ( codigo );
 CREATE TABLE examenes_centro ( centroservicio_id VARCHAR(20) NOT NULL, examenes_codigo VARCHAR(20) NOT NULL, centroservicio_usuario_id VARCHAR(20) NOT NULL );
 ALTER TABLE examenes_centro ADD CONSTRAINT examenes_centro_pk PRIMARY KEY ( centroservicio_id, examenes_codigo );
-
+-- se agrega id a historiaclinica
 CREATE TABLE historiaclinica ( id VARCHAR(20) NOT NULL,nombre VARCHAR(20) NOT NULL, sexo VARCHAR(20), fecha_ingreso DATE, fechasalida DATE, mascota_id VARCHAR(20) NOT NULL );
 -- CREATE UNIQUE INDEX historiaclinica__idx ON historiaclinica ( mascota_id ASC );
 ALTER TABLE historiaclinica ADD CONSTRAINT historiaclinica_pk PRIMARY KEY ( id);
-
-
+-- PENDIENTE DE CORREGIR ATRIBUTOS DE HISTORIALSERVICIO
 CREATE TABLE historialservicio ( id VARCHAR(20) NOT NULL, fecha_servicio DATE, servicio_idcs VARCHAR(30) NOT NULL, servicioc_id INTEGER NOT NULL, plan_id VARCHAR(20) NOT NULL, serviciocentro_idcen VARCHAR(5) NOT NULL, serviciocentro_idser VARCHAR(20) NOT NULL );
 ALTER TABLE historialservicio ADD CONSTRAINT planservicio_pk PRIMARY KEY ( servicio_idcs, servicioc_id, id );
-
+--
 CREATE TABLE mascota ( id VARCHAR(20) NOT NULL, nombre VARCHAR(20), fecha_nacimiento DATE, genero VARCHAR(20), plan_id VARCHAR(5) NOT NULL, raza_codigo VARCHAR(20) NOT NULL, tipomascota_id VARCHAR(20) NOT NULL );
 ALTER TABLE mascota ADD CONSTRAINT mascota_pk PRIMARY KEY ( id );
 CREATE TABLE plan ( id VARCHAR(20) NOT NULL, mensualidad INTEGER , copago INTEGER, afiliado_usuario_id VARCHAR(20) NOT NULL, empleadosafepet_usuario_id VARCHAR(20) NOT NULL );
@@ -36,10 +35,10 @@ CREATE TABLE planservicio ( plan_id VARCHAR(20) NOT NULL, servicio_id VARCHAR(20
 ALTER TABLE planservicio ADD CONSTRAINT planservicio_pk PRIMARY KEY ( plan_id, servicio_id );
 CREATE TABLE raza ( codigo VARCHAR(20) NOT NULL, nombre VARCHAR(20) NOT NULL );
 ALTER TABLE raza ADD CONSTRAINT raza_pk PRIMARY KEY ( codigo );
-
+-- Se eliminan los atributos de registro dejan
 CREATE TABLE registro (codigo VARCHAR(20) NOT NULL,concepto VARCHAR(20),fecharegistro DATE,examenes_codigo VARCHAR(20) NOT NULL,historiaclinica_mascota_id VARCHAR(20) NOT NULL );
 ALTER TABLE registro ADD CONSTRAINT registro_pk PRIMARY KEY ( codigo );
-
+--
 CREATE TABLE servicio (id VARCHAR(20) NOT NULL,nombre VARCHAR(50),valor INTEGER );
 ALTER TABLE servicio ADD CONSTRAINT servicio_pk PRIMARY KEY ( id );
 CREATE TABLE serviciocentro (servicio_id VARCHAR(20) NOT NULL, centroservicio_usuario_id VARCHAR(20) NOT NULL );
@@ -71,9 +70,7 @@ ALTER TABLE registro ADD CONSTRAINT registro_examenes_fk FOREIGN KEY ( examenes_
 ALTER TABLE registro ADD CONSTRAINT registro_historiaclinica_fk FOREIGN KEY ( historiaclinica_mascota_id ) REFERENCES historiaclinica ( mascota_id );
 ALTER TABLE serviciocentro ADD CONSTRAINT servicio_centroservicio_fk FOREIGN KEY ( centroservicio_usuario_id ) REFERENCES centroservicio ( usuario_id );
 ALTER TABLE serviciocentro ADD CONSTRAINT serviciocentro_servicio_fk FOREIGN KEY ( servicio_id ) REFERENCES servicio ( id );
-
 -- INSERT RAZA
-
 INSERT INTO raza (codigo, nombre) VALUES ('1','CRIOLLO');
 INSERT INTO raza (codigo, nombre) VALUES ('2','BULDOG');
 INSERT INTO raza (codigo, nombre) VALUES ('3','CHIHUAHUA');
@@ -84,9 +81,7 @@ INSERT INTO raza (codigo, nombre) VALUES ('7','PERSA');
 INSERT INTO raza (codigo, nombre) VALUES ('8','SIAMES');
 INSERT INTO raza (codigo, nombre) VALUES ('9','RAGDOLL');
 INSERT INTO raza (codigo, nombre) VALUES ('10','HOLANDES');
-
 -- INSERT TIPOMASCOTA
-
 INSERT INTO tipomascota (id, tipo) VALUES ('1', 'PERRO');
 INSERT INTO tipomascota (id, tipo) VALUES ('2', 'GATO');
 INSERT INTO tipomascota (id, tipo) VALUES ('3', 'HAMSTER');
@@ -97,9 +92,7 @@ INSERT INTO tipomascota (id, tipo) VALUES ('7', 'MINI PIG');
 INSERT INTO tipomascota (id, tipo) VALUES ('8', 'CABALLO');
 INSERT INTO tipomascota (id, tipo) VALUES ('9', 'BOVINO');
 INSERT INTO tipomascota (id, tipo) VALUES ('10', 'REPTIL');
-
 -- INSERT TIPOCENTRO
-
 INSERT INTO tipocentro(codigo, nombre) VALUES ('1', 'FARMACEUTICA');
 INSERT INTO tipocentro(codigo, nombre) VALUES ('2', 'PELUQUERIA');
 INSERT INTO tipocentro(codigo, nombre) VALUES ('3', 'LABORATORIO');
@@ -110,9 +103,7 @@ INSERT INTO tipocentro(codigo, nombre) VALUES ('7', 'GUARDERIA');
 INSERT INTO tipocentro(codigo, nombre) VALUES ('8', 'FUNERARIA');
 INSERT INTO tipocentro(codigo, nombre) VALUES ('9', 'HOSPITAL');
 INSERT INTO tipocentro(codigo, nombre) VALUES ('10', 'VETERINARIA');
-
 -- INSERT EXAMENES
-
 INSERT INTO examenes (codigo, nombre) VALUES ('1', 'HEPATICO');
 INSERT INTO examenes (codigo, nombre) VALUES ('2', 'RADIOGRAFICO');
 INSERT INTO examenes (codigo, nombre) VALUES ('3', 'LEUCEMICO');
@@ -123,9 +114,7 @@ INSERT INTO examenes (codigo, nombre) VALUES ('7', 'PRUEBA DE TIROIDES');
 INSERT INTO examenes (codigo, nombre) VALUES ('8', 'EXAMEN DE LA RETINA');
 INSERT INTO examenes (codigo, nombre) VALUES ('9', 'LEPTOSPIRA');
 INSERT INTO examenes (codigo, nombre) VALUES ('10', 'FRUCTOSAMINA');
-
 -- INSERT SERVICIO
-
 insert into servicio values('1','Vacunas',5000);
 insert into servicio values('2','Desparasitación',7500);
 insert into servicio values('3','Consultas',10000);
@@ -136,8 +125,7 @@ insert into Servicio values('7','Funeraria',9000);
 insert into servicio values('8','Arreglo de Uñas',6000);
 insert into servicio values('9','Corte de Pelo',6000);
 insert into servicio values('10','Paseos matutinos',5000);
-
---- INSERT USUARIO ---
+-- INSERT USUARIO Empleado
 INSERT INTO usuario values ('1094901343', 'Milena Rodriguez', '123456', '3124567892');
 INSERT INTO usuario values ('1097902111', 'Juan Diaz', '123456', '7456321');
 INSERT INTO usuario values ('1094876543', 'Yeferson Cardona', '123456', '3003452165');
@@ -148,20 +136,18 @@ INSERT INTO usuario values ('76453221', 'Lilia Patricia Vallejo', '123456', '310
 INSERT INTO usuario values ('1096764321', 'Over Tabares', '123456', '3112345643');
 INSERT INTO usuario values ('1094973555', 'Daniel Castro', '123456', '3152777654');
 INSERT INTO usuario values ('1094756098', 'Vanessa Rubio', '123456', '3184563214');
-
-
-INSERT INTO usuario values ('1094901333', 'Sandra Quintero', '123456', '3124567892');
-INSERT INTO usuario values ('1094901331', 'Pablo Diaz', '123456', '3124567892');
-INSERT INTO usuario values ('1094901332', 'Carolina Torres', '123456', '3124567892');
-INSERT INTO usuario values ('1094901334', 'Duvan Molina', '123456', '3124567892');
-INSERT INTO usuario values ('1094901335', 'Margarita Centeno', '123456', '3124567892');
-INSERT INTO usuario values ('1094901336', 'Diego Ipiales', '123456', '3124567892');
-INSERT INTO usuario values ('1094901337', 'Paula Gutierrez', '123456', '3124567892');
-INSERT INTO usuario values ('1094901338', 'Sebastian Londoño', '123456', '3124567892');
+-- Afiliado
+INSERT INTO usuario values ('1094901333', 'Sandra Quintero', '123456', '3124567123');
+INSERT INTO usuario values ('1094901331', 'Pablo Diaz', '123456', '312456435');
+INSERT INTO usuario values ('1094901332', 'Carolina Torres', '123456', '3104789800');
+INSERT INTO usuario values ('1094901334', 'Duvan Molina', '123456', '3204567456');
+INSERT INTO usuario values ('1094901335', 'Margarita Centeno', '123456', '3004567789');
+INSERT INTO usuario values ('1094901336', 'Diego Ipiales', '123456', '319087889966');
+INSERT INTO usuario values ('1094901337', 'Paula Gutierrez', '123456', '312345687');
+INSERT INTO usuario values ('1094901338', 'Sebastian Londoño', '123456', '310998877665');
 INSERT INTO usuario values ('1094901339', 'Alba Marín', '123456', '3124567892');
 INSERT INTO usuario values ('1094901340', 'Cristian Benitez', '123456', '3124567892');
-
-
+-- centros
 INSERT INTO usuario values ('1', 'Patitas', '123456', '7345567');
 INSERT INTO usuario values ('2', 'Clínica Pet', '123456', '7345567');
 INSERT INTO usuario values ('3', 'Pelos Spa', '123456', '7345567');
@@ -173,9 +159,7 @@ INSERT INTO usuario values ('8', 'FarmaPet', '123456', '7345567');
 INSERT INTO usuario values ('9', 'AgroPets', '123456', '7345567');
 INSERT INTO usuario values ('10', 'Especialistas Pets', '123456', '7345567');
 INSERT INTO usuario values ('11', 'Guardería Mis Amores', '123456', '3177304567');
-
 -- INSERT EMPLEADO SAFEPET
-
 insert into empleadosafepet values('1094952956');
 insert into empleadosafepet values('1094901343');
 insert into empleadosafepet values('1097902111');
@@ -186,9 +170,7 @@ insert into empleadosafepet values('76453221');
 insert into empleadosafepet values('1096764321');
 insert into empleadosafepet values('1094973555');
 insert into empleadosafepet values('1094756098');
-
 -- INSERT AFILIADO
-
 insert into afiliado values('1094901333');
 insert into afiliado values('1094901331');
 insert into afiliado values('1094901332');
@@ -199,9 +181,7 @@ insert into afiliado values('1094901337');
 insert into afiliado values('1094901338');
 insert into afiliado values('1094901339');
 insert into afiliado values('1094901340');
-
 -- INSERT CENTRO DE SERVICIOS
-
 insert into centroservicio values('1','10');
 insert into centroservicio values('2','9');
 insert into centroservicio values('3','6');
@@ -213,9 +193,7 @@ insert into centroservicio values('8','1');
 insert into centroservicio values('9','1');
 insert into centroservicio values('10','9');
 insert into centroservicio values('11','7');
-
 -- PLAN
-
 insert into plan values ('1',22500,5000,'1094901333','1094952956');
 insert into plan values ('2',69000,5000,'1094901334','1094901343');
 insert into plan values ('3',84500,2000,'1094901334','1094952956');
@@ -226,9 +204,7 @@ insert into plan values ('7',845000,2000,'1094901335','1094952956');
 insert into plan values ('8',19000,10000,'1094901336','1094756098');
 insert into plan values ('9',28125,5000,'1094901333','1094952956');
 insert into plan values ('10',30375,5000,'1094901333','1094876543');
-
 -- PLAN SERVICIO
-
 insert into planservicio values ('1','1');
 insert into planservicio values ('1','2');
 insert into planservicio values ('1','3');
@@ -267,9 +243,7 @@ insert into planservicio values ('9','3');
 insert into planservicio values ('10','1');
 insert into planservicio values ('10','2');
 insert into planservicio values ('10','3');
-
 -- INSERT EVALUACIÓN
-
 insert into evaluacion values ('1', 4, '3','2','10','1094901333');
 insert into evaluacion values ('2', 3, '7','7','2','1094901334');
 insert into evaluacion values ('3', 5, '1','2','10','1094901333');
@@ -280,10 +254,7 @@ insert into evaluacion values ('7', 4, '1','1','10','1094901333');
 insert into evaluacion values ('8', 5, '7','9','4','1094901331');
 insert into evaluacion values ('9', 2, '2','3','4','1094901331');
 insert into evaluacion values ('10', 3, '2','3','8','1094756098');
-
-
 -- INSERT MASCOTA
-
 insert into mascota values ('1','Lulu','2020-01-01','Hembra', '1', '1','2');
 insert into mascota values ('2','Tony','2015-10-02','Macho', '2','1','1');
 insert into mascota values ('3','Nina','2014-12-02','Hembra', '3','10','4');
@@ -297,9 +268,7 @@ insert into mascota values ('9','Teo','2021-05-13','Macho', '9','5','1');
 insert into mascota values ('10','Jerry','2015-11-01','Macho', '10','9','2');
 insert into mascota values ('11','Junior','2017-10-02','Macho', '10','1','1');
 insert into mascota values ('12','Gaspar','2020-08-12','Macho', '10','1','2');
-
 -- INSERT HISTORIA CLINICA
-
 insert into historiaclinica values ('1', 'Lulu', 'Hembra', '2021-02-14', '2021-02-15','1');
 insert into historiaclinica values ('2','Tony', 'Macho', '2021-03-14', '2021-03-16','2');
 insert into historiaclinica values ('3','Teo', 'Macho', '2021-04-14', '2021-04-15','9');
@@ -310,9 +279,7 @@ insert into historiaclinica values ('7','Iker', 'Macho', '2021-01-14', '2021-01-
 insert into historiaclinica values ('8','Frida', 'Hembra', '2021-02-14', '2021-02-15','7');
 insert into historiaclinica values ('9','Noah', 'Hembra', '2021-08-20', '2021-08-23','6');
 insert into historiaclinica values ('10','Junior', 'Macho', '2021-05-24', '2021-05-26','10');
-
 -- INSERT EXAMENES_CENTRO
-
 insert into examenes_centro values ('1','4');
 insert into examenes_centro values ('1','8');
 insert into examenes_centro values ('2','2');
@@ -323,8 +290,6 @@ insert into examenes_centro values ('3','8');
 insert into examenes_centro values ('3','4');
 insert into examenes_centro values ('8','8');
 insert into examenes_centro values ('9','2');
-
-
 -- INSERT REGISTRO
 -- codigo, concepto, fechaRegistro, codigo examen, histoClin masoca id.
 insert into registro values ('1','Se realiza examen', '2021-02-14', '1','1');
@@ -337,7 +302,6 @@ insert into registro values ('7','Se realiza examen', '2021-01-14', '1','7');
 insert into registro values ('8','Se realiza examen', '2021-02-14', '5','1');
 insert into registro values ('9','Se realiza examen', '2021-08-04', '2','8');
 insert into registro values ('10','Se realiza examen', '2021-02-14', '6','1');
-
 -- INSERT CONSULTA
 -- codigo, fechacita, descripcion, idMascota, idCentroServicio
 insert into consulta values ('1','2021-02-12', 'Hinchazon estomago', '1', '2');
@@ -350,11 +314,8 @@ insert into consulta values ('7','2021-01-02', 'Malestar General', '1', '2');
 insert into consulta values ('8','2021-02-12', 'Hinchazon estomago', '1', '1');
 insert into consulta values ('9','2021-02-12', 'Hinchazon Corporal', '1', '1');
 insert into consulta values ('10','2020-06-10', 'Falta de apetito', '1', '2');
-
-
 -- SERVICIO CENTRO
 -- idservicio, idcentro (corregir en datamodeler
-
 insert into serviciocentro values ('1','1');
 insert into serviciocentro values ('2','1');
 insert into serviciocentro values ('3','2');
@@ -365,9 +326,6 @@ insert into serviciocentro values ('7','1');
 insert into serviciocentro values ('8','7');
 insert into serviciocentro values ('9','7');
 insert into serviciocentro values ('10','5');
-
-
 -- HISTORIAL SERVICIO
 -- corregir datamodeler
-
-insert into historialservicio values ('1',)
+-- insert into historialservicio values ('1',)
