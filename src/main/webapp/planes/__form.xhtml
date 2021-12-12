@@ -16,10 +16,11 @@
 
                 <div class="p-field">
                     <p:outputLabel for="afiliado">AFILIADO</p:outputLabel>
-                    <p:selectOneMenu id="afiliado" value="#{planBean.selectedEntity.}" converter="#{afiliadoConverter}"
+                    <p:selectOneMenu id="afiliado" value="#{planBean.selectedEntity.afiliado}"
                                      panelStyle="width:180px" effect="fade" var="c"
                                      filter="true" filterMatchMode="startsWith">
 
+                        <f:converter binding="#{afiliadoConverter}" />
                         <f:selectItems value="#{afiliadoBean.entities}" var="entidad"
                                        itemLabel="#{entidad.nombre}" itemValue="#{entidad}"/>
 
@@ -42,12 +43,13 @@
                 <div class="p-field">
                     <p:outputLabel for="servicios">SERVICIO</p:outputLabel>
                     <p:selectCheckboxMenu id="servicios" value="#{planBean.servicios}" label="Servicios" style="min-width: 15rem"
-                                          multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250" converter="servicioConverter">
+                                          multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250" >
 
                         <p:ajax event="change" listener="#{planBean.subjectSelectionChanged}" update="mensualidad copago" />
 
 
                         <f:selectItems value="#{servicioBean.entities}" var="servicio" itemLabel="#{servicio.nombre} - #{servicio.valor}" itemValue="#{servicio}" />
+                        <f:converter binding="#{servicioConverter}" />
                     </p:selectCheckboxMenu>
                 </div>
                 <div class="p-field">

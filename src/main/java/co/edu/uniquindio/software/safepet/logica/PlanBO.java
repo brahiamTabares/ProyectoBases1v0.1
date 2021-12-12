@@ -26,10 +26,12 @@ public class PlanBO implements GenericBO<Plan,String>{
     private ServicioBO servicioBO;
     @Inject
     private MascotaBO mascotaBO;
+    @Inject
+    private AfiliadoBO afiliadoBO;
 
     @Override
     public Plan create(Plan entity) {
-        String sql = "insert into PLAN (ID,MENSUALIDAD,COPAGO,AFILIADO_ID,EMPLEADOSAFEPET_ID values (?,?,?,?,?) ";
+        String sql = "insert into plan (id,mensualidad,copago,afiliado_usuario_id,empleadosafepet_usuario_id values (?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setDouble(2, entity.getMensualidad());
@@ -46,7 +48,7 @@ public class PlanBO implements GenericBO<Plan,String>{
 
     @Override
     public void delete(Plan entity) {
-        String sql = "delete from PLAN where ID = ? ";
+        String sql = "delete from plan where id = ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.executeUpdate();
@@ -58,7 +60,7 @@ public class PlanBO implements GenericBO<Plan,String>{
 
     @Override
     public Plan find(String id) {
-        String sql = "select ID,MENSUALIDAD,COPAGO,AFILIADO_ID,EMPLEADOSAFEPET_ID  from PLAN where ID = ? " ;
+        String sql = "select id,mensualidad,copago,afiliado_usuario_id,empleadosafepet_usuario_id  from plan where id = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -72,7 +74,7 @@ public class PlanBO implements GenericBO<Plan,String>{
 
     @Override
     public Plan update(Plan entity) {
-        String sql = "UPDATE PLAN SET MENSUALIDAD,COPAGO,AFILIADO_ID,EMPLEADOSAFEPET_ID  where ID=? ";
+        String sql = "UPDATE plan SET mensualidad,copago,afiliado_usuario_id,empleadosafepet_usuario_id  where id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setDouble(1, entity.getMensualidad());
             statement.setDouble(2, entity.getCopago());
@@ -89,7 +91,7 @@ public class PlanBO implements GenericBO<Plan,String>{
 
     @Override
     public List<Plan> findAll() {
-        String sql = "select ID,MENSUALIDAD,COPAGO,AFILIADO_ID,EMPLEADOSAFEPET_ID from PLAN " ;
+        String sql = "select id,mensualidad,copago,afiliado_usuario_id,empleadosafepet_usuario_id from plan " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Plan> result = new ArrayList<>();
@@ -110,16 +112,17 @@ public class PlanBO implements GenericBO<Plan,String>{
     private Plan completarPlan(Plan plan){
         plan.setServicios( servicioBO.findByPlan(plan.getId()) );
         plan.setMascotas( mascotaBO.findByPlan(plan.getId()) );
+        plan.setAfiliado( afiliadoBO.find(plan.getAfiliado_id()) );
         return plan;
     }
 
     private Plan createFromResultSet(ResultSet resultSet) throws SQLException {
         Plan plan = new Plan();
-        plan.setId(resultSet.getString("ID"));
-        plan.setMensualidad(resultSet.getDouble("MENSUALIDAD"));
-        plan.setCopago(resultSet.getDouble("COPAGO"));
-        plan.setAfiliado_id(resultSet.getString("AFILIADO_ID"));
-        plan.setEmpleadoSafepet_id(resultSet.getString("EMPLEADO_SAFEPET"));
+        plan.setId(resultSet.getString("id"));
+        plan.setMensualidad(resultSet.getDouble("mensualidad"));
+        plan.setCopago(resultSet.getDouble("copago"));
+        plan.setAfiliado_id(resultSet.getString("afiliado_usuario_id"));
+        plan.setEmpleadoSafepet_id(resultSet.getString("empleadosafepet_usuario_id"));
         return plan;
     }
 }

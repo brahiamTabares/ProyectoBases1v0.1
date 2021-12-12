@@ -6,6 +6,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.Raza;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class RazaBO implements GenericBO<Raza,String> {
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -23,7 +24,7 @@ public class RazaBO implements GenericBO<Raza,String> {
     @Override
     public Raza create(Raza entity) {
 
-        String sql = "insert into RAZA (CODIGO,NOMBRE) values (?,?) ";
+        String sql = "insert into raza (CODIGO,NOMBRE) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
             statement.setString(2, entity.getCodigo());
@@ -38,7 +39,7 @@ public class RazaBO implements GenericBO<Raza,String> {
 
     @Override
     public void delete(Raza entity) {
-        String sql = "delete from RAZA where CODIGO=? ";
+        String sql = "delete from raza where CODIGO=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
             statement.setString(2, entity.getNombre());
@@ -52,7 +53,7 @@ public class RazaBO implements GenericBO<Raza,String> {
 
     @Override
     public Raza find(String id) {
-        String sql = "select  CODIGO,NOMBRE from EXAMEN where CODIGO= ? " ;
+        String sql = "select  CODIGO,NOMBRE from raza where CODIGO= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -66,7 +67,7 @@ public class RazaBO implements GenericBO<Raza,String> {
 
     @Override
     public Raza update(Raza entity) {
-        String sql = "UPDATE RAZA SET nombre=? where codigo=? ";
+        String sql = "UPDATE raza SET nombre=? where codigo=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getNombre());
@@ -81,7 +82,7 @@ public class RazaBO implements GenericBO<Raza,String> {
 
     @Override
     public List<Raza> findAll() {
-        String sql = "select  from RAZA " ;
+        String sql = "select  from raza " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Raza> result = new ArrayList<>();

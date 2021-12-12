@@ -81,4 +81,12 @@ public class Plan {
         this.servicios = servicios;
     }
 
+    public Afiliado getAfiliado() {
+        return afiliado;
+    }
+
+    public void setAfiliado(Afiliado afiliado) {
+        this.afiliado = afiliado;
+        this.afiliado_id = afiliado.getId();
+    }
 }

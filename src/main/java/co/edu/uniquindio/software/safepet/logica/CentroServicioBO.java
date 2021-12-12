@@ -7,6 +7,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.CentroServicio;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class CentroServicioBO implements GenericBO<CentroServicio, String> {
     @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
@@ -66,7 +67,7 @@ public class CentroServicioBO implements GenericBO<CentroServicio, String> {
 
     @Override
     public CentroServicio update(CentroServicio entity) {
-        String sql = "UPDATE CENTROSERVICIO SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? ,TIPOCENTRO_CODIGO=? where ID=? ";
+        String sql = "UPDATE centroservicio SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? ,TIPOCENTRO_CODIGO=? where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getNombre());

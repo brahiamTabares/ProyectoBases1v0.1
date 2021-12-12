@@ -19,7 +19,7 @@ public class HistorialServicioBO implements GenericBO<HistorialServicio,String>{
 
     @Override
     public HistorialServicio create(HistorialServicio entity) {
-        String sql = "insert into PLANSERVICIO (ID,FECHA_SERVICIO,SERVICIO_IDCS,SERVICIOC_ID,SERVICIOCENTRO_IDSER,SERVICIOCENTRO_IDCEN values (?,?,?,?,?,?,?) ";
+        String sql = "insert into historialservicio (ID,FECHA_SERVICIO,SERVICIO_IDCS,SERVICIOC_ID,SERVICIOCENTRO_IDSER,SERVICIOCENTRO_IDCEN values (?,?,?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setDate(2,(Date) entity.getFechaServicio());
@@ -37,7 +37,7 @@ public class HistorialServicioBO implements GenericBO<HistorialServicio,String>{
 
     @Override
     public void delete(HistorialServicio entity) {
-        String sql = "delete from planservicio where ID = ? ";
+        String sql = "delete from historialservicio where ID = ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.executeUpdate();
@@ -49,7 +49,7 @@ public class HistorialServicioBO implements GenericBO<HistorialServicio,String>{
 
     @Override
     public HistorialServicio find(String id) {
-        String sql = "select ID,,COPAGO,AFILIADO_ID,EMPLEADOSAFEPET_ID  from PLANSERVICIO where ID = ? " ;
+        String sql = "select ID,,COPAGO,AFILIADO_ID,EMPLEADOSAFEPET_ID  from historialservicio where ID = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -63,7 +63,7 @@ public class HistorialServicioBO implements GenericBO<HistorialServicio,String>{
 
     @Override
     public HistorialServicio update(HistorialServicio entity) {
-        String sql = "UPDATE PLANSERVICIO SET FECHA_SERVICIO=?,SERVICIO_IDCS=?,SERVICIOC_ID=?,SERVICIOCENTRO_IDSER=?,SERVICIOCENTRO_IDCEN=?  where ID=? ";
+        String sql = "UPDATE historialservicio SET FECHA_SERVICIO=?,SERVICIO_IDCS=?,SERVICIOC_ID=?,SERVICIOCENTRO_IDSER=?,SERVICIOCENTRO_IDCEN=?  where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setDate(1, (Date) entity.getFechaServicio());
             statement.setString(2,entity.getServicio_idcs());
@@ -81,7 +81,7 @@ public class HistorialServicioBO implements GenericBO<HistorialServicio,String>{
 
     @Override
     public List<HistorialServicio> findAll() {
-        String sql = "select  from PLANSERVICIO ";
+        String sql = "select  from historialservicio ";
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<HistorialServicio> result = new ArrayList<>();

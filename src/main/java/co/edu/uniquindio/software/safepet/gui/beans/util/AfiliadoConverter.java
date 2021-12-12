@@ -3,11 +3,13 @@ package co.edu.uniquindio.software.safepet.gui.beans.util;
 import co.edu.uniquindio.software.safepet.logica.AfiliadoBO;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Afiliado;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
+@ApplicationScoped
 @FacesConverter(value = "afiliadoConverter",managed = true)
 public class AfiliadoConverter extends EntidadConverter<Afiliado> {
 	@Inject

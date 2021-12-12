@@ -5,6 +5,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.Servicio;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class ServicioBO implements GenericBO<Servicio,String> {
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -22,7 +23,7 @@ public class ServicioBO implements GenericBO<Servicio,String> {
     @Override
     public Servicio create(Servicio entity) {
 
-        String sql = "insert into SERVICIO (ID,NOMBRE,VALOR) values (?,?) ";
+        String sql = "insert into servicio (id,nombre,valor) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setString(2, entity.getNombre());
@@ -38,7 +39,7 @@ public class ServicioBO implements GenericBO<Servicio,String> {
 
     @Override
     public void delete(Servicio entity) {
-        String sql = "delete from  SERVICIO where ID=? ";
+        String sql = "delete from  servicio where id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setString(2, entity.getNombre());
@@ -53,7 +54,7 @@ public class ServicioBO implements GenericBO<Servicio,String> {
 
     @Override
     public Servicio find(String id) {
-        String sql = "select  ID,NOMBRE,VALOR from SERVICIO where ID= ? " ;
+        String sql = "select  id,nombre,valor from servicio where id= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -67,7 +68,7 @@ public class ServicioBO implements GenericBO<Servicio,String> {
 
     @Override
     public Servicio update(Servicio entity) {
-        String sql = "UPDATE SERVICIO SET NOMBRE=?,VALOR=? where ID=? ";
+        String sql = "UPDATE servicio SET NOMBRE=?,VALOR=? where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getNombre());
@@ -83,7 +84,7 @@ public class ServicioBO implements GenericBO<Servicio,String> {
 
     @Override
     public List<Servicio> findAll() {
-        String sql = "select ID,NOMBRE,VALOR from SERVICIO" ;
+        String sql = "select ID,NOMBRE,VALOR from servicio" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Servicio> result = new ArrayList<>();
@@ -109,7 +110,7 @@ public class ServicioBO implements GenericBO<Servicio,String> {
     }
 
     public List<Servicio> findByPlan(String id) {
-        String sql = "select  s.ID,s.NOMBRE,s.VALOR from SERVICIO s inner join planservicio p on s.id = p.SERVICIO_ID where p.plan_id= ? " ;
+        String sql = "select  s.ID,s.NOMBRE,s.VALOR from servicio s inner join planservicio p on s.id = p.SERVICIO_ID where p.plan_id= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();

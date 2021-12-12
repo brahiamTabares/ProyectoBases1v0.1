@@ -5,6 +5,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.Afiliado;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,19 +14,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class AfiliadoBO implements GenericBO<Afiliado,String>{
     @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
     @Override
     public Afiliado create(Afiliado entity) {
-        String sql = "insert into AFILIADO(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
-        try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
+        String sql = "insert into usuario(id,nombre,contrasenia,telefono) values (?,?,?,?) ";
+        String sql2 = "insert into afiliado(usuario_id) values(?) ";
+        try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ); PreparedStatement statement2 = connection.prepareStatement( sql2 ) ) {
             statement.setString(1, entity.getId());
             statement.setString(2, entity.getNombre());
             statement.setString(3, entity.getContrasenia());
             statement.setString(4, entity.getTelefono());
             statement.executeUpdate();
+            statement2.setString(1, entity.getId());
+            statement2.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
@@ -37,7 +41,7 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
     @Override
     public void delete(Afiliado entity) {
 
-        String sql = "delete from AFILIADO where ID = ? ";
+        String sql = "delete from afiliado where usuario_id = ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.executeUpdate();
@@ -51,7 +55,7 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
 
     @Override
     public Afiliado find(String id) {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from afiliado where ID = ? " ;
+        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono from afiliado a inner join usuario u on a.usuario_id=u.id where u.id = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -65,7 +69,7 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
 
     @Override
     public Afiliado update(Afiliado entity) {
-        String sql = "UPDATE AFILIADO SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
+        String sql = "UPDATE usuario SET nombre=?, contrasenia=?, telefono=? where id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getNombre());
@@ -83,7 +87,7 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
 
     @Override
     public List<Afiliado> findAll() {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from AFILIADO " ;
+        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono from afiliado a inner join usuario u on a.usuario_id=u.id " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Afiliado> result = new ArrayList<>();
@@ -99,10 +103,10 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
 
     private Afiliado createFromResultSet(ResultSet resultSet) throws SQLException {
         Afiliado afiliado = new Afiliado();
-        afiliado.setId(resultSet.getString("ID"));
-        afiliado.setNombre(resultSet.getString("NOMBRE"));
-        afiliado.setContrasenia(resultSet.getString("CONTRASENIA"));
-        afiliado.setTelefono(resultSet.getString("TELEFONO"));
+        afiliado.setId(resultSet.getString("id"));
+        afiliado.setNombre(resultSet.getString("nombre"));
+        afiliado.setContrasenia(resultSet.getString("contrasenia"));
+        afiliado.setTelefono(resultSet.getString("telefono"));
         return afiliado;
     }
 }

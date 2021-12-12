@@ -6,14 +6,10 @@ import javax.inject.Inject;
 import java.io.Serializable;
 
 public abstract class AbstracBean implements Serializable {
-    @Inject
-    private FacesContext facesContext;
+
 
     protected FacesContext getFacesContext() {
-        if( facesContext == null ){
-            facesContext = FacesContext.getCurrentInstance();
-        }
-        return facesContext;
+        return FacesContext.getCurrentInstance();
     }
 
     protected void showMessage(String idComponente, String message, FacesMessage.Severity severidad) {

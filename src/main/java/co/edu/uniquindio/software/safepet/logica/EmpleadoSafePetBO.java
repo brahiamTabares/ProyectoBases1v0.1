@@ -6,6 +6,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.Usuario;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -23,7 +24,7 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
     @Override
     public EmpleadoSafePet create(EmpleadoSafePet entity) {
 
-        String sql = "insert into EMPLEADOSAFEPET(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
+        String sql = "insert into empleadosafepet(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setString(2, entity.getNombre());
@@ -40,7 +41,7 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     @Override
     public void delete(EmpleadoSafePet entity) {
-        String sql = "delete from EMPLEADOSAFEPET where ID = ? ";
+        String sql = "delete from empleadosafepet where ID = ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.executeUpdate();
@@ -53,7 +54,7 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     @Override
     public EmpleadoSafePet find(String id) {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from EMPLEADOSAFEPET where ID = ? " ;
+        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from empleadosafepet where ID = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -67,7 +68,7 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     @Override
     public EmpleadoSafePet update(EmpleadoSafePet entity) {
-        String sql = "UPDATE EMPLEADOSAFEPET SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
+        String sql = "UPDATE empleadosafepet SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getNombre());
@@ -85,7 +86,7 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     @Override
     public List<EmpleadoSafePet> findAll() {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from EMPLEADOSAFEPET " ;
+        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from empleadosafepet " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<EmpleadoSafePet> result = new ArrayList<>();

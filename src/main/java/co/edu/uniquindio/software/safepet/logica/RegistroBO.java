@@ -5,12 +5,13 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.Registro;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class RegistroBO implements GenericBO<Registro,String>{
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -19,7 +20,7 @@ public class RegistroBO implements GenericBO<Registro,String>{
     @Override
     public Registro create(Registro entity) {
 
-        String sql = "insert into REGISTRO(CODIGO,OBSERVACIONES,CONCEPTO,DECISIONES,FECHAREGISTRO,EXAMENES_CODIGO,HISTORIACLINICA_MASCOTA_ID) values (?,?,?,?,?,?,?) ";
+        String sql = "insert into registro(CODIGO,OBSERVACIONES,CONCEPTO,DECISIONES,FECHAREGISTRO,EXAMENES_CODIGO,HISTORIACLINICA_MASCOTA_ID) values (?,?,?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
             statement.setString(2, entity.getObservaciones());
@@ -39,7 +40,7 @@ public class RegistroBO implements GenericBO<Registro,String>{
 
     @Override
     public void delete(Registro entity) {
-        String sql = "delete from REGISTRO where CODIGO = ? ";
+        String sql = "delete from registro where CODIGO = ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
             statement.executeUpdate();
@@ -52,7 +53,7 @@ public class RegistroBO implements GenericBO<Registro,String>{
 
     @Override
     public Registro find(String id) {
-        String sql = "select CODIGO,OBSERVACIONES,CONCEPTO,DECISIONES,FECHAREGISTRO,EXAMENES_CODIGO,HISTORIACLINICA_MASCOTA_ID from REGISTRO where CODIGO= ? " ;
+        String sql = "select CODIGO,OBSERVACIONES,CONCEPTO,DECISIONES,FECHAREGISTRO,EXAMENES_CODIGO,HISTORIACLINICA_MASCOTA_ID from registro where CODIGO= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -66,7 +67,7 @@ public class RegistroBO implements GenericBO<Registro,String>{
 
     @Override
     public Registro update(Registro entity) {
-        String sql = "UPDATE  Registro SET ,OBSERVACIONES=?,CONCEPTO=?,DECISIONES=?,FECHAREGISTRO=?,EXAMENES_CODIGO=?,HISTORIACLINICA_MASCOTA_ID=? where CODIGO";
+        String sql = "UPDATE  registro SET OBSERVACIONES=?,CONCEPTO=?,DECISIONES=?,FECHAREGISTRO=?,EXAMENES_CODIGO=?,HISTORIACLINICA_MASCOTA_ID=? where CODIGO";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getObservaciones());
             statement.setString(2, entity.getConcepto());
@@ -85,7 +86,7 @@ public class RegistroBO implements GenericBO<Registro,String>{
 
     @Override
     public List<Registro> findAll() {
-        String sql = "select CODIGO,OBSERVACIONES,CONCEPTO,DECISIONES,FECHAREGISTRO,EXAMENES_CODIGO,HISTORIACLINICA_MASCOTA_ID from REGISTRO " ;
+        String sql = "select CODIGO,OBSERVACIONES,CONCEPTO,DECISIONES,FECHAREGISTRO,EXAMENES_CODIGO,HISTORIACLINICA_MASCOTA_ID from registro " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Registro> result = new ArrayList<>();

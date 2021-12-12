@@ -7,6 +7,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.TipoMascota;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class TipoMascotaBO implements GenericBO<TipoMascota,String>{
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -24,7 +25,7 @@ public class TipoMascotaBO implements GenericBO<TipoMascota,String>{
     @Override
     public TipoMascota create(TipoMascota entity) {
 
-        String sql = "insert into TIPOMASCOTA (ID,TIPO) values (?,?) ";
+        String sql = "insert into tipomascota (ID,TIPO) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setString(2, entity.getTipo());
@@ -39,7 +40,7 @@ public class TipoMascotaBO implements GenericBO<TipoMascota,String>{
 
     @Override
     public void delete(TipoMascota entity) {
-        String sql = "delete from TIPOMASCOTA where ID=? ";
+        String sql = "delete from tipomascota where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setString(2, entity.getTipo());
@@ -53,7 +54,7 @@ public class TipoMascotaBO implements GenericBO<TipoMascota,String>{
 
     @Override
     public TipoMascota find(String id) {
-        String sql = "select  ID,TIPO from TIPOMASCOTA where ID= ? " ;
+        String sql = "select  ID,TIPO from tipomascota where ID= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -67,7 +68,7 @@ public class TipoMascotaBO implements GenericBO<TipoMascota,String>{
 
     @Override
     public TipoMascota update(TipoMascota entity) {
-        String sql = "UPDATE TIPOMASCOTA SET TIPO=? where ID=? ";
+        String sql = "UPDATE tipomascota SET TIPO=? where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getTipo());
@@ -82,7 +83,7 @@ public class TipoMascotaBO implements GenericBO<TipoMascota,String>{
 
     @Override
     public List<TipoMascota> findAll() {
-        String sql = "select ID,TIPO from  TIPOMASCOTA";
+        String sql = "select ID,TIPO from  tipomascota";
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<TipoMascota> result = new ArrayList<>();

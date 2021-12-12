@@ -6,6 +6,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.Evaluacion;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class EvaluacionBO implements GenericBO<Evaluacion,String>{
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -23,7 +24,7 @@ public class EvaluacionBO implements GenericBO<Evaluacion,String>{
     @Override
     public Evaluacion create(Evaluacion entity) {
 
-        String sql = "insert into EVALUACION(ID_EVALUACION,PUNTUACION,PLANSERVICIO_SERVICIO_IDCS,PLANSERVICIO_SERVICIOC_ID,AFILIADO_ID,PLANSERVICIO_ID) values (?,?,?,?,?,?) ";
+        String sql = "insert into evaluacion(ID_EVALUACION,PUNTUACION,PLANSERVICIO_SERVICIO_IDCS,PLANSERVICIO_SERVICIOC_ID,AFILIADO_ID,PLANSERVICIO_ID) values (?,?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId_evaluacion());
             statement.setInt(2, entity.getPuntacion());
@@ -42,7 +43,7 @@ public class EvaluacionBO implements GenericBO<Evaluacion,String>{
 
     @Override
     public void delete(Evaluacion entity) {
-        String sql = "delete from EVALUACION where ID_EVALUACION = ? ";
+        String sql = "delete from evaluacion where ID_EVALUACION = ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId_evaluacion());
             statement.executeUpdate();
@@ -69,7 +70,7 @@ public class EvaluacionBO implements GenericBO<Evaluacion,String>{
 
     @Override
     public Evaluacion update(Evaluacion entity) {
-        String sql = "UPDATE EVALUACION SET PUNTUACION=?,PLANSERVICIO_SERVICIO_IDCS=?,PLANSERVICIO_SERVICIOC_ID=?,AFILIADO_ID,PLANSERVICIO_ID=? where ID_EVALUACION=? ";
+        String sql = "UPDATE evaluacion SET PUNTUACION=?,PLANSERVICIO_SERVICIO_IDCS=?,PLANSERVICIO_SERVICIOC_ID=?,AFILIADO_ID,PLANSERVICIO_ID=? where ID_EVALUACION=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setInt(1, entity.getPuntacion());
