@@ -482,7 +482,63 @@ insert into planservicio values ('10','1');
 insert into planservicio values ('10','2');
 insert into planservicio values ('10','3');
 
-
 -- INSERT EVALUACIÓN
 
-insert into evaluacion values ()
+insert into evaluacion values ('1', 4, '3','2','10','1094901333');
+insert into evaluacion values ('2', 3, '7','7','2','1094901334');
+insert into evaluacion values ('3', 5, '1','2','10','1094901333');
+insert into evaluacion values ('4', 1, '1','1','10','1094901333');
+insert into evaluacion values ('5', 3, '3','2','1','1094901333');
+insert into evaluacion values ('6', 4, '1','2','1','1094901333');
+insert into evaluacion values ('7', 4, '1','1','10','1094901333');
+insert into evaluacion values ('8', 5, '7','9','4','1094901331');
+insert into evaluacion values ('9', 2, '2','3','4','1094901331');
+insert into evaluacion values ('10', 3, '2','3','8','1094756098');
+
+
+-- INSERT MASCOTA
+
+insert into mascota values ('1','Lulu','2020-01-01','Hembra', '1', '1','2');
+insert into mascota values ('2','Tony','2015-10-02','Macho', '2','1','1');
+insert into mascota values ('3','Nina','2014-12-02','Hembra', '3','10','4');
+insert into mascota values ('4','Iker','2019-08-02','Macho', '4','2','1');
+insert into mascota values ('5','Rocket','2018-01-02','Macho', '5','6','1');
+insert into mascota values ('6','Noah','2015-10-02','Hembra', '6','7','2');
+insert into mascota values ('7','Frida','2015-10-02','Hembra', '7','8','2');
+insert into mascota values ('8','Candy','2015-10-02','Hembra', '8','8','2' )
+insert into mascota values ('9','Azabache','2015-10-02','Macho', '9','1','3');
+insert into mascota values ('9','Teo','2021-05-13','Macho', '9','5','1');
+insert into mascota values ('10','Jerry','2015-11-01','Macho', '10','9','2');
+insert into mascota values ('10','Junior','2017-10-02','Macho', '10','1','1');
+insert into mascota values ('10','Gaspar','2020-08-12','Macho', '10','1','2');
+
+-- INSERT HISTORIA CLINICA
+
+insert into historiaclinica values ('Lulu', 'Hembra', '2021-02-14', '2021-02-15','1');
+insert into historiaclinica values ('Lulu', 'Hembra', '2021-03-14', '2021-03-16','1');
+insert into historiaclinica values ('Teo', 'Macho', '2021-04-14', '2021-04-15','9');
+insert into historiaclinica values ('Lulu', 'Hembra', '2021-07-14', '2021-07-20','1');
+insert into historiaclinica values ('Rocket', 'Macho', '2021-05-14', '2021-05-15','5');
+insert into historiaclinica values ('Candy', 'Hembra', '2020-08-04', '2021-08-15','8');
+insert into historiaclinica values ('Frida', 'Hembra', '2021-01-14', '2021-01-15','7');
+insert into historiaclinica values ('Frida', 'Hembra', '2021-02-14', '2021-02-15','7');
+insert into historiaclinica values ('Lulu', 'Hembra', '2021-08-20', '2021-08-23','1');
+insert into historiaclinica values ('Junior', 'Macho', '2021-05-24', '2021-05-26','1');
+
+--- INSERT EXAMENES_CENTRO
+
+
+
+
+-- INSERT REGISTRO
+
+
+
+-- INSERT CONSULTA
+
+
+
+-- SERVICIO CENTRO
+
+
+-- HISTORIAL SERVICIO
