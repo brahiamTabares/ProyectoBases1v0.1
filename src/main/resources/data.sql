@@ -527,18 +527,32 @@ insert into historiaclinica values ('Junior', 'Macho', '2021-05-24', '2021-05-26
 
 --- INSERT EXAMENES_CENTRO
 
-
+insert into examenes_centro values ('1','4');
+insert into examenes_centro values ('1','8');
+insert into examenes_centro values ('2','2');
+insert into examenes_centro values ('3','4');
+insert into examenes_centro values ('6','4');
+insert into examenes_centro values ('5','4');
+insert into examenes_centro values ('3','8');
+insert into examenes_centro values ('3','4');
+insert into examenes_centro values ('8','8');
+insert into examenes_centro values ('9','2');
 
 
 -- INSERT REGISTRO
-
+-- codigo, observaciones, concepto, decisiones, fechaRegistro, codigo examen, histoClin masoca id.
 
 
 -- INSERT CONSULTA
+-- codigo, fechacita, descripcion, idMascota, idCentroServicio
 
 
 
 -- SERVICIO CENTRO
+-- idservicio, idcentro (corregir en datamodeler
+
+
 
 
 -- HISTORIAL SERVICIO
+-- corregir datamodeler
