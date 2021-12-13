@@ -20,7 +20,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
 
     @Override
     public Mascota create(Mascota entity) {
-        String sql = "insert into mascota(ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID) values (?,?,?,?,?,?,?) ";
+        String sql = "insert into mascota(id,nombre,fecha_nacimiento,genero,plan_id,raza_codigo,tipomascota_id) values (?,?,?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1,entity.getId());
             statement.setString(2, entity.getNombre());
@@ -40,7 +40,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
     @Override
     public void delete(Mascota entity) {
 
-        String sql = "delete from mascota where ID=?";
+        String sql = "delete from mascota where id=?";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {statement.setString(1,entity.getId());
             statement.setString(1,entity.getId());
             statement.executeUpdate();
@@ -53,7 +53,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
 
     @Override
     public Mascota find(Integer id) {
-        String sql = "select ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID from mascota where ID=?" ;
+        String sql = "select id,nombre,fecha_nacimiento,genero,plan_id,raza_codigo,tipomascota_id from mascota where id=?" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -67,7 +67,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
 
     @Override
     public Mascota update(Mascota entity) {
-        String sql = "UPDATE mascota SET NOMBRE=?, FECHA_NACIMIENTO=?,GENERO=?,PLAN_ID=?,RAZA_CODIGO=?,TIPOMASCOTA_ID=? where ID=? ";
+        String sql = "UPDATE mascota SET nombre=?, fecha_nacimiento=?,genero=?,plan_id=?,raza_codigo=?,tipomascota_id=? where id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1,entity.getId());
             statement.setString(2, entity.getNombre());
@@ -87,7 +87,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
 
     @Override
     public List<Mascota> findAll() throws SQLException {
-        String sql = "select ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID from mascota ";
+        String sql = "select id,nombre,fecha_nacimiento,genero,plan_id,raza_codigo,tipomascota_id from mascota ";
         ResultSet resultSet;
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             resultSet = statement.executeQuery();
@@ -104,19 +104,19 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
 
         private Mascota createFromResultSet (ResultSet resultSet) throws SQLException {
             Mascota mascota = new Mascota();
-            mascota.setId(resultSet.getString("ID"));
-            mascota.setNombre(resultSet.getString("NOMBRE"));
-            mascota.setFecha_nacimiento(resultSet.getDate("FECHA_NACIMIENTO"));
-            mascota.setGenero(resultSet.getString("GENERO"));
-            mascota.setPlan_id(resultSet.getString("PLAN_ID"));
-            mascota.setRaza_codigo(resultSet.getString("RAZA_CODIGO"));
-            mascota.setTipomascota_id(resultSet.getString("TIPOMASCOTA_ID"));
+            mascota.setId(resultSet.getString("id"));
+            mascota.setNombre(resultSet.getString("nombre"));
+            mascota.setFecha_nacimiento(resultSet.getDate("fecha_nacimiento"));
+            mascota.setGenero(resultSet.getString("genero"));
+            mascota.setPlan_id(resultSet.getString("plan_id"));
+            mascota.setRaza_codigo(resultSet.getString("raza_codigo"));
+            mascota.setTipomascota_id(resultSet.getString("tipomascota_id"));
             return mascota;
         }
 
 
     public List<Mascota> findByPlan(String id) {
-        String sql = "select ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID from mascota where plan_id=?" ;
+        String sql = "select id,nombre,fecha_nacimiento,genero,plan_id,raza_codigo,tipomascota_id from mascota where plan_id=?" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
