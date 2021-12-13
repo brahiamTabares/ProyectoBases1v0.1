@@ -8,6 +8,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.CentroServicio;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +21,10 @@ import java.util.List;
 public class CentroServicioBO implements GenericBO<CentroServicio, String> {
     @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
+
+    @Inject
+    private TipoCentroBO tipoCentroBO;
+
     @Override
     public CentroServicio create(CentroServicio entity) {
         String sql = "insert into usuario(id,nombre,contrasenia,telefono) values (?,?,?,?) ";
@@ -56,17 +61,22 @@ public class CentroServicioBO implements GenericBO<CentroServicio, String> {
 
     @Override
     public CentroServicio find(String id) {
-        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono from centroservicio c inner join usuario u on c.usuario_id=u.id where u.id = ? " ;
+        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono, c.tipocentro_codigo from centroservicio c inner join usuario u on c.usuario_id=u.id where u.id = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            return createFromResultSet(resultSet);
+            return completarRegistro(createFromResultSet(resultSet));
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
         }
 
+    }
+
+    private CentroServicio completarRegistro(CentroServicio registro) {
+        registro.setTipoCentro( tipoCentroBO.find(registro.getTipoCentro_codigo()  ) );
+        return registro;
     }
 
     @Override
@@ -80,8 +90,8 @@ public class CentroServicioBO implements GenericBO<CentroServicio, String> {
             statement.setString(3, entity.getTelefono());
             statement.setString(4, entity.getId());
             statement.executeUpdate();
-            statement2.setString(1, entity.getId());
-            statement2.setString(2, entity.getTipoCentro_codigo());
+            statement2.setString(1, entity.getTipoCentro_codigo());
+            statement2.setString(2, entity.getId());
             statement2.executeUpdate();
 
         }catch (SQLException e){
@@ -93,12 +103,12 @@ public class CentroServicioBO implements GenericBO<CentroServicio, String> {
 
     @Override
     public List<CentroServicio> findAll() {
-        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono  from centroservicio c inner join usuario u on c.usuario_id=u.id ";
+        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono, c.tipocentro_codigo  from centroservicio c inner join usuario u on c.usuario_id=u.id ";
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<CentroServicio> result = new ArrayList<>();
             while (resultSet.next()) {
-                result.add(createFromResultSet(resultSet) );
+                result.add(completarRegistro(createFromResultSet(resultSet)) );
             }
             return result;
         } catch (SQLException e) {
@@ -113,7 +123,7 @@ public class CentroServicioBO implements GenericBO<CentroServicio, String> {
         centroServicio.setNombre(resultSet.getString("nombre"));
         centroServicio.setContrasenia(resultSet.getString("contrasenia"));
         centroServicio.setTelefono(resultSet.getString("telefono"));
-        centroServicio.setTipoCentro_codigo(resultSet.getString("tipoCentro_codigo"));
+        centroServicio.setTipoCentro_codigo(resultSet.getString("tipocentro_codigo"));
         return  centroServicio;
     }
 }
