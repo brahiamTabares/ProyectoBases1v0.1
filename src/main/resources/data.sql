@@ -165,13 +165,12 @@ insert into empleadosafepet values('1094901343');
 insert into empleadosafepet values('1097902111');
 insert into empleadosafepet values('1094876543');
 insert into empleadosafepet values('41902453');
-insert into empleadosafepet values('1094876543');
+insert into empleadosafepet values('1094876545');
 insert into empleadosafepet values('76453221');
 insert into empleadosafepet values('1096764321');
 insert into empleadosafepet values('1094973555');
 insert into empleadosafepet values('1094756098');
 -- INSERT AFILIADO
-
 insert into afiliado values('1094901333');
 insert into afiliado values('1094901331');
 insert into afiliado values('1094901332');

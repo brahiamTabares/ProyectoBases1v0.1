@@ -95,6 +95,7 @@ public class SeguridadBean extends AbstracBean {
     public void setAutenticado(boolean autenticado) {
         this.autenticado = autenticado;
     }
+
     public boolean isEmpleado(){
         return securityContext.isCallerInRole( "EmpleadoSafePet" );
     }

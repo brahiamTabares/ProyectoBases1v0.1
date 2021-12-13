@@ -19,6 +19,29 @@
                                  styleClass="ui-button-success" style="margin-right: .5rem">
                     <p:resetInput target=":form:manage-entity-content"/>
                 </p:commandButton>
+
+            </p:toolbarGroup>
+            <p:toolbarGroup align="right">
+                <p:commandButton value="XLS" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="xls" target="dt-entities" fileName="reporte"/>
+                </p:commandButton>
+
+                <p:commandButton value="XLSX" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="xlsxstream" target="dt-entities" fileName="reporte"/>
+                </p:commandButton>
+
+                <p:commandButton value="PDF" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="pdf" target="dt-entities" fileName="reporte"/>
+                </p:commandButton>
+
+                <p:commandButton value="CSV" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="csv" target="dt-entities" fileName="reporte" />
+                </p:commandButton>
+
+                <p:commandButton value="XML" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="xml" target="dtEntities" fileName="reporte"/>
+                </p:commandButton>
+
             </p:toolbarGroup>
 
         </p:toolbar>
@@ -37,15 +60,18 @@
                 </div>
             </f:facet>
             <!-- COLUMNAS DE LOS ATRIBUTOS QUE DESEO MOSTRAR EN LA TABLA -->
-            <p:column headerText="ID" filterBy="#{entity.id}" filterStyle="display: none" >
+            <p:column headerText="ID"  filterBy="#{entity.id}" filterStyle="display: none" >
                 <h:outputText value="#{entity.id}"/>
             </p:column>
-            <p:column headerText="Nombre" filterBy="#{entity.nombre}" filterStyle="display: none" >
+            <p:column headerText="Nombre"  filterBy="#{entity.nombre}" filterStyle="display: none" >
                 <h:outputText value="#{entity.nombre}"/>
             </p:column>
-                <p:column headerText="Telefono" filterBy="#{entity.telefono}" filterStyle="display: none" >
-                    <h:outputText value="#{entity.telefono}"/>
-                </p:column>
+        <p:column headerText="Telefono"  filterBy="#{entity.telefono}" filterStyle="display: none" >>
+            <h:outputText value="#{entity.telefono}"/>
+        </p:column>
+            <p:column headerText="tipoCentro_codigo"  filterBy="#{entity.tipoCentro_codigo}" filterStyle="display: none" >>
+                <h:outputText value="#{entity.tipoCentro_Codigo}"/>
+            </p:column>
             <p:column exportable="false">
                 <p:commandButton icon="pi pi-pencil" update=":form:manage-entity-content"
                                  oncomplete="PF('manageEntityDialog').show()"
@@ -58,13 +84,12 @@
                     <f:setPropertyActionListener value="#{entity}" target="#{centroServicioBean.selectedEntity}"/>
                 </p:commandButton>
             </p:column>
-
         </p:dataTable>
 
         <ui:include src="__form.xhtml" />
         <p:confirmDialog widgetVar="deleteEntityDialog" showEffect="fade" width="300"
                          message="Borrar el registro?" header="Confirmación" severity="warn">
-            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{centroVeterinarioBean.delete}"
+            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{centroServicioBean.delete}"
                              process="@this" oncomplete="PF('deleteEntityDialog').hide()"/>
             <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                              onclick="PF('deleteEntityDialog').hide()"/>

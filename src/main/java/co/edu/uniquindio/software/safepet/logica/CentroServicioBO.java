@@ -93,7 +93,7 @@ public class CentroServicioBO implements GenericBO<CentroServicio, String> {
 
     @Override
     public List<CentroServicio> findAll() {
-        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono from centroservicio c inner join usuario u on c.usuario_id=u.id ";
+        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono  from centroservicio c inner join usuario u on c.usuario_id=u.id ";
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<CentroServicio> result = new ArrayList<>();
