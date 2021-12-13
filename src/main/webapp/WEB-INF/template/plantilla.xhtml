@@ -37,7 +37,15 @@
         <br />
         <h:form>
             <p:menubar rendered="#{seguridadBean.autenticado}">
-                <p:menuitem value="Usuarios" icon="pi pi-fw pi-user" action="/usuarios/index.xhtml?faces-redirect=true" />
+                <p:menuitem value="Afiliados" icon="pi pi-fw pi-user" action="/afiliados/index.xhtml?faces-redirect=true" />
+                <p:menuitem value="Empleados" icon="pi pi-fw pi-user" action="/empleados/index.xhtml?faces-redirect=true" />
+                <p:menuitem value="Centros" icon="pi pi-fw pi-user" action="/centros/index.xhtml?faces-redirect=true" />
+                <p:menuitem value="Planes" icon="pi pi-fw pi-user" action="/planes/index.xhtml?faces-redirect=true" />
+                <p:menuitem value="Razas" icon="pi pi-fw pi-user" action="/razas/index.xhtml?faces-redirect=true" />
+                <p:menuitem value="Examenes" icon="pi pi-fw pi-user" action="/examenes/index.xhtml?faces-redirect=true" />
+                <p:menuitem value="Servicios" icon="pi pi-fw pi-user" action="/servicios/index.xhtml?faces-redirect=true" />
+                <p:menuitem value="Tipo Centro" icon="pi pi-fw pi-user" action="/tipoCentro/index.xhtml?faces-redirect=true" />
+                <p:menuitem value="Tipo Mascota" icon="pi pi-fw pi-user" action="/tipoMascota/index.xhtml?faces-redirect=true" />
                 <p:menuitem value="Salir" icon="pi pi-fw pi-sign-out" action="#{seguridadBean.logout}" ajax="false" />
             </p:menubar>
         </h:form>

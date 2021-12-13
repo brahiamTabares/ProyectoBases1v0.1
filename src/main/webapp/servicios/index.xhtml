@@ -20,7 +20,28 @@
                     <p:resetInput target=":form:manage-entity-content"/>
                 </p:commandButton>
             </p:toolbarGroup>
+            <p:toolbarGroup align="right">
+                <p:commandButton value="XLS" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="xls" target="dt-entities" fileName="reporte"/>
+                </p:commandButton>
 
+                <p:commandButton value="XLSX" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="xlsxstream" target="dt-entities" fileName="reporte"/>
+                </p:commandButton>
+
+                <p:commandButton value="PDF" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="pdf" target="dt-entities" fileName="reporte"/>
+                </p:commandButton>
+
+                <p:commandButton value="CSV" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="csv" target="dt-entities" fileName="reporte" />
+                </p:commandButton>
+
+                <p:commandButton value="XML" styleClass="p-mr-2 p-mb-2" immediate="true">
+                    <p:dataExporter type="xml" target="dtEntities" fileName="reporte"/>
+                </p:commandButton>
+
+            </p:toolbarGroup>
         </p:toolbar>
 
         <p:dataTable id="dt-entities" widgetVar="dtEntities" var="entity" value="#{servicioBean.entities}"
