@@ -1,9 +1,12 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
+import java.util.List;
+
 public class CentroServicio extends Usuario{
 
 
      private String  tipoCentro_codigo;
+
 
 
     public String getTipoCentro_codigo() {

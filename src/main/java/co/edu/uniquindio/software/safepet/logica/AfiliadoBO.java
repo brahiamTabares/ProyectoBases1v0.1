@@ -90,7 +90,7 @@ public class AfiliadoBO implements GenericBO<Afiliado,String>{
 
     @Override
     public List<Afiliado> findAll() {
-        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono from afiliado a inner join usuario u on a.usuario_id=u.id " ;
+        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono from afiliado a inner join usuario u on a.usuario_id=u.id ";
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Afiliado> result = new ArrayList<>();

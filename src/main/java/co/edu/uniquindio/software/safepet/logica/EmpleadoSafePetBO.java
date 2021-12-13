@@ -24,13 +24,18 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
     @Override
     public EmpleadoSafePet create(EmpleadoSafePet entity) {
 
-        String sql = "insert into empleadosafepet(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
-        try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
+        String sql = "insert into usuario (id,nombre,contrasenia,telefono) values (?,?,?,?) ";
+
+        String sql2= "insert into empleadosafepet(usuario_id) values(?)";
+
+        try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql );PreparedStatement statement2 = connection.prepareStatement( sql2 ) ) {
             statement.setString(1, entity.getId());
             statement.setString(2, entity.getNombre());
             statement.setString(3, entity.getContrasenia());
             statement.setString(4, entity.getTelefono());
             statement.executeUpdate();
+            statement2.setString(1, entity.getId());
+            statement2.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
@@ -41,10 +46,13 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     @Override
     public void delete(EmpleadoSafePet entity) {
-        String sql = "delete from empleadosafepet where ID = ? ";
-        try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
+        String sql = "delete from empleadosafepet where usuario_id = ? ";
+        String sql2 = "delete from usuario where id = ? ";
+        try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql );PreparedStatement statement2 = connection.prepareStatement( sql2 )  ) {
             statement.setString(1, entity.getId());
             statement.executeUpdate();
+            statement2.setString(1, entity.getId());
+            statement2.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
@@ -54,7 +62,7 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     @Override
     public EmpleadoSafePet find(String id) {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from empleadosafepet where ID = ? " ;
+        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono from empleadosafepet e inner join usuario u on e.usuario_id=u.id where u.id = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -68,7 +76,7 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     @Override
     public EmpleadoSafePet update(EmpleadoSafePet entity) {
-        String sql = "UPDATE empleadosafepet SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
+        String sql = "UPDATE usuario SET nombre=?, contrasenia=?, telefono=? where id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getNombre());
@@ -86,7 +94,7 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     @Override
     public List<EmpleadoSafePet> findAll() {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from empleadosafepet " ;
+        String sql = "select u.id,u.nombre,u.contrasenia,u.telefono from empleadosafepet e inner join usuario u on e.usuario_id=u.id ";
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<EmpleadoSafePet> result = new ArrayList<>();
@@ -103,10 +111,10 @@ public class EmpleadoSafePetBO  implements GenericBO<EmpleadoSafePet,String>{
 
     private EmpleadoSafePet createFromResultSet(ResultSet resultSet) throws SQLException {
         EmpleadoSafePet empleadoSafePet = new EmpleadoSafePet();
-        empleadoSafePet.setId(resultSet.getString("ID"));
-        empleadoSafePet.setNombre(resultSet.getString("NOMBRE"));
-        empleadoSafePet.setContrasenia(resultSet.getString("CONTRASENIA"));
-        empleadoSafePet.setTelefono(resultSet.getString("TELEFONO"));
+        empleadoSafePet.setId(resultSet.getString("id"));
+        empleadoSafePet.setNombre(resultSet.getString("nombre"));
+        empleadoSafePet.setContrasenia(resultSet.getString("contrasenia"));
+        empleadoSafePet.setTelefono(resultSet.getString("telefono"));
         return empleadoSafePet;
     }
 }
