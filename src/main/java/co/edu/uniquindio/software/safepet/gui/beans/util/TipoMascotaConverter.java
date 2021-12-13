@@ -4,6 +4,7 @@ import co.edu.uniquindio.software.safepet.logica.TipoMascotaBO;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.TipoMascota;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,7 +17,11 @@ public class TipoMascotaConverter extends EntidadConverter<TipoMascota> {
 	private TipoMascotaBO bo;
 
 	@Override
-	protected TipoMascota findById(String id) {return bo.find(id);
+	protected TipoMascota findById(String id) {
+		if( bo == null ){
+			bo = CDI.current().select(TipoMascotaBO.class).get();
+		}
+		return bo.find(id);
 	}
 
 	@Override

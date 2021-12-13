@@ -72,7 +72,6 @@ public class PlanBean extends PrimeFacesCrudBean<Plan,String, PlanBO> {
     }
 
     public void save(){
-        System.out.println("SERVICIOS --> "+servicios);
         selectedEntity.getServicios().clear();
 //        selectedEntity.getServicios().addAll(Arrays.asList(servicios));
         selectedEntity.getServicios().addAll(servicios);
@@ -81,15 +80,6 @@ public class PlanBean extends PrimeFacesCrudBean<Plan,String, PlanBO> {
     }
 
     public void selectionChanged()  {
-        System.out.println("CAMBIO2 "+servicios);
-        for (var s:servicios ) {
-            if( s != null ) {
-                System.out.println(s.getNombre());
-            }else{
-                System.out.println("NULO");
-            }
-        }
-
         if( servicios != null ){
             int valor = 0;
             for (Servicio a:servicios) {
@@ -111,6 +101,7 @@ public class PlanBean extends PrimeFacesCrudBean<Plan,String, PlanBO> {
 
     public void crearMascota(){
         mascota.setPlan(selectedEntity);
+        mascota.setPlan_id(selectedEntity.getId());
         selectedEntity.getMascotas().add(
                 mascotaBO.create(mascota)
                 // se llama el nuevo mètodo aquì para que afecte el valor de la mensualidad por el aumento de mascotas
