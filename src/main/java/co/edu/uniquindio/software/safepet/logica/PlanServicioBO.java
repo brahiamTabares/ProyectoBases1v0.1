@@ -1,56 +1,58 @@
 package co.edu.uniquindio.software.safepet.logica;
+
 import co.edu.uniquindio.software.safepet.config.Datasource;
-import co.edu.uniquindio.software.safepet.persistencia.entidades.Plan;
+import co.edu.uniquindio.software.safepet.logica.GenericBO;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.PlanServicio;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Stateless
 @ApplicationScoped
-public class PlanServicioBO implements GenericBO<PlanServicio,String>{
+public class PlanServicioBO implements GenericBO<PlanServicio,String> {
 
     @Resource(lookup= Datasource.DATASOURCE )
     private DataSource dataSource;
 
-
     @Override
     public PlanServicio create(PlanServicio entity) {
-        String sql = "insert into PLANSERVICIO (ID,FECHA_SERVICIO,SERVICIO_IDCS,SERVICIOC_ID,SERVICIOCENTRO_IDSER,SERVICIOCENTRO_IDCEN values (?,?,?,?,?,?,?) ";
+
+        String sql = "insert into planservicio (PLAN_ID,SERVICIO_ID) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setString(1, entity.getId());
-            statement.setDate(2,(Date) entity.getFechaServicio());
-            statement.setString(3, entity.getServicio_idcs());
-            statement.setString(4, entity.getServicioc_id());
-            statement.setString(5,entity.getServicioc_idser());
-            statement.setString(6,entity.getServicioc_idcen());
+            statement.setString(1, entity.getPlan_id());
+            statement.setString(2, entity.getServicio_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
         }
         return entity;
+
     }
 
     @Override
     public void delete(PlanServicio entity) {
-        String sql = "delete from planservicio where ID = ? ";
+        String sql = "delete from planservicio where PLAN_ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setString(1, entity.getId());
+            statement.setString(1, entity.getPlan_id());
+            statement.setString(2, entity.getServicio_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
             throw new RuntimeException("Operacion no completada:"+e.getMessage(),e);
         }
+
     }
 
     @Override
-    public PlanServicio find(String id) {
-        String sql = "select ID,,COPAGO,AFILIADO_ID,EMPLEADOSAFEPET_ID  from PLANSERVICIO where ID = ? " ;
+    public  PlanServicio find(String id) {
+        String sql = "select  PLAN_ID,SERVICIO_ID from planservicio where PLAN_ID= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -63,14 +65,12 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String>{
     }
 
     @Override
-    public Plan update(Plan entity) {
-        String sql = "UPDATE PLANSERVICIO SET ID,FECHA_SERVICIO,SERVICIO_IDCS,SERVICIOC_ID,SERVICIOCENTRO_IDSER,SERVICIOCENTRO_IDCEN  where ID=? ";
+    public PlanServicio update(PlanServicio entity) {
+        String sql = "UPDATE planservicio SET SERVICIO_ID=? where PLAN_ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setDouble(1, entity.);
-            statement.setDouble(2, entity.getCopago());
-            statement.setString(3, entity.getAfiliado_id());
-            statement.setString(4,entity.getEmpleadoSafepet_id());
-            statement.setString(5, entity.getId());
+
+            statement.setString(2, entity.getServicio_id());
+            statement.setString(1, entity.getPlan_id());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -80,11 +80,11 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String>{
     }
 
     @Override
-    public List<Plan> findAll() {
-        String sql = "select ID,MENSUALIDAD,COPAGO,AFILIADO_ID,EMPLEADOSAFEPET_ID from PLAN " ;
+    public List<PlanServicio> findAll() {
+        String sql = "select PLAN_ID,SERVICIO_ID from planservicio" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
-            List<Plan> result = new ArrayList<>();
+            List<PlanServicio> result = new ArrayList<>();
             while (resultSet.next()) {
                 result.add( createFromResultSet(resultSet) );
             }
@@ -95,13 +95,15 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String>{
         }
     }
 
-    private Plan createFromResultSet(ResultSet resultSet) throws SQLException {
-        Plan plan = new Plan();
-        plan.setId(resultSet.getString("ID"));
-        plan.setMensualidad(resultSet.getDouble("MENSUALIDAD"));
-        plan.setCopago(resultSet.getDouble("COPAGO"));
-        plan.setAfiliado_id(resultSet.getString("AFILIADO_ID"));
-        plan.setEmpleadoSafepet_id(resultSet.getString("EMPLEADO_SAFEPET"));
-        return plan;
+
+    private PlanServicio createFromResultSet(ResultSet resultSet) throws SQLException {
+        PlanServicio planServicio = new PlanServicio();
+        planServicio.setPlan_id(resultSet.getString("PLAN_ID"));
+        planServicio.setServicio_id(resultSet.getString("SERVICIO_ID"));
+
+
+        return planServicio;
     }
 }
+
+

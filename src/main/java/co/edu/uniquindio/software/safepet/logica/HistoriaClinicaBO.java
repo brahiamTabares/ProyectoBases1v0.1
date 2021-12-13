@@ -5,12 +5,13 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.HistoriaClinica
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -19,7 +20,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
     @Override
     public HistoriaClinica create(HistoriaClinica entity) {
 
-        String sql = "insert into HISTORIACLINICA(NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID) values (?,?,?,?,?) ";
+        String sql = "insert into historiaclinica(NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID) values (?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getNombre());
             statement.setString(2, entity.getSexo());
@@ -37,7 +38,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Override
     public void delete(HistoriaClinica entity) {
-        String sql = "delete from HISTORIACLINICA where MASCOTA_ID=?";
+        String sql = "delete from historiaclinica where MASCOTA_ID=?";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getNombre());
             statement.setString(2, entity.getSexo());
@@ -54,7 +55,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Override
     public HistoriaClinica find(String id) {
-        String sql = "select NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID from HISTORIACLINICA where MASCOTA_ID=?" ;
+        String sql = "select NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID from historiaclinica where MASCOTA_ID=?" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -68,7 +69,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Override
     public HistoriaClinica update(HistoriaClinica entity) {
-        String sql = "UPDATE HISTORIACLINICA SET NOMBRE=?,SEXO=?,FECHA_INGRESO=?,FECHASALIDA=? where MASCOTA_ID ";
+        String sql = "UPDATE historiaclinica SET NOMBRE=?,SEXO=?,FECHA_INGRESO=?,FECHASALIDA=? where MASCOTA_ID ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getNombre());
             statement.setString(2, entity.getSexo());
@@ -85,7 +86,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Override
     public List<HistoriaClinica> findAll() {
-        String sql = "select NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID from HISTORIACLINICA " ;
+        String sql = "select NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID from historiaclinica " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<HistoriaClinica> result = new ArrayList<>();

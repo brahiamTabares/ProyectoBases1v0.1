@@ -11,31 +11,26 @@
 
     <p:dialog id="dialog" widgetVar="manageEntityDialog">
         <p:outputPanel id="manage-entity-content" class="ui-fluid">
-            <p:outputPanel rendered="#{not empty usuarioBean.selectedEntity}">
+            <p:outputPanel rendered="#{not empty servicioBean.selectedEntity}">
                 <div class="p-field">
                     <p:outputLabel for="id">ID</p:outputLabel>
-                    <p:inputText id="id" value="#{usuarioBean.selectedEntity.id}" required="true" readonly="#{usuarioBean.updating}" />
+                    <p:inputText id="id" value="#{servicioBean.selectedEntity.id}" required="true" readonly="#{servicioBean.updating}" />
                 </div>
                 <div class="p-field">
                     <p:outputLabel for="nombre">Nombre</p:outputLabel>
-                    <p:inputText id="nombre" value="#{usuarioBean.selectedEntity.nombre}"/>
+                    <p:inputText id="nombre" value="#{servicioBean.selectedEntity.nombre}"/>
                 </div>
                 <div class="p-field">
-                    <p:outputLabel for="telefono">Telefono</p:outputLabel>
-                    <p:inputText id="telefono" value="#{usuarioBean.selectedEntity.telefono}"/>
-                </div>
-                <div class="p-field">
-                    <p:outputLabel for="contraseña">Contraseña</p:outputLabel>
-                    <p:password id="contraseña" value="#{usuarioBean.selectedEntity.contrasenia}" toggleMask="true" redisplay="true"/>
+                    <p:outputLabel for="nombre">Valor</p:outputLabel>
+                    <p:inputText id="Valor" value="#{servicioBean.selectedEntity.valor}"/>
                 </div>
             </p:outputPanel>
         </p:outputPanel>
         <f:facet name="footer">
-            <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{usuarioBean.save}"
+            <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{servicioBean.save}"
                              update="manage-entity-content" process="manage-entity-content @this"/>
             <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageEntityDialog').hide()"
-                             class="ui-button-secondary"/>
-        </f:facet>
+                             class="ui-button-secondary"/></f:facet>
     </p:dialog>
 </f:view>
 </html>

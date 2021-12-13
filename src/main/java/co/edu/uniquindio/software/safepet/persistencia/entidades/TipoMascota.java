@@ -1,21 +1,28 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
+import java.util.List;
+
 public class TipoMascota {
 
-    private String codigo;
+    private String id;
     private  String tipo;
+    private List<Mascota> Mascotas;
 
-    public TipoMascota(String codigo, String nombre) {
-        this.codigo = codigo;
+    public TipoMascota(String id, String nombre) {
+        this.id = id;
         this.tipo = nombre;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public TipoMascota() {
+
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTipo() {
@@ -24,5 +31,13 @@ public class TipoMascota {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public List<Mascota> getMascotas() {
+        return Mascotas;
+    }
+
+    public void setMascotas(List<Mascota> mascotas) {
+        Mascotas = mascotas;
     }
 }

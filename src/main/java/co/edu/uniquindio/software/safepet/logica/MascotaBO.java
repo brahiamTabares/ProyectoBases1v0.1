@@ -1,17 +1,18 @@
 package co.edu.uniquindio.software.safepet.logica;
 
 import co.edu.uniquindio.software.safepet.config.Datasource;
-import co.edu.uniquindio.software.safepet.persistencia.entidades.HistoriaClinica;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Mascota;
 
 import javax.annotation.Resource;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@Named
+@ApplicationScoped
 public class MascotaBO implements GenericBO<Mascota,Integer>{
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -39,7 +40,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
     @Override
     public void delete(Mascota entity) {
 
-        String sql = "delete from MASCOTA where ID=?";
+        String sql = "delete from mascota where ID=?";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {statement.setString(1,entity.getId());
             statement.setString(1,entity.getId());
             statement.executeUpdate();
@@ -52,7 +53,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
 
     @Override
     public Mascota find(Integer id) {
-        String sql = "select ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID from MASCOTA where ID=?" ;
+        String sql = "select ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID from mascota where ID=?" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -66,7 +67,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
 
     @Override
     public Mascota update(Mascota entity) {
-        String sql = "UPDATE MASCOTA SET NOMBRE=?, FECHA_NACIMIENTO=?,GENERO=?,PLAN_ID=?,RAZA_CODIGO=?,TIPOMASCOTA_ID=? where ID=? ";
+        String sql = "UPDATE mascota SET NOMBRE=?, FECHA_NACIMIENTO=?,GENERO=?,PLAN_ID=?,RAZA_CODIGO=?,TIPOMASCOTA_ID=? where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1,entity.getId());
             statement.setString(2, entity.getNombre());
@@ -86,7 +87,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
 
     @Override
     public List<Mascota> findAll() throws SQLException {
-        String sql = "select ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID from MASCOTA ";
+        String sql = "select ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID from mascota ";
         ResultSet resultSet;
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             resultSet = statement.executeQuery();
@@ -114,4 +115,19 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
         }
 
 
+    public List<Mascota> findByPlan(String id) {
+        String sql = "select ID,nombre,fecha_nacimiento,GENERO,PLAN_ID,RAZA_CODIGO,TIPOMASCOTA_ID from mascota where plan_id=?" ;
+        try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
+            statement.setObject(1,id);
+            ResultSet resultSet = statement.executeQuery();
+            List<Mascota> result = new ArrayList<>();
+            while (resultSet.next()) {
+                result.add(createFromResultSet(resultSet));
+            }
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Operacion no completada:" + e.getMessage(), e);
+        }
+    }
 }

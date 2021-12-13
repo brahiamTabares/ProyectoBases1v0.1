@@ -6,12 +6,13 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.Evaluacion;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class ConsultaBO implements GenericBO<Consulta,String>{
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -20,7 +21,7 @@ public class ConsultaBO implements GenericBO<Consulta,String>{
     @Override
     public Consulta create(Consulta entity) {
 
-        String sql = "insert into CONSULTA(CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID) values (?,?,?,?,?) ";
+        String sql = "insert into consulta(CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID) values (?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
             statement.setDate(2, (Date) entity.getFecha_Cita());
@@ -51,7 +52,7 @@ public class ConsultaBO implements GenericBO<Consulta,String>{
 
     @Override
     public Consulta find(String id) {
-        String sql = "select CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID from CONSULTA where CODIGO = ? " ;
+        String sql = "select CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID from consulta where CODIGO = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -65,7 +66,7 @@ public class ConsultaBO implements GenericBO<Consulta,String>{
 
     @Override
     public Consulta update(Consulta entity) {
-        String sql = "UPDATE CONSULTA SET FECHA_CITA=?,DESCRIPCION=?,CENTROSERVICIO_ID=?,MASCOTA_ID=? where CODIGO=? ";
+        String sql = "UPDATE consulta SET FECHA_CITA=?,DESCRIPCION=?,CENTROSERVICIO_ID=?,MASCOTA_ID=? where CODIGO=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getCodigo());
@@ -83,7 +84,7 @@ public class ConsultaBO implements GenericBO<Consulta,String>{
 
     @Override
     public List<Consulta> findAll() {
-        String sql = "select CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID from CONSULTA" ;
+        String sql = "select CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID from consulta" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Consulta> result = new ArrayList<>();

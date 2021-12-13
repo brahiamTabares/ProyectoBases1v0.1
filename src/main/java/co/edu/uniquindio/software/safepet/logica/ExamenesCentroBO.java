@@ -5,6 +5,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.ExamenesCentro;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class ExamenesCentroBO implements GenericBO<ExamenesCentro, String> {
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -22,7 +23,7 @@ public class ExamenesCentroBO implements GenericBO<ExamenesCentro, String> {
     @Override
     public ExamenesCentro create(ExamenesCentro entity) {
 
-        String sql = "insert into EXAMENES_CENTRO(CENTROSERVICIO_ID,EXAMENES_CODIGO) values (?,?) ";
+        String sql = "insert into examenes_centro(CENTROSERVICIO_ID,EXAMENES_CODIGO) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCentroServicio_id());
             statement.setString(2, entity.getExamenes_codigo());
@@ -50,7 +51,7 @@ public class ExamenesCentroBO implements GenericBO<ExamenesCentro, String> {
 
     @Override
     public ExamenesCentro find(String id) {
-        String sql = "select  CENTROSERVICIO_ID,EXAMENES_CODIGO from EXAMENES_CENTRO where CENTROSERVICIO_ID= ? " ;
+        String sql = "select  CENTROSERVICIO_ID,EXAMENES_CODIGO from examenes_centro where CENTROSERVICIO_ID= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -64,7 +65,7 @@ public class ExamenesCentroBO implements GenericBO<ExamenesCentro, String> {
 
     @Override
     public ExamenesCentro update(ExamenesCentro entity) {
-        String sql = "UPDATE EXAMENES_CENTRO SET EXAMENES_CODIGO where CENTROSERVICIO_ID ";
+        String sql = "UPDATE examenes_centro SET EXAMENES_CODIGO where CENTROSERVICIO_ID ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getExamenes_codigo());
@@ -79,7 +80,7 @@ public class ExamenesCentroBO implements GenericBO<ExamenesCentro, String> {
 
     @Override
     public List<ExamenesCentro> findAll() {
-        String sql = "select CENTROSERVICIO_ID,EXAMENENES_CODIGO from EXAMENES_CENTRO " ;
+        String sql = "select CENTROSERVICIO_ID,EXAMENENES_CODIGO from examenes_centro " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<ExamenesCentro> result = new ArrayList<>();

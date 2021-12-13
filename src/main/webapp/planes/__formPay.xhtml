@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<f:view>
+
+    <p:dialog id="dialogPago" widgetVar="manageEntityDialog2">
+        <p:outputPanel id="manage-entity-content2" class="ui-fluid">
+            <p:outputPanel rendered="#{not empty planBean.selectedEntity}">
+
+
+                <div class="p-field">
+                    INFORMACIÓN PARA PAGO
+                    <br /><br /><br />
+                    <p:outputLabel for="afiliado2">AFILIADO</p:outputLabel>
+
+                    <p:inputText id="afiliado2" value="#{planBean.selectedEntity.afiliado.nombre}" readonly="true" ></p:inputText>
+                </div>
+                <br />
+                <div class="p-field">
+                    <p:outputLabel for="mensualidad2">MENSUALIDAD</p:outputLabel>
+
+                    <p:inputText id="mensualidad2" value="#{planBean.selectedEntity.mensualidad}" readonly="true" />
+                </div>
+                <div class="p-field">
+                    <br />
+                    <p:outputLabel for="pago">MEDIO DE PAGO</p:outputLabel>
+                    <br /><br />
+                    <p:selectOneRadio id="pago">
+                        <br />
+                        <f:selectItem itemLabel="Contado" itemValue="Contado"/>
+                        <f:selectItem itemLabel="Tarjeta de Crédito" itemValue="TarjetaC"/>
+                        <f:selectItem itemLabel="Tarjeta Débito" itemValue="TarjetaD"/>
+                    </p:selectOneRadio>
+                </div>
+                <br /><br />
+                    <div class="p-field">
+                    <p:outputLabel for="bancos">SELECCIONAR BANCO</p:outputLabel>
+                    <p:selectOneMenu id="bancos" label="Bancos" style="min-width: 15rem"
+                                          multiple="False" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250" >
+
+                        <f:selectItem itemLabel="Seleccione uno" itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="Bancolombia" itemValue="1"/>
+                        <f:selectItem itemLabel="Davivienda" itemValue="2"/>
+                        <f:selectItem itemLabel="Popular" itemValue="3"/>
+                        <f:selectItem itemLabel="Agrario" itemValue="4"/>
+                        <f:selectItem itemLabel="Caja Social" itemValue="5"/>
+                        <f:selectItem itemLabel="BBVA" itemValue="6"/>
+                        <f:selectItem itemLabel="Banco de Occidente" itemValue="7"/>
+                        <f:selectItem itemLabel="Efectivo" itemValue="8"/>
+
+                    </p:selectOneMenu>
+                </div>
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <f:facet name="footer">
+            <p:commandButton value="Pagar" icon="pi pi-dollar" actionListener="#{planBean.save()}"
+                             update="manage-entity-content" process="manage-entity-content @this"/>
+            <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageEntityDialog').hide()"
+                             class="ui-button-secondary"/>
+        </f:facet>
+    </p:dialog>
+</f:view>
+</html>

@@ -3,11 +3,13 @@ package co.edu.uniquindio.software.safepet.gui.beans.util;
 import co.edu.uniquindio.software.safepet.logica.ServicioBO;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Servicio;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
+@ApplicationScoped
 @FacesConverter(value = "servicioConverter",managed = true)
 public class ServicioConverter extends EntidadConverter<Servicio> {
 	@Inject
@@ -15,7 +17,7 @@ public class ServicioConverter extends EntidadConverter<Servicio> {
 
 	@Override
 	protected Servicio findById(String id) {
-		return bo.find(Integer.parseInt(id));
+		return bo.find(id);
 	}
 
 	@Override

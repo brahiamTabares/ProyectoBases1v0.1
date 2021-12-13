@@ -9,7 +9,7 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class ServicioBean extends PrimeFacesCrudBean<Servicio,Integer, ServicioBO> {
+public class ServicioBean extends PrimeFacesCrudBean<Servicio,String, ServicioBO> {
     @Inject
     public ServicioBean(ServicioBO bo) {
         super(bo);

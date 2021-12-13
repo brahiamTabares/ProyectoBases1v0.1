@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<f:view>
+    <br /><br /><br /><br /><br />
+    LOS VALORES Y DESCUENTOS  ESTAN SUJETOS A CAMBIO SEGUN LOS CRITERIOS EMPRESARIALES
+    <p:dialog id="dialog" widgetVar="manageEntityDialog">
+        <p:outputPanel id="manage-entity-content" class="ui-fluid">
+            <p:outputPanel rendered="#{not empty planBean.selectedEntity}">
+
+
+                <div class="p-field">
+                    <p:outputLabel for="afiliado">AFILIADO</p:outputLabel>
+                    <p:selectOneMenu id="afiliado" value="#{planBean.selectedEntity.afiliado}" converter="#{afiliadoConverter}"
+                                     panelStyle="width:180px" effect="fade" var="c"
+                                     filter="true" filterMatchMode="startsWith">
+
+                        <f:selectItems value="#{afiliadoBean.entities}" var="entidad"
+                                       itemLabel="#{entidad.nombre}" itemValue="#{entidad}"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{c.nombre}"/>
+                        </p:column>
+
+
+
+                        <f:facet name="footer">
+                            <h:outputText value="#{afiliadoBean.entities.size()} afiliados"
+                                          style="font-weight:bold;" styleClass="p-py-1 p-d-block"/>
+                        </f:facet>
+                    </p:selectOneMenu>
+                </div>
+
+                <div class="p-field">
+                    <p:outputLabel for="servicios">SERVICIO</p:outputLabel>
+                    <p:selectCheckboxMenu id="servicios" value="#{planBean.servicios}" label="Servicios" style="min-width: 15rem"
+                                          multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250" converter="servicioConverter">
+
+                        <p:ajax event="change" listener="#{planBean.subjectSelectionChanged}" update="mensualidad copago" />
+
+
+                        <f:selectItems value="#{servicioBean.entities}" var="servicio" itemLabel="#{servicio.nombre} - #{servicio.valor}" itemValue="#{servicio}" />
+                    </p:selectCheckboxMenu>
+                </div>
+                <div class="p-field">
+                    <p:outputLabel for="copago">Copago</p:outputLabel>
+                    <p:inputText id="copago" value="#{planBean.selectedEntity.copago}" readonly="true" />
+                </div>
+
+                <div class="p-field">
+                    <p:outputLabel for="mensualidad">Mensualidad</p:outputLabel>
+                    <p:inputText id="mensualidad" value="#{planBean.selectedEntity.mensualidad}" readonly="true" />
+                </div>
+
+
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <f:facet name="footer">
+            <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageEntityDialog').hide()"
+                             class="ui-button-secondary"/>
+        </f:facet>
+    </p:dialog>
+</f:view>
+</html>

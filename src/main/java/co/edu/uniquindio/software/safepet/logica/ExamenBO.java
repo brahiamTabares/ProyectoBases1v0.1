@@ -6,6 +6,7 @@ import co.edu.uniquindio.software.safepet.persistencia.entidades.Examen;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class ExamenBO implements GenericBO<Examen,String> {
 
     @Resource(lookup= Datasource.DATASOURCE )
@@ -23,10 +24,10 @@ public class ExamenBO implements GenericBO<Examen,String> {
     @Override
     public Examen create(Examen entity) {
 
-        String sql = "insert into EXAMENES (CODIGO,NOMBRE) values (?,?) ";
+        String sql = "insert into examenes (codigo,nombre) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
-            statement.setString(2, entity.getCodigo());
+            statement.setString(2, entity.getNombre());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -38,10 +39,9 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     @Override
     public void delete(Examen entity) {
-        String sql = "delete from EXAMENES where CODIGO=? ";
+        String sql = "delete from examenes where codigo=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
-            statement.setString(2, entity.getNombre());
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -52,7 +52,7 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     @Override
     public Examen find(String id) {
-        String sql = "select  CODIGO,NOMBRE from EXAMEN whereCODIGO= ? " ;
+        String sql = "select  codigo,nombre from examenes where codigo= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -66,7 +66,7 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     @Override
     public Examen update(Examen entity) {
-        String sql = "UPDATE EXAMENES SET nombre=? where codigo=? ";
+        String sql = "UPDATE examenes SET nombre=? where codigo=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getNombre());
@@ -81,7 +81,7 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     @Override
     public List<Examen> findAll() {
-        String sql = "select CENTROSERVICIO_ID,EXAMENENES_CODIGO from EXAMENES_CENTRO " ;
+        String sql = "select codigo,nombre from examenes" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Examen> result = new ArrayList<>();
@@ -98,8 +98,8 @@ public class ExamenBO implements GenericBO<Examen,String> {
 
     private Examen createFromResultSet(ResultSet resultSet) throws SQLException {
         Examen examen = new Examen();
-        examen.setCodigo(resultSet.getString("CODIGO"));
-        examen.setNombre(resultSet.getString("NOMBRE"));
+        examen.setCodigo(resultSet.getString("codigo"));
+        examen.setNombre(resultSet.getString("nombre"));
 
 
         return examen;

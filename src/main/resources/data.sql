@@ -131,7 +131,7 @@ INSERT INTO usuario values ('1097902111', 'Juan Diaz', '123456', '7456321');
 INSERT INTO usuario values ('1094876543', 'Yeferson Cardona', '123456', '3003452165');
 INSERT INTO usuario values ('1094952956', 'Brahiam Tabares', '123456', '3177074523');
 INSERT INTO usuario values ('41902453', 'Olga Leal', '123456', '3164297865');
-INSERT INTO usuario values ('1094876543', 'Juan Tabares', '123456', '3014356798');
+INSERT INTO usuario values ('1094876545', 'Juan Tabares', '123456', '3014356798');
 INSERT INTO usuario values ('76453221', 'Lilia Patricia Vallejo', '123456', '3101365475');
 INSERT INTO usuario values ('1096764321', 'Over Tabares', '123456', '3112345643');
 INSERT INTO usuario values ('1094973555', 'Daniel Castro', '123456', '3152777654');
@@ -171,6 +171,7 @@ insert into empleadosafepet values('1096764321');
 insert into empleadosafepet values('1094973555');
 insert into empleadosafepet values('1094756098');
 -- INSERT AFILIADO
+
 insert into afiliado values('1094901333');
 insert into afiliado values('1094901331');
 insert into afiliado values('1094901332');

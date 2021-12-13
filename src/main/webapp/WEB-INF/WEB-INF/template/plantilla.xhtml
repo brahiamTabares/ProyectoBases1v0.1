@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<h:head>
+    <title>SafePet</title>
+
+    <ui:insert name="estilos">
+        <style type="text/css">
+            .colorFondo {
+                background-color: #49723c !important;
+                color: #FFFFFF;
+            }
+        </style>
+    </ui:insert>
+    <ui:insert name="head"/>
+
+</h:head>
+
+<h:body styleClass="colorFondo">
+    <f:view>
+
+        <div id="header" align='center'>
+            <ui:insert name="header">
+
+                <p:graphicImage name="LogoSafePet.png" library="images"  style="width: 20%" />
+
+                <!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
+                <!-- <ui:include src="header.xhtml"/> -->
+            </ui:insert>
+            <br />
+        </div>
+        <br />
+        <h:form>
+            <p:menubar rendered="#{seguridadBean.autenticado}">
+                <p:menuitem value="Plan de Servicios" icon="pi pi-fw pi-calendar" action="/planes/index.xhtml?faces-redirect=true" rendered="#{seguridadBean.empleado}" />
+                <p:menuitem value="Centro Veterinarios" icon="pi pi-fw pi-pencil" action="/centros/index.xhtml?faces-redirect=true" rendered="#{seguridadBean.empleado}" />
+                <p:menuitem value="Afiliaciones" icon="pi pi-fw pi-user" action="/afiliados/index.xhtml?faces-redirect=true" rendered="#{seguridadBean.empleado}" />
+                <p:menuitem value="Mis Planes" icon="pi pi-fw pi-user" action="/afiliadoConsulta/index2.xhtml?faces-redirect=true" rendered="#{seguridadBean.afiliado}" />
+                <p:menuitem value="Simulación" icon="pi pi-fw pi-calendar" action="/simulacion/index.xhtml?faces-redirect=true" rendered="#{seguridadBean.afiliado}" />
+                <p:menuitem value="Consultar Copago" icon="pi pi-fw pi-id-card" action="/consultarCopago/index.xhtml?faces-redirect=true" rendered="#{seguridadBean.centroServicio}" />
+                <p:menuitem value="Salir" icon="pi pi-fw pi-sign-out" action="#{seguridadBean.logout}" ajax="false" />
+            </p:menubar>
+        </h:form>
+        <div id="content" align='center'>
+            <p:growl id="msgs"/>
+            <h:panelGroup id="panelContenido" style="width:100%">
+                <h:panelGroup >
+                    <ui:insert name="content">
+                        Pagina en construccion
+                    </ui:insert>
+                </h:panelGroup>
+            </h:panelGroup>
+        </div>
+    </f:view>
+</h:body>
+
+</html>

@@ -9,6 +9,10 @@ public class TipoCentro {
         this.nombre = nombre;
     }
 
+    public TipoCentro() {
+
+    }
+
     public String getCodigo() {
         return codigo;
     }

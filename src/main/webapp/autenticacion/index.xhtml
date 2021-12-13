@@ -28,13 +28,14 @@
                     <p:outputLabel for="txtclave" value="Clave"/>
                     <p:password id="txtclave" required="true" value="#{seguridadBean.loginDTO.password}" />
                     <p:commandButton value="Ingresar" icon="pi pi-check" action="#{seguridadBean.autenticar}" ajax="false" />
-
                 </h:panelGrid>
             </h:form>
         </h:body>
 
     </h:form>
 </f:view>
+
+
 
     </ui:define>
 </ui:composition>

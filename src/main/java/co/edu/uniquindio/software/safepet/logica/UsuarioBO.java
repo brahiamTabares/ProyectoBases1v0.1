@@ -23,7 +23,7 @@ public class UsuarioBO implements GenericBO<Usuario,String>{
 
     @Override
     public Usuario create(Usuario entity) {
-        String sql = "insert into USUARIO(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
+        String sql = "insert into usuario(ID,NOMBRE,CONTRASENIA,TELEFONO) values (?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setString(2, entity.getNombre());
@@ -39,7 +39,7 @@ public class UsuarioBO implements GenericBO<Usuario,String>{
 
     @Override
     public void delete(Usuario entity) {
-        String sql = "delete from USUARIO where ID = ? ";
+        String sql = "delete from usuario where ID = ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.executeUpdate();
@@ -51,7 +51,7 @@ public class UsuarioBO implements GenericBO<Usuario,String>{
 
     @Override
     public Usuario find(String id) {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from USUARIO where ID = ? " ;
+        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from usuario where ID = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -65,7 +65,7 @@ public class UsuarioBO implements GenericBO<Usuario,String>{
 
     @Override
     public Usuario update(Usuario entity) {
-        String sql = "UPDATE USUARIO SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
+        String sql = "UPDATE usuario SET NOMBRE=?, CONTRASENIA=?, TELEFONO=? where ID=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getNombre());
@@ -83,7 +83,7 @@ public class UsuarioBO implements GenericBO<Usuario,String>{
 
     @Override
     public List<Usuario> findAll() {
-        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from USUARIO " ;
+        String sql = "select ID,NOMBRE,CONTRASENIA,TELEFONO from usuario " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Usuario> result = new ArrayList<>();

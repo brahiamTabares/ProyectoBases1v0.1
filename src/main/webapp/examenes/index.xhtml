@@ -14,7 +14,7 @@
         <p:growl id="messages" />
         <p:toolbar>
             <p:toolbarGroup>
-                <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{usuarioBean.newEntity}"
+                <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{examenBean.newEntity}"
                                  update=":form:manage-entity-content" oncomplete="PF('manageEntityDialog').show()"
                                  styleClass="ui-button-success" style="margin-right: .5rem">
                     <p:resetInput target=":form:manage-entity-content"/>
@@ -23,13 +23,13 @@
 
         </p:toolbar>
 
-        <p:dataTable id="dt-entities" widgetVar="dtEntities" var="entity" value="#{usuarioBean.entities}"
+        <p:dataTable id="dt-entities" widgetVar="dtEntities" var="entity" value="#{examenBean.entities}"
                      reflow="true" styleClass="entity-table"
-                     selection="#{usuarioBean.selectedEntities}" rowKey="#{entity.dny}" paginator="true"
+                     selection="#{tipoCentroBean.selectedEntities}" rowKey="#{entity.dny}" paginator="true"
                      rows="10" rowSelectMode="add" paginatorPosition="bottom">
             <f:facet name="header">
                 <div class="entity-table-header">
-                    <span style="font-weight: bold">USUARIOS</span>
+                    <span style="font-weight: bold">EXAMENES</span>
                     <span class="filter-container ui-input-icon-left">
                         <i class="pi pi-search"></i>
                         <p:inputText id="globalFilter" onkeyup="PF('dtEntities').filter()" placeholder="Buscar"/>
@@ -37,25 +37,22 @@
                 </div>
             </f:facet>
             <!-- COLUMNAS DE LOS ATRIBUTOS QUE DESEO MOSTRAR EN LA TABLA -->
-            <p:column headerText="ID" >
-                <h:outputText value="#{entity.id}"/>
+            <p:column headerText="Codigo"  filterBy="#{entity.codigo}" filterStyle="display: none" >
+                <h:outputText value="#{entity.codigo}"/>
             </p:column>
-            <p:column headerText="Nombre" >
+            <p:column headerText="Nombre"  filterBy="#{entity.nombre}" filterStyle="display: none" >
                 <h:outputText value="#{entity.nombre}"/>
             </p:column>
-        <p:column headerText="Telefono" >
-            <h:outputText value="#{entity.telefono}"/>
-        </p:column>
             <p:column exportable="false">
                 <p:commandButton icon="pi pi-pencil" update=":form:manage-entity-content"
                                  oncomplete="PF('manageEntityDialog').show()"
                                  styleClass="edit-button rounded-button ui-button-success" process="@this">
-                    <f:setPropertyActionListener value="#{entity}" target="#{usuarioBean.selectedEntity}"/>
+                    <f:setPropertyActionListener value="#{entity}" target="#{examenBean.selectedEntity}"/>
                     <p:resetInput target=":form:manage-entity-content"/>
                 </p:commandButton>
                 <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
                                  oncomplete="PF('deleteEntityDialog').show()">
-                    <f:setPropertyActionListener value="#{entity}" target="#{usuarioBean.selectedEntity}"/>
+                    <f:setPropertyActionListener value="#{entity}" target="#{examenBean.selectedEntity}"/>
                 </p:commandButton>
             </p:column>
 
@@ -64,7 +61,7 @@
         <ui:include src="__form.xhtml" />
         <p:confirmDialog widgetVar="deleteEntityDialog" showEffect="fade" width="300"
                          message="Borrar el registro?" header="Confirmación" severity="warn">
-            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{usuarioBean.delete}"
+            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{examenBean.delete}"
                              process="@this" oncomplete="PF('deleteEntityDialog').hide()"/>
             <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                              onclick="PF('deleteEntityDialog').hide()"/>

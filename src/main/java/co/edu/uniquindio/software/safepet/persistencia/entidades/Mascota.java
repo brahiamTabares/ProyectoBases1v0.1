@@ -12,6 +12,8 @@ public class Mascota {
     private String   plan_id;
     private String tipomascota_id;
     private String raza_codigo ;
+    private  Plan plan;
+    private TipoMascota  tipoMascota;
 
 
     public Mascota(String id, String nombre, Date fecha_nacimiento, String genero, String plan_id, String tipomascota_id, String raza_codigo) {
@@ -94,6 +96,14 @@ public class Mascota {
 
     public void setRaza_codigo(String raza_codigo) {
         this.raza_codigo = raza_codigo;
+    }
+
+    public Plan getPlan() {
+        return plan;
+    }
+
+    public void setPlan(Plan plan) {
+        this.plan = plan;
     }
 
 

@@ -1,13 +1,17 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
-public class raza {
+public class Raza {
 
     private String codigo;
     private String nombre;
 
-    public raza(String codigo, String nombre) {
+    public Raza(String codigo, String nombre) {
         this.codigo = codigo;
         this.nombre = nombre;
+    }
+
+    public Raza() {
+
     }
 
     public String getCodigo() {
