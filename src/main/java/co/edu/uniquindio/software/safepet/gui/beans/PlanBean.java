@@ -1,16 +1,21 @@
 package co.edu.uniquindio.software.safepet.gui.beans;
 
+import co.edu.uniquindio.software.safepet.gui.beans.seguridad.SeguridadBean;
 import co.edu.uniquindio.software.safepet.logica.MascotaBO;
 import co.edu.uniquindio.software.safepet.logica.PlanBO;
+import co.edu.uniquindio.software.safepet.logica.ServicioBO;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Mascota;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Plan;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Servicio;
 
+import javax.el.MethodExpression;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Named
@@ -18,53 +23,79 @@ import java.util.List;
 public class PlanBean extends PrimeFacesCrudBean<Plan,String, PlanBO> {
     @Inject
     private MascotaBO mascotaBO;
+    @Inject
+    private ServicioBO servicioBO;
+    @Inject
+    private SeguridadBean seguridadBean;
+
+    private List<Servicio> servicios;
+    private String idServicio;
 
     @Inject
     public PlanBean(PlanBO bo) {
         super(bo);
+        servicios = new ArrayList<>();
     }
 
     private Mascota mascota;
 
-    private List<Servicio> servicios;
 
+    public String getIdServicio() {
+        return idServicio;
+    }
+
+    public void setIdServicio(String idServicio) {
+        this.idServicio = idServicio;
+    }
 
     public List<Servicio> getServicios() {
         return servicios;
     }
 
-
     public void setServicios(List<Servicio> servicios) {
         this.servicios = servicios;
     }
 
-
-
-
     @Override
     public void newEntity() {
         super.newEntity();
-        servicios = new ArrayList<>();
+        servicios.clear();
+        //servicios = new Servicio[];
     }
 
     @Override
     public void setSelectedEntity(Plan selectedEntity) {
         super.setSelectedEntity(selectedEntity);
-        servicios = new ArrayList<>();
+//        servicios = selectedEntity.getServicios().toArray(new Servicio[0]);
+        servicios.clear();
         servicios.addAll( selectedEntity.getServicios() );
     }
 
     public void save(){
+        System.out.println("SERVICIOS --> "+servicios);
         selectedEntity.getServicios().clear();
+//        selectedEntity.getServicios().addAll(Arrays.asList(servicios));
         selectedEntity.getServicios().addAll(servicios);
+        selectedEntity.setEmpleadoSafepet_id( seguridadBean.getId() );
         super.save();
     }
 
-    public void subjectSelectionChanged(final AjaxBehaviorEvent event)  {
+    public void selectionChanged()  {
+        System.out.println("CAMBIO2 "+servicios);
+        for (var s:servicios ) {
+            if( s != null ) {
+                System.out.println(s.getNombre());
+            }else{
+                System.out.println("NULO");
+            }
+        }
+
         if( servicios != null ){
             int valor = 0;
             for (Servicio a:servicios) {
-                valor += a.getValor();
+                if( a != null ) {
+                    valor += a.getValor();
+                }
             }
             selectedEntity.setMensualidad(valor);
 
@@ -106,4 +137,20 @@ public class PlanBean extends PrimeFacesCrudBean<Plan,String, PlanBO> {
     }
 
 
+    public void addServicio() {
+        try {
+            Servicio servicio = servicioBO.find(idServicio);
+            if (!servicios.contains(servicio) && servicio != null) {
+                servicios.add(servicio);
+            }
+            selectionChanged();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void removeServicio(Servicio servicio) {
+        servicios.remove(servicio);
+        selectionChanged();
+    }
 }

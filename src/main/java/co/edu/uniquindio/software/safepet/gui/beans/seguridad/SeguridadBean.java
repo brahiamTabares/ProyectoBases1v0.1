@@ -106,4 +106,6 @@ public class SeguridadBean extends AbstracBean {
     public boolean isCentroServicio(){
         return securityContext.isCallerInRole( "CentroServicio" );
     }
+
+    public String getId(){ return securityContext.getCallerPrincipal().getName(); }
 }

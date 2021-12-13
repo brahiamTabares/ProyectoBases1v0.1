@@ -31,7 +31,7 @@ public class PlanBO implements GenericBO<Plan,String>{
 
     @Override
     public Plan create(Plan entity) {
-        String sql = "insert into plan (id,mensualidad,copago,afiliado_usuario_id,empleadosafepet_usuario_id values (?,?,?,?,?) ";
+        String sql = "insert into plan (id,mensualidad,copago,afiliado_usuario_id,empleadosafepet_usuario_id) values (?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId());
             statement.setDouble(2, entity.getMensualidad());

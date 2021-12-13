@@ -15,6 +15,11 @@
 
 
                 <div class="p-field">
+                    <div class="p-field">
+                        <p:outputLabel for="id">ID</p:outputLabel>
+                        <p:inputText id="id" value="#{planBean.selectedEntity.id}" required="true" readonly="#{planBean.updating}" />
+                    </div>
+
                     <p:outputLabel for="afiliado">AFILIADO</p:outputLabel>
                     <p:selectOneMenu id="afiliado" value="#{planBean.selectedEntity.afiliado}"
                                      panelStyle="width:180px" effect="fade" var="c"
@@ -42,24 +47,35 @@
 
                 <div class="p-field">
                     <p:outputLabel for="servicios">SERVICIO</p:outputLabel>
-                    <p:selectCheckboxMenu id="servicios" value="#{planBean.servicios}" label="Servicios" style="min-width: 15rem"
-                                          multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250" >
+                    <p:selectOneMenu id="servicios" value="#{planBean.idServicio}" >
 
-                        <p:ajax event="change" listener="#{planBean.subjectSelectionChanged}" update="mensualidad copago" />
+                        <f:selectItems value="#{servicioBean.entities}" var="servicio" itemLabel="#{servicio.nombre} - #{servicio.valor}" itemValue="#{servicio.id}"   />
 
-
-                        <f:selectItems value="#{servicioBean.entities}" var="servicio" itemLabel="#{servicio.nombre} - #{servicio.valor}" itemValue="#{servicio}" />
-                        <f:converter binding="#{servicioConverter}" />
-                    </p:selectCheckboxMenu>
+                    </p:selectOneMenu>
+                    <p:commandButton value="+" action="#{planBean.addServicio}"  />
+                    <p:dataList value="#{planBean.servicios}" var="servicio" type="definition">
+                        <p:autoUpdate ></p:autoUpdate>
+                        <f:facet name="header">
+                            Servicios
+                        </f:facet>
+                        <p:panelGrid columns="2">
+                            <h:outputText value="#{servicio.nombre}" />
+                            <p:commandButton value="-" action="#{planBean.removeServicio(servicio)}" />
+                        </p:panelGrid>
+                    </p:dataList>
                 </div>
                 <div class="p-field">
                     <p:outputLabel for="copago">Copago</p:outputLabel>
-                    <p:inputText id="copago" value="#{planBean.selectedEntity.copago}" readonly="true" />
+                    <p:inputText id="copago" value="#{planBean.selectedEntity.copago}" readonly="true" >
+                        <p:autoUpdate ></p:autoUpdate>
+                    </p:inputText>
                 </div>
 
                 <div class="p-field">
                     <p:outputLabel for="mensualidad">Mensualidad</p:outputLabel>
-                    <p:inputText id="mensualidad" value="#{planBean.selectedEntity.mensualidad}" readonly="true" />
+                    <p:inputText id="mensualidad" value="#{planBean.selectedEntity.mensualidad}" readonly="true" >
+                        <p:autoUpdate ></p:autoUpdate>
+                    </p:inputText>
                 </div>
 
 

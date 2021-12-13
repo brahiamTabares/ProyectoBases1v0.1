@@ -2,6 +2,7 @@ package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class Servicio implements Serializable {
 
@@ -51,5 +52,18 @@ public class Servicio implements Serializable {
 
     public void setPlan(List<Plan> plan) {
         this.plan = plan;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Servicio)) return false;
+        Servicio servicio = (Servicio) o;
+        return getId().equals(servicio.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
