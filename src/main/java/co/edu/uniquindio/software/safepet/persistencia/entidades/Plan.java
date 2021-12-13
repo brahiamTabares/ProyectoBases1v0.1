@@ -1,5 +1,6 @@
 package co.edu.uniquindio.software.safepet.persistencia.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Plan {
@@ -15,6 +16,7 @@ public class Plan {
 
 
     public Plan(String id, double mensualidad, double copago, String afiliado_id, String empleadoSafepet_id) {
+        this();
         this.id = id;
         this.mensualidad = mensualidad;
         this.copago = copago;
@@ -23,7 +25,7 @@ public class Plan {
     }
 
     public Plan() {
-
+        servicios = new ArrayList<>();
     }
 
     public String getId() {

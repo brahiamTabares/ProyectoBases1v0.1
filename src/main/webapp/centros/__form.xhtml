@@ -28,6 +28,30 @@
                     <p:outputLabel for="telefono">Telefono</p:outputLabel>
                     <p:inputText id="telefono" value="#{centroServicioBean.selectedEntity.telefono}"/>
                 </div>
+                <div class="p-field">
+                    <p:outputLabel for="centro">TIPOCENTRO</p:outputLabel>
+                    <p:selectOneMenu id="centro" value="#{centroServicioBean.selectedEntity.tipoCentro_codigo}" converter="#{tipoCentroConverter}"
+                                     panelStyle="width:180px" effect="fade" var="c"
+                                     filter="true" filterMatchMode="startsWith">
+
+                        <f:selectItems value="#{centroServicioBean.entities}" var="entidad"
+                                       itemLabel="#{entidad.nombre}" itemValue="#{entidad}"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{c.nombre}"/>
+                        </p:column>
+
+
+
+                        <f:facet name="footer">
+                            <h:outputText value="#{tipoCentroBean.entities.size()} tipoCentro"
+                                          style="font-weight:bold;" styleClass="p-py-1 p-d-block"/>
+                        </f:facet>
+                    </p:selectOneMenu>
+                </div>
             </p:outputPanel>
         </p:outputPanel>
         <f:facet name="footer">
