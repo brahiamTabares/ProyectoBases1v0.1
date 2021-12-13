@@ -13,12 +13,12 @@
         <p:outputPanel id="manage-mascotas-content" class="ui-fluid">
             <p:outputPanel rendered="#{not empty planBean.mascota}">
                 <div class="p-field">
-                    <p:outputLabel for="nombre">Nombre</p:outputLabel>
-                    <p:inputText id="nombre" value="#{planBean.mascota.nombre}"/>
+                    <p:outputLabel for="idMascota">Id</p:outputLabel>
+                    <p:inputText id="idMascota" value="#{planBean.mascota.id}"/>
                 </div>
                 <div class="p-field">
-                    <p:outputLabel for="edad">Edad</p:outputLabel>
-                    <p:inputText id="edad" value="#{planBean.mascota.edad}"  />
+                    <p:outputLabel for="nombre">Nombre</p:outputLabel>
+                    <p:inputText id="nombre" value="#{planBean.mascota.nombre}"/>
                 </div>
                 <div class="p-field">
                     <p:outputLabel for="genero">Genero</p:outputLabel>
@@ -29,10 +29,16 @@
                 </div>
                 <div class="p-field">
                     <p:outputLabel for="tipo">Tipo</p:outputLabel>
-                    <p:selectOneMenu id="tipo" value="#{planBean.mascota.tipoMascota}"
-                                     converter="#{tipoMascotaConverter}" >
-                        <f:selectItems value="#{tipoMascotaBean.entities}" var="entidad"
-                                       itemLabel="#{entidad.tipo}" itemValue="#{entidad}"/>
+                    <p:selectOneMenu id="tipo" value="#{planBean.mascota.tipomascota_id}" >
+                        <f:selectItems value="#{tipoMascotaBean.entities}" var="tipo"
+                                       itemLabel="#{tipo.tipo}" itemValue="#{tipo.id}"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class="p-field">
+                    <p:outputLabel for="raza">Raza</p:outputLabel>
+                    <p:selectOneMenu id="raza" value="#{planBean.mascota.raza_codigo}" >
+                        <f:selectItems value="#{razaBean.entities}" var="raza"
+                                       itemLabel="#{raza.nombre}" itemValue="#{raza.codigo}"/>
                     </p:selectOneMenu>
                 </div>
             </p:outputPanel>

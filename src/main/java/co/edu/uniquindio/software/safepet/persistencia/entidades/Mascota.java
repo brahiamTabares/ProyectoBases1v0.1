@@ -106,5 +106,11 @@ public class Mascota {
         this.plan = plan;
     }
 
+    public TipoMascota getTipoMascota() {
+        return tipoMascota;
+    }
 
+    public void setTipoMascota(TipoMascota tipoMascota) {
+        this.tipoMascota = tipoMascota;
+    }
 }
