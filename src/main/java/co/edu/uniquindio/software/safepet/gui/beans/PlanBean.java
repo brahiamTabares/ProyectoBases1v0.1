@@ -102,8 +102,7 @@ public class PlanBean extends PrimeFacesCrudBean<Plan,String, PlanBO> {
     public void crearMascota(){
         mascota.setPlan(selectedEntity);
         mascota.setPlan_id(selectedEntity.getId());
-        selectedEntity.getMascotas().add(
-                mascotaBO.create(mascota)
+        selectedEntity.getMascotas().add(mascotaBO.create(mascota)
                 // se llama el nuevo mètodo aquì para que afecte el valor de la mensualidad por el aumento de mascotas
         );
     }

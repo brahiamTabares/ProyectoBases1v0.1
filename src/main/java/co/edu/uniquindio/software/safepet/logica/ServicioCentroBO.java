@@ -24,7 +24,7 @@ public class ServicioCentroBO implements GenericBO<ServicioCentro,String> {
     @Override
     public ServicioCentro create(ServicioCentro entity) {
 
-        String sql = "insert into serviciocentro (IDSER,IDCEN,SERVICIO_ID) values (?,?,?) ";
+        String sql = "insert into serviciocentro (servicio_id, centroservicio_usuario_id) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getIdser());
             statement.setString(2, entity.getIdcen());
@@ -40,11 +40,9 @@ public class ServicioCentroBO implements GenericBO<ServicioCentro,String> {
 
     @Override
     public void delete(ServicioCentro entity) {
-        String sql = "delete from  serviciocentro where ID=? ";
+        String sql = "delete from serviciocentro  where servicio_id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
-            statement.setString(1, entity.getIdser());
-            statement.setString(2, entity.getIdcen());
-            statement.setString(3,entity.getServicio_id());
+            statement.setString(1,entity.getServicio_id()); ;
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -55,7 +53,7 @@ public class ServicioCentroBO implements GenericBO<ServicioCentro,String> {
 
     @Override
     public ServicioCentro find(String id) {
-        String sql = "select  IDSER,IDCEN,SERVICIO_ID from serviciocentro where IDSER= ? " ;
+        String sql = "select servicio_id,centroservicio_usuario_id from serviciocentro where servicio_id= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -69,12 +67,12 @@ public class ServicioCentroBO implements GenericBO<ServicioCentro,String> {
 
     @Override
     public ServicioCentro update(ServicioCentro entity) {
-        String sql = "UPDATE serviciocentro SET IDSER=?,IDCEN=?,SERVICIO_ID=? where IDSER=? ";
+        String sql = "UPDATE serviciocentro SET servicio_id,centroservicio_usuario_id=? where servicio_id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
-            statement.setString(1,entity.getIdcen());
+
             statement.setString(2, entity.getServicio_id());
-            statement.setString(3, entity.getIdser());
+
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();

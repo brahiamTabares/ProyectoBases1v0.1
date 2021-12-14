@@ -2,8 +2,6 @@ package co.edu.uniquindio.software.safepet.logica;
 
 import co.edu.uniquindio.software.safepet.config.Datasource;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Mascota;
-import co.edu.uniquindio.software.safepet.persistencia.entidades.Plan;
-import co.edu.uniquindio.software.safepet.persistencia.entidades.TipoMascota;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
@@ -89,7 +87,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
 
     @Override
     public List<Mascota> findAll() throws SQLException {
-        String sql = "select id,nombre,fecha_nacimiento,genero,plan_id,raza_codigo,tipomascota_id from mascota ";
+        String sql = "select ID,nombre,fecha_nacimiento,genero,plan_id,raza_codigo,tipomascota_id from mascota ";
         ResultSet resultSet;
         try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
             resultSet = statement.executeQuery();
@@ -116,6 +114,7 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
             return mascota;
         }
 
+
     public List<Mascota> findByPlan(String id) {
         String sql = "select id,nombre,fecha_nacimiento,genero,plan_id,raza_codigo,tipomascota_id from mascota where plan_id=?" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
@@ -131,22 +130,4 @@ public class MascotaBO implements GenericBO<Mascota,Integer>{
             throw new RuntimeException("Operacion no completada:" + e.getMessage(), e);
         }
     }
-
-
-    public List<Mascota> findByNombreMascota(String id) {
-        String sql = "select distinct nombre from mascota m   inner join plan  p on m.plan_id=p.id where p.id=?" ;
-        try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
-            statement.setObject(1,id);
-            ResultSet resultSet = statement.executeQuery();
-            List<Mascota> result = new ArrayList<>();
-            while (resultSet.next()) {
-                result.add(createFromResultSet(resultSet));
-            }
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Operacion no completada:" + e.getMessage(), e);
-        }
-    }
-
 }

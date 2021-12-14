@@ -107,7 +107,7 @@ public class ServicioBO implements GenericBO<Servicio,String> {
     }
 
     public List<Servicio> findByPlan(String id) {
-        String sql = "select  s.id,s.NOMBRE,s.valor from servicio s inner join planservicio p on s.id = p.SERVICIO_ID where p.plan_id= ? " ;
+        String sql = "select  s.id,s.nombre,s.valor from servicio s inner join planservicio p on s.id = p.servicio_id where p.plan_id= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();

@@ -74,7 +74,7 @@ public class PlanBO implements GenericBO<Plan,String>{
 
     @Override
     public Plan update(Plan entity) {
-        String sql = "UPDATE plan SET mensualidad,copago,afiliado_usuario_id,empleadosafepet_usuario_id  where id=? ";
+        String sql = "UPDATE plan SET mensualidad=?,copago=?,afiliado_usuario_id=?,empleadosafepet_usuario_id=?  where id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setDouble(1, entity.getMensualidad());
             statement.setDouble(2, entity.getCopago());

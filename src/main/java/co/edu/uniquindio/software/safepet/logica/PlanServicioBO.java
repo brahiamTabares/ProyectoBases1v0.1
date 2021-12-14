@@ -23,7 +23,7 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String> {
     @Override
     public PlanServicio create(PlanServicio entity) {
 
-        String sql = "insert into planservicio (PLAN_ID,SERVICIO_ID) values (?,?) ";
+        String sql = "insert into planservicio (plan_id,servicio_id) values (?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getPlan_id());
             statement.setString(2, entity.getServicio_id());
@@ -38,7 +38,7 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String> {
 
     @Override
     public void delete(PlanServicio entity) {
-        String sql = "delete from planservicio where PLAN_ID=? ";
+        String sql = "delete from planservicio where plan_id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getPlan_id());
             statement.setString(2, entity.getServicio_id());
@@ -52,7 +52,7 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String> {
 
     @Override
     public  PlanServicio find(String id) {
-        String sql = "select  PLAN_ID,SERVICIO_ID from planservicio where PLAN_ID= ? " ;
+        String sql = "select  plan_id,servicio_id from planservicio where plan_id= ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -66,7 +66,7 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String> {
 
     @Override
     public PlanServicio update(PlanServicio entity) {
-        String sql = "UPDATE planservicio SET SERVICIO_ID=? where PLAN_ID=? ";
+        String sql = "UPDATE planservicio SET servicio_id=? where plan_id=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(2, entity.getServicio_id());
@@ -81,7 +81,7 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String> {
 
     @Override
     public List<PlanServicio> findAll() {
-        String sql = "select PLAN_ID,SERVICIO_ID from planservicio" ;
+        String sql = "select plan_id,servicio_id from planservicio" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<PlanServicio> result = new ArrayList<>();
@@ -98,8 +98,8 @@ public class PlanServicioBO implements GenericBO<PlanServicio,String> {
 
     private PlanServicio createFromResultSet(ResultSet resultSet) throws SQLException {
         PlanServicio planServicio = new PlanServicio();
-        planServicio.setPlan_id(resultSet.getString("PLAN_ID"));
-        planServicio.setServicio_id(resultSet.getString("SERVICIO_ID"));
+        planServicio.setPlan_id(resultSet.getString("plan_id"));
+        planServicio.setServicio_id(resultSet.getString("servicio_id"));
 
 
         return planServicio;

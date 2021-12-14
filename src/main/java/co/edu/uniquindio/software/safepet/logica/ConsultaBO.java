@@ -21,7 +21,7 @@ public class ConsultaBO implements GenericBO<Consulta,String>{
     @Override
     public Consulta create(Consulta entity) {
 
-        String sql = "insert into consulta(CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID) values (?,?,?,?,?) ";
+        String sql = "insert into consulta(codigo,fecha_cita,descripcion,centroservicio_usuario_id,mascota_id) values (?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
             statement.setDate(2, (Date) entity.getFecha_Cita());
@@ -39,7 +39,7 @@ public class ConsultaBO implements GenericBO<Consulta,String>{
 
     @Override
     public void delete(Consulta entity) {
-        String sql = "delete  where CODIGO= ? ";
+        String sql = "delete  from consulta where codigo= ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getCodigo());
             statement.executeUpdate();
@@ -52,7 +52,7 @@ public class ConsultaBO implements GenericBO<Consulta,String>{
 
     @Override
     public Consulta find(String id) {
-        String sql = "select CODIGO,FECHA_CITA,DESCRIPCION,CENTROSERVICIO_ID,MASCOTA_ID from consulta where CODIGO = ? " ;
+        String sql = "select codigo,fecha_cita,descripcion,centroservicio_usuario_id,mascota_id from consulta where codigo = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -66,7 +66,7 @@ public class ConsultaBO implements GenericBO<Consulta,String>{
 
     @Override
     public Consulta update(Consulta entity) {
-        String sql = "UPDATE consulta SET FECHA_CITA=?,DESCRIPCION=?,CENTROSERVICIO_ID=?,MASCOTA_ID=? where CODIGO=? ";
+        String sql = "UPDATE consulta SET fecha_cita=?,descripcion=?,centroservicio_usuario_id=?,mascota_id? where codigo=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setString(1, entity.getCodigo());
@@ -101,11 +101,11 @@ public class ConsultaBO implements GenericBO<Consulta,String>{
 
     private Consulta createFromResultSet(ResultSet resultSet) throws SQLException {
         Consulta consulta = new Consulta();
-        consulta.setCodigo(resultSet.getString("CODIGO"));
-        consulta.setFecha_Cita(resultSet.getDate("FECHA_CITA"));
-        consulta.setDescripcion(resultSet.getString("DESCRIPCION"));
-        consulta.setCentroServicio_id(resultSet.getString("CENTROSERVICIO_ID"));
-        consulta.setMascota_id(resultSet.getString("MASCOTA_ID"));
+        consulta.setCodigo(resultSet.getString("codigo"));
+        consulta.setFecha_Cita(resultSet.getDate("fecha_cita"));
+        consulta.setDescripcion(resultSet.getString("descripcion"));
+        consulta.setCentroServicio_id(resultSet.getString("cenroservicio_id"));
+        consulta.setMascota_id(resultSet.getString("mascota_id"));
 
         return consulta;
     }

@@ -20,7 +20,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
     @Override
     public HistoriaClinica create(HistoriaClinica entity) {
 
-        String sql = "insert into historiaclinica(NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID) values (?,?,?,?,?) ";
+        String sql = "insert into historiaclinica(nombre,sexo,fecha_ingreso,fechasalida,mascota_id) values (?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getNombre());
             statement.setString(2, entity.getSexo());
@@ -38,7 +38,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Override
     public void delete(HistoriaClinica entity) {
-        String sql = "delete from historiaclinica where MASCOTA_ID=?";
+        String sql = "delete from historiaclinica where mascota_id=?";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getNombre());
             statement.setString(2, entity.getSexo());
@@ -55,7 +55,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Override
     public HistoriaClinica find(String id) {
-        String sql = "select NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID from historiaclinica where MASCOTA_ID=?" ;
+        String sql = "select nombre,SEXO,fecha_ingreso,fechasalida,mascota_id from historiaclinica where mascota_id=?" ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -69,7 +69,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Override
     public HistoriaClinica update(HistoriaClinica entity) {
-        String sql = "UPDATE historiaclinica SET NOMBRE=?,SEXO=?,FECHA_INGRESO=?,FECHASALIDA=? where MASCOTA_ID ";
+        String sql = "UPDATE historiaclinica SET nombre=?,sexo=?,fecha_ingreso=?,fechasalida=? where mascota_id ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getNombre());
             statement.setString(2, entity.getSexo());
@@ -86,7 +86,7 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     @Override
     public List<HistoriaClinica> findAll() {
-        String sql = "select NOMBRE,SEXO,FECHA_INGRESO,FECHASALIDA,MASCOTA_ID from historiaclinica " ;
+        String sql = "select nombre,sexo,fecha_ingreso,fechasalida,mascota_id from historiaclinica " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<HistoriaClinica> result = new ArrayList<>();
@@ -103,11 +103,11 @@ public class HistoriaClinicaBO implements GenericBO<HistoriaClinica, String> {
 
     private HistoriaClinica createFromResultSet(ResultSet resultSet) throws SQLException {
         HistoriaClinica historiaClinica = new HistoriaClinica();
-        historiaClinica.setNombre(resultSet.getString("NOMBRE"));
-        historiaClinica.setSexo(resultSet.getString("SEXO"));
-        historiaClinica.setFechaIngreso(resultSet.getDate("FECHA_INGRESO"));
-        historiaClinica.setFechaSalida(resultSet.getDate("FECHASALIDA"));
-        historiaClinica.setMascota_id(resultSet.getString("MASCOTA_ID"));
+        historiaClinica.setNombre(resultSet.getString("nombre"));
+        historiaClinica.setSexo(resultSet.getString("sexo"));
+        historiaClinica.setFechaIngreso(resultSet.getDate("fecha_ingreso"));
+        historiaClinica.setFechaSalida(resultSet.getDate("fechasalida"));
+        historiaClinica.setMascota_id(resultSet.getString("mascota_id"));
 
         return historiaClinica;
     }
