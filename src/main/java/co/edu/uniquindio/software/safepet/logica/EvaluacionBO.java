@@ -24,7 +24,7 @@ public class EvaluacionBO implements GenericBO<Evaluacion,String>{
     @Override
     public Evaluacion create(Evaluacion entity) {
 
-        String sql = "insert into evaluacion(ID_EVALUACION,PUNTUACION,PLANSERVICIO_SERVICIO_IDCS,PLANSERVICIO_SERVICIOC_ID,AFILIADO_ID,PLANSERVICIO_ID) values (?,?,?,?,?,?) ";
+        String sql = "insert into evaluacion(id_evaluacion,puntuacion,planservicio_servicio_idcs,planservicio_servicioc_id,planservicio_id) values (?,?,?,?,?,?) ";
         try(Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId_evaluacion());
             statement.setInt(2, entity.getPuntacion());
@@ -43,7 +43,7 @@ public class EvaluacionBO implements GenericBO<Evaluacion,String>{
 
     @Override
     public void delete(Evaluacion entity) {
-        String sql = "delete from evaluacion where ID_EVALUACION = ? ";
+        String sql = "delete from evaluacion where id_evaluacion = ? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
             statement.setString(1, entity.getId_evaluacion());
             statement.executeUpdate();
@@ -56,7 +56,7 @@ public class EvaluacionBO implements GenericBO<Evaluacion,String>{
 
     @Override
     public Evaluacion find(String id) {
-        String sql = "select ID_EVALUACION,PUNTUACION,PLANSERVICIO_SERVICIO_IDCS,PLANSERVICIO_SERVICIOC_ID,AFILIADO_ID,PLANSERVICIO_ID from EVALUACION where ID_EVALUACION = ? " ;
+        String sql = "select id_evaluacion,puntuacion,planservicio_servicio_idcs,planservicio_servicioc_id,afiliado_usuario_id,planservicio_id from EVALUACION where ID_EVALUACION = ? " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             statement.setObject(1,id);
             ResultSet resultSet = statement.executeQuery();
@@ -70,7 +70,7 @@ public class EvaluacionBO implements GenericBO<Evaluacion,String>{
 
     @Override
     public Evaluacion update(Evaluacion entity) {
-        String sql = "UPDATE evaluacion SET PUNTUACION=?,PLANSERVICIO_SERVICIO_IDCS=?,PLANSERVICIO_SERVICIOC_ID=?,AFILIADO_ID,PLANSERVICIO_ID=? where ID_EVALUACION=? ";
+        String sql = "UPDATE evaluacion SET PUNTUACION=?,PLANSERVICIO_SERVICIO_IDCS=?,PLANSERVICIO_SERVICIOC_ID=?,AFILIADO_ID,PLANSERVICIO_ID=? where id_evaluacion=? ";
         try(Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql ) ) {
 
             statement.setInt(1, entity.getPuntacion());
@@ -89,7 +89,7 @@ public class EvaluacionBO implements GenericBO<Evaluacion,String>{
 
     @Override
     public List<Evaluacion> findAll() {
-        String sql = "select ID_EVALUACION,PUNTUACION,PLANSERVICIO_SERVICIO_IDCS,PLANSERVICIO_SERVICIOC_ID,AFILIADO_ID,PLANSERVICIO_ID from EVALUACION " ;
+        String sql = "select id_evaluacion,puntuacion,planservicio_servicio_idcs,planservicio_servicioc_id,afiliado_usuario_id,planservicio_id from evaluacion " ;
         try (Connection connection = dataSource.getConnection();PreparedStatement statement = connection.prepareStatement( sql )){
             ResultSet resultSet = statement.executeQuery();
             List<Evaluacion> result = new ArrayList<>();

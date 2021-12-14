@@ -2,6 +2,7 @@ package co.edu.uniquindio.software.safepet.logica;
 
 import co.edu.uniquindio.software.safepet.config.Datasource;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.Examen;
+import co.edu.uniquindio.software.safepet.persistencia.entidades.Mascota;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.TipoCentro;
 import co.edu.uniquindio.software.safepet.persistencia.entidades.TipoMascota;
 
@@ -97,6 +98,7 @@ public class TipoMascotaBO implements GenericBO<TipoMascota,String>{
     }
 
 
+
     private TipoMascota createFromResultSet(ResultSet resultSet) throws SQLException {
         TipoMascota tipoMascota= new TipoMascota();
         tipoMascota.setId(resultSet.getString("id"));
@@ -105,5 +107,7 @@ public class TipoMascotaBO implements GenericBO<TipoMascota,String>{
 
         return tipoMascota;
     }
+
+
 
 }

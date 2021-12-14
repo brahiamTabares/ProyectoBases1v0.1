@@ -244,17 +244,17 @@ insert into planservicio values ('10','01');
 insert into planservicio values ('10','02');
 insert into planservicio values ('10','03');
 -- INSERT EVALUACIÓN
--- insert into evaluacion values ('01', 4, '03','02','10','1094901333');
--- insert into evaluacion values ('02', 3, '07','07','02','1094901334');
--- insert into evaluacion values ('03', 5, '01','02','10','1094901333');
--- insert into evaluacion values ('04', 1, '01','01','10','1094901333');
--- insert into evaluacion values ('05', 3, '03','02','01','1094901333');
--- insert into evaluacion values ('06', 4, '01','02','01','1094901333');
--- insert into evaluacion values ('07', 4, '01','01','10','1094901333');
--- insert into evaluacion values ('08', 5, '07','09','04','1094901331');
--- insert into evaluacion values ('09', 2, '02','03','04','1094901331');
--- insert into evaluacion values ('10', 3, '02','03','08','1094756098');
--- INSERT MASCOTA
+insert into evaluacion values ('01', 4, '03','02','10','1094901333');
+insert into evaluacion values ('02', 3, '07','07','02','1094901334');
+insert into evaluacion values ('03', 5, '01','02','10','1094901333');
+ insert into evaluacion values ('04', 1, '01','01','10','1094901333');
+insert into evaluacion values ('05', 3, '03','02','01','1094901333');
+insert into evaluacion values ('06', 4, '01','02','01','1094901333');
+insert into evaluacion values ('07', 4, '01','01','10','1094901333');
+ insert into evaluacion values ('08', 5, '07','09','04','1094901331');
+ insert into evaluacion values ('09', 2, '02','03','04','1094901331');
+insert into evaluacion values ('10', 3, '02','03','08','1094756098');
+INSERT MASCOTA
 insert into mascota values ('01','Lulu','2020-01-01','Hembra', '01', '01','02');
 insert into mascota values ('02','Tony','2015-10-02','Macho', '02','01','01');
 insert into mascota values ('03','Nina','2014-12-02','Hembra', '03','10','04');
@@ -269,15 +269,15 @@ insert into mascota values ('10','Jerry','2015-11-01','Macho', '10','09','02');
 insert into mascota values ('11','Junior','2017-10-02','Macho', '10','01','01');
 insert into mascota values ('12','Gaspar','2020-08-12','Macho', '10','01','02');
 -- INSERT HISTORIA CLINICA
-insert into historiaclinica values ('01', 'Lulu', 'Hembra', '2021-02-14', '2021-02-15','1');
-insert into historiaclinica values ('02','Tony', 'Macho', '2021-03-14', '2021-03-16','2');
-insert into historiaclinica values ('03','Teo', 'Macho', '2021-04-14', '2021-04-15','9');
-insert into historiaclinica values ('04','Nina', 'Hembra', '2021-07-14', '2021-07-20','3');
-insert into historiaclinica values ('05','Rocket', 'Macho', '2021-05-14', '2021-05-15','5');
-insert into historiaclinica values ('06','Candy', 'Hembra', '2020-08-04', '2021-08-15','8');
-insert into historiaclinica values ('07','Iker', 'Macho', '2021-01-14', '2021-01-15','4');
-insert into historiaclinica values ('08','Frida', 'Hembra', '2021-02-14', '2021-02-15','7');
-insert into historiaclinica values ('09','Noah', 'Hembra', '2021-08-20', '2021-08-23','6');
+insert into historiaclinica values ('01', 'Lulu', 'Hembra', '2021-02-14', '2021-02-15','01');
+insert into historiaclinica values ('02','Tony', 'Macho', '2021-03-14', '2021-03-16','02');
+insert into historiaclinica values ('03','Teo', 'Macho', '2021-04-14', '2021-04-15','09');
+insert into historiaclinica values ('04','Nina', 'Hembra', '2021-07-14', '2021-07-20','03');
+insert into historiaclinica values ('05','Rocket', 'Macho', '2021-05-14', '2021-05-15','05');
+insert into historiaclinica values ('06','Candy', 'Hembra', '2020-08-04', '2021-08-15','08');
+insert into historiaclinica values ('07','Iker', 'Macho', '2021-01-14', '2021-01-15','04');
+insert into historiaclinica values ('08','Frida', 'Hembra', '2021-02-14', '2021-02-15','07');
+insert into historiaclinica values ('09','Noah', 'Hembra', '2021-08-20', '2021-08-23','06');
 insert into historiaclinica values ('10','Junior', 'Macho', '2021-05-24', '2021-05-26','10');
 -- INSERT EXAMENES_CENTRO
 insert into examenes_centro values ('01','04');
@@ -292,28 +292,28 @@ insert into examenes_centro values ('08','08');
 insert into examenes_centro values ('09','02');
 -- INSERT REGISTRO
 -- codigo, concepto, fechaRegistro, codigo examen, histoClin masoca id.
-insert into registro values ('01','Se realiza examen', '2021-02-14', '1','1');
-insert into registro values ('02','Se realiza examen', '2021-02-14', '2','1');
-insert into registro values ('03','Se realiza examen', '2021-02-14', '3','1');
-insert into registro values ('04','Se realiza examen', '2021-08-20', '6','1');
-insert into registro values ('05','Se realiza examen', '2021-08-21', '7','1');
-insert into registro values ('06','Se realiza examen', '2021-01-14', '1','7');
-insert into registro values ('07','Se realiza examen', '2021-01-14', '1','7');
-insert into registro values ('08','Se realiza examen', '2021-02-14', '5','1');
-insert into registro values ('09','Se realiza examen', '2021-08-04', '2','8');
-insert into registro values ('10','Se realiza examen', '2021-02-14', '6','1');
+insert into registro values ('01','Se realiza examen', '2021-02-14', '01','01');
+insert into registro values ('02','Se realiza examen', '2021-02-14', '02','01');
+insert into registro values ('03','Se realiza examen', '2021-02-14', '03','01');
+insert into registro values ('04','Se realiza examen', '2021-08-20', '06','01');
+insert into registro values ('05','Se realiza examen', '2021-08-21', '07','01');
+insert into registro values ('06','Se realiza examen', '2021-01-14', '01','07');
+insert into registro values ('07','Se realiza examen', '2021-01-14', '01','07');
+insert into registro values ('08','Se realiza examen', '2021-02-14', '05','01');
+insert into registro values ('09','Se realiza examen', '2021-08-04', '02','08');
+insert into registro values ('10','Se realiza examen', '2021-02-14', '06','01');
 -- INSERT CONSULTA
--- codigo, fechacita, descripcion, idMascota, idCentroServicio
--- insert into consulta values ('01','2021-02-12', 'Hinchazon estomago', '1', '2');
--- insert into consulta values ('02','2021-02-14', 'Falta de apetito', '1', '2');
--- insert into consulta values ('03','2021-02-19', 'Revisión General', '1', '1');
--- insert into consulta values ('04','2021-03-12', 'Revisión General', '1', '1');
--- insert into consulta values ('05','2021-02-12', 'Control enfermedad', '1', '10');
--- insert into consulta values ('06','2021-04-23', 'Revisión General', '1', '1');
--- insert into consulta values ('07','2021-01-02', 'Malestar General', '1', '2');
--- insert into consulta values ('08','2021-02-12', 'Hinchazon estomago', '1', '1');
--- insert into consulta values ('09','2021-02-12', 'Hinchazon Corporal', '1', '1');
--- insert into consulta values ('10','2020-06-10', 'Falta de apetito', '1', '2');
+codigo, fechacita, descripcion, idMascota, idCentroServicio
+insert into consulta values ('01','2021-02-12', 'Hinchazon estomago', '01', '02');
+insert into consulta values ('02','2021-02-14', 'Falta de apetito', '01', '02');
+insert into consulta values ('03','2021-02-19', 'Revisión General', '01', '01');
+insert into consulta values ('04','2021-03-12', 'Revisión General', '01', '01');
+insert into consulta values ('05','2021-02-12', 'Control enfermedad', '01', '10');
+insert into consulta values ('06','2021-04-23', 'Revisión General', '01', '01');
+insert into consulta values ('07','2021-01-02', 'Malestar General', '01', '02');
+insert into consulta values ('08','2021-02-12', 'Hinchazon estomago', '01', '01');
+insert into consulta values ('09','2021-02-12', 'Hinchazon Corporal', '01', '01');
+insert into consulta values ('10','2020-06-10', 'Falta de apetito', '01', '02');
 -- SERVICIO CENTRO
 -- idservicio, idcentro (corregir en datamodeler
 insert into serviciocentro values ('01','01');
